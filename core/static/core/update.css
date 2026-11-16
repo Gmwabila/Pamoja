@@ -1,0 +1,15 @@
+/* PAMOJA scheduling and dashboard update. Keeps the original green/cream design. */
+.time-field{padding:0;border:0;min-width:0;margin-left:0;margin-right:0}
+.time-field legend{font-size:12px;font-weight:600;margin-bottom:8px;padding:0}
+.time-selects{display:grid;grid-template-columns:1fr 1fr 1.05fr;gap:10px}
+.time-component{min-width:0}
+.time-component label{font-size:10px;color:var(--muted);font-weight:400;margin-bottom:5px}
+.time-component select{font-size:16px;width:100%;padding:11px 8px;min-height:47px}
+.upcoming-section{margin-top:28px}
+.upcoming-section .eyebrow{font-size:8px;letter-spacing:1.4px}
+.upcoming-date{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:0 0 40px;height:47px;background:var(--sage);border-radius:11px;color:var(--green)}
+.upcoming-date strong{font:22px/1 Georgia,serif}
+.upcoming-date small{font-size:9px;margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.upcoming-open{display:grid;place-items:center;min-width:28px;min-height:38px;color:var(--green)}
+.invalid .time-selects select{border-color:#a13732}
+@media(max-width:600px){.upcoming-section{order:4;margin:0}.suggestion-card{order:5}.upcoming-row{gap:11px;padding:17px 13px}.upcoming-row .task-detail p{font-size:10px}.time-selects{gap:8px}.time-component select{padding:11px 6px}.onboarding{padding-bottom:24px}}

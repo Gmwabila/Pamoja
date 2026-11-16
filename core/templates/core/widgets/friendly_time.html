@@ -1,0 +1,5 @@
+<div class="time-selects">
+{% for widget in widget.subwidgets %}
+  <div class="time-component"><label for="{{ widget.attrs.id }}">{{ widget.component_label }}</label>{% include widget.template_name %}</div>
+{% endfor %}
+</div>
