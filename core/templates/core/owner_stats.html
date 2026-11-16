@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% block title %}Owner overview · PAMOJA{% endblock %}
+{% block content %}
+<section class="narrow">
+  <span class="eyebrow">PRIVATE OWNER OVERVIEW</span>
+  <h1>PAMOJA at a glance.</h1>
+  <p class="muted">Registered accounts, including your own account.</p>
+
+  <div class="profile-card">
+    <span class="eyebrow">TOTAL ACCOUNTS</span>
+    <h1>{{ metrics.total }}</h1>
+  </div>
+
+  <div class="profile-card" style="margin-top:16px">
+    <span class="eyebrow">NEW TODAY</span>
+    <h1>{{ metrics.today }}</h1>
+  </div>
+
+  <div class="profile-card" style="margin-top:16px">
+    <span class="eyebrow">NEW IN THE LAST 7 CALENDAR DAYS</span>
+    <h1>{{ metrics.week }}</h1>
+  </div>
+
+  <p class="fine-print">
+    Checked {{ checked_at|date:"M j, Y, g:i A T" }}.
+    Counts update whenever you open or refresh this page.
+    These are account registrations, not visits or logins.
+  </p>
+  <a class="button full secondary" href="{% url 'owner_dashboard' %}">
+    Refresh counts
+  </a>
+</section>
+{% endblock %}
