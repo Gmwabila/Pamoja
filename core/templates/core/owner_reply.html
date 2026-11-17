@@ -1,0 +1,76 @@
+{% extends "core/owner_base.html" %}
+
+{% block title %}Reply | PAMOJA Admin{% endblock %}
+
+{% block content %}
+<section class="narrow">
+    <div class="page-heading">
+        <span class="eyebrow">USER FEEDBACK</span>
+        <h1>Reply to feedback</h1>
+        <a href="{% url 'owner_feedback' %}">
+            Back to Feedback Inbox
+        </a>
+    </div>
+
+    <article class="profile-card">
+        <span class="eyebrow">
+            {{ feedback.get_kind_display }} ·
+            {{ feedback.get_status_display }}
+        </span>
+
+        <h2>{{ feedback.title }}</h2>
+
+        <p class="fine-print">
+            {% if feedback.user %}
+                {{ feedback.user.get_full_name|default:"Name not provided" }}
+            {% else %}
+                Deleted account
+            {% endif %}
+            · {{ feedback.created_at|date:"M j, Y, g:i A T" }}
+        </p>
+
+        <p style="white-space: pre-wrap; overflow-wrap: anywhere;">{{ feedback.body }}</p>
+    </article>
+
+    <section class="profile-card" style="margin-top: 20px;">
+        <h2>Previous replies</h2>
+
+        {% for reply in replies %}
+            <article style="padding: 16px 0; border-bottom: 1px solid #d9ded9;">
+                <strong>PAMOJA Team</strong>
+                <p class="fine-print">
+                    {{ reply.created_at|date:"M j, Y, g:i A T" }}
+                </p>
+                <p style="white-space: pre-wrap; overflow-wrap: anywhere;">{{ reply.body }}</p>
+            </article>
+        {% empty %}
+            <p>No replies yet.</p>
+        {% endfor %}
+    </section>
+
+    <section class="profile-card" style="margin-top: 20px;">
+        <h2>Write a reply</h2>
+
+        <p class="fine-print">
+            Your response will appear under My feedback
+            in the user's PAMOJA account.
+        </p>
+
+        {% if not feedback.user %}
+            <p class="fine-print">
+                This account has been deleted.
+                Its former user cannot access new replies.
+            </p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="button">
+                Send reply
+            </button>
+        </form>
+    </section>
+</section>
+{% endblock %}

@@ -50,7 +50,12 @@
             </p>
 
             <p style="white-space: pre-wrap; overflow-wrap: anywhere;">{{ item.body }}</p>
-
+            <p>
+                <a class="button secondary"
+                    href="{% url 'owner_reply' item.pk %}">
+                    View / Reply
+                </a>
+            </p>
             <form method="post"
                   action="{% url 'owner_feedback_status' item.pk %}">
                 {% csrf_token %}
@@ -100,14 +105,20 @@
     <section class="profile-card" style="margin-top: 24px;">
         <h2>Recent Admin actions</h2>
         <p class="fine-print">
-            Latest 20 feedback status changes.
+            Latest 20 feedback status changes and replies.
+        </p>
+        <p class="fine-print">
             Message contents are not copied into this log.
         </p>
 
         {% for entry in audit_entries %}
             <p>
                 Feedback #{{ entry.feedback_id|default:"deleted" }}:
-                {{ entry.previous_status }} → {{ entry.new_status }}
+                {% if entry.action == "feedback.reply_sent" %}
+                    Reply sent
+                {% else %}
+                    {{ entry.previous_status }} → {{ entry.new_status }}
+                {% endif %}
                 <br>
                 <span class="fine-print">
                     {{ entry.created_at|date:"M j, Y, g:i A T" }}

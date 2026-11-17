@@ -146,3 +146,22 @@ class AdminAudit(models.Model):
 
     class Meta:
         ordering = ["-created_at", "-pk"]
+
+
+class FeedbackReply(models.Model):
+    feedback = models.ForeignKey(
+        Feedback,
+        on_delete=models.CASCADE,
+        related_name="replies",
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    body = models.TextField(max_length=3000)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created_at", "pk"]
