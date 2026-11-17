@@ -1,175 +1,85 @@
 
-{% load static %}
+{% extends "core/owner_base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}PAMOJA Admin | Overview{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
+{% block content %}
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, viewport-fit=cover">
+<section class="narrow">
 
-    <meta name="theme-color" content="#173f35">
+    <!-- DASHBOARD HEADER -->
+    <div class="page-heading">
+        <span class="eyebrow">ADMIN DASHBOARD</span>
 
-    <meta name="description"
-          content="PAMOJA private administration dashboard.">
+        <h1>PAMOJA Overview</h1>
 
-    <meta name="apple-mobile-web-app-title"
-          content="PAMOJA Admin">
-
-    <title>
-        {% block title %}PAMOJA Admin{% endblock %}
-    </title>
-
-    <!-- Existing PAMOJA stylesheets -->
-    <link rel="stylesheet"
-          href="{% static 'core/app.css' %}">
-
-    <link rel="stylesheet"
-          href="{% static 'core/update.css' %}?v=2">
-
-    <!-- Admin-specific styling -->
-    <style>
-        .admin-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 8px;
-            background-color: #e5d8b4;
-            color: #173f35;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .admin-navigation {
-            display: flex;
-            gap: 12px;
-            margin: 20px 0 30px;
-            padding-bottom: 18px;
-            border-bottom: 1px solid #d9ded9;
-        }
-
-        .admin-navigation a {
-            display: inline-block;
-            padding: 11px 18px;
-            border-radius: 10px;
-            background-color: #173f35;
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .admin-navigation a:hover {
-            background-color: #245a49;
-        }
-
-        .admin-footer {
-            margin-top: 40px;
-            padding: 20px 0;
-            border-top: 1px solid #d9ded9;
-            text-align: center;
-            font-size: 12px;
-            color: #64756d;
-        }
-
-        .admin-footer p {
-            margin: 5px 0;
-            overflow-wrap: anywhere;
-        }
-    </style>
-
-    {% block extra_head %}{% endblock %}
-</head>
-
-<body class="admin-body">
-
-    <a class="skip" href="#main">
-        Skip to content
-    </a>
-
-    <div class="app-shell">
-
-        <!-- ADMIN HEADER -->
-        <header class="topbar">
-
-            <a class="brand"
-               href="{% url 'owner_dashboard' %}">
-
-                <img src="{% static 'core/mark.svg' %}"
-                     alt=""
-                     width="34"
-                     height="34">
-
-                <span>PAMOJA</span>
-
-                <span class="admin-badge">
-                    ADMIN
-                </span>
-            </a>
-
-            <!-- Temporary account link -->
-            <a class="text-link"
-               href="{% url 'profile' %}">
-                Account
-            </a>
-
-        </header>
-
-        <!-- ADMIN NAVIGATION -->
-        <nav class="admin-navigation"
-             aria-label="Admin navigation">
-
-            <a href="{% url 'owner_dashboard' %}"
-               aria-current="page">
-                Overview
-            </a>
-
-        </nav>
-
-        <!-- MAIN ADMIN CONTENT -->
-        <main id="main">
-
-            {% if messages %}
-                <div class="notices" role="status">
-
-                    {% for message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-
-                </div>
-            {% endif %}
-
-            {% block content %}
-            {% endblock %}
-
-        </main>
-
-        <!-- ADMIN FOOTER -->
-        <footer class="admin-footer">
-
-            <p>
-                PAMOJA Administration
-            </p>
-
-            <p>
-                Private management dashboard
-            </p>
-
-            {% if user.is_authenticated %}
-                <p>
-                    Signed in as {{ user.email }}
-                </p>
-            {% endif %}
-
-        </footer>
-
+        <p class="muted">
+            Monitor registrations and track
+            the growth of PAMOJA.
+        </p>
     </div>
 
-    <script src="{% static 'core/app.js' %}" defer></script>
+    <!-- TOTAL REGISTERED ACCOUNTS -->
+    <div class="profile-card">
+        <span class="eyebrow">
+            TOTAL REGISTERED ACCOUNTS
+        </span>
 
-    {% block scripts %}{% endblock %}
+        <h1>{{ metrics.total }}</h1>
 
-</body>
-</html>
+        <p class="muted">
+            Total accounts created on PAMOJA.
+        </p>
+    </div>
+
+    <!-- NEW ACCOUNTS TODAY -->
+    <div class="profile-card" style="margin-top: 16px;">
+        <span class="eyebrow">
+            NEW ACCOUNTS TODAY
+        </span>
+
+        <h1>{{ metrics.today }}</h1>
+
+        <p class="muted">
+            Accounts registered today.
+        </p>
+    </div>
+
+    <!-- NEW ACCOUNTS THIS WEEK -->
+    <div class="profile-card" style="margin-top: 16px;">
+        <span class="eyebrow">
+            LAST 7 CALENDAR DAYS
+        </span>
+
+        <h1>{{ metrics.week }}</h1>
+
+        <p class="muted">
+            Accounts registered in the last
+            seven calendar days.
+        </p>
+    </div>
+
+    <!-- REFRESH BUTTON -->
+    <div style="margin-top: 24px;">
+        <a href="{% url 'owner_dashboard' %}"
+           class="button full secondary">
+            Refresh Statistics
+        </a>
+    </div>
+
+    <!-- LAST UPDATED -->
+    <div style="margin-top: 20px;">
+        <p class="fine-print">
+            Last checked:
+            {{ checked_at|date:"M j, Y, g:i A T" }}
+        </p>
+
+        <p class="fine-print">
+            These statistics represent registered
+            accounts, not website visits.
+        </p>
+    </div>
+
+</section>
+
+{% endblock %}
