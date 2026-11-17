@@ -1,2 +1,85 @@
-{% extends 'core/base.html' %}{% block title %}Your space · PAMOJA{% endblock %}
-{% block content %}<section class="narrow"><span class="eyebrow">MAKE YOURSELF AT HOME</span><h1>Your space.</h1><div class="profile-card"><span class="avatar large">{{ user.first_name|first|upper|default:'P' }}</span><h2>{{ user.first_name }}</h2><p class="muted">{{ user.email }}</p></div><div class="settings-list"><a href="{% url 'onboarding' %}"><div><strong>Preferences & spaces</strong><small>Your interests, goal, time zone, and reminders</small></div><span>↗</span></a><div class="settings-item"><div><strong>Current time zone</strong><small>{{ profile.timezone }}</small></div></div><div class="settings-item"><div><strong>My goal</strong><small>{{ profile.goal|default:'Your next goal is yours to choose.' }}</small></div></div><div class="settings-item"><div><strong>About PAMOJA</strong><small>Pamoja means together in Swahili. Built around the way you live.</small></div></div></div><div class="install-note"><h3>A little closer to home.</h3><p>Once we deploy PAMOJA with HTTPS, open it in Safari, tap Share, and choose Add to Home Screen.</p></div><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="button full secondary">Log out</button></form></section>{% endblock %}
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% translate "Your space" %} · PAMOJA
+{% endblock %}
+
+{% block content %}
+{% translate "Your next goal is yours to choose." as default_goal %}
+
+<section class="narrow">
+    <span class="eyebrow">
+        {% translate "MAKE YOURSELF AT HOME" %}
+    </span>
+
+    <h1>{% translate "Your space." %}</h1>
+
+    <div class="profile-card">
+        <span class="avatar large">
+            {{ user.first_name|first|upper|default:'P' }}
+        </span>
+
+        <h2>{{ user.first_name }}</h2>
+        <p class="muted">{{ user.email }}</p>
+    </div>
+
+    <div class="settings-list">
+        <a href="{% url 'onboarding' %}">
+            <div>
+                <strong>
+                    {% translate "Preferences & spaces" %}
+                </strong>
+                <small>
+                    {% translate "Your interests, goal, language, time zone, and reminders" %}
+                </small>
+            </div>
+            <span aria-hidden="true">↗</span>
+        </a>
+
+        <div class="settings-item">
+            <div>
+                <strong>{% translate "Language" %}</strong>
+                <small>{{ profile.get_language_display }}</small>
+            </div>
+        </div>
+
+        <div class="settings-item">
+            <div>
+                <strong>{% translate "Current time zone" %}</strong>
+                <small>{{ profile.timezone }}</small>
+            </div>
+        </div>
+
+        <div class="settings-item">
+            <div>
+                <strong>{% translate "My goal" %}</strong>
+                <small>{{ profile.goal|default:default_goal }}</small>
+            </div>
+        </div>
+
+        <div class="settings-item">
+            <div>
+                <strong>{% translate "About PAMOJA" %}</strong>
+                <small>
+                    {% translate "Pamoja means together in Swahili. Built around the way you live." %}
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="install-note">
+        <h3>{% translate "A little closer to home." %}</h3>
+        <p>
+            {% translate "Open PAMOJA in Safari, tap Share, and choose Add to Home Screen." %}
+        </p>
+    </div>
+
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="button full secondary">
+            {% translate "Log out" %}
+        </button>
+    </form>
+</section>
+{% endblock %}

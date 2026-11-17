@@ -3,6 +3,7 @@ import os
 from datetime import timedelta
 from functools import wraps
 
+from django.utils.translation import gettext_lazy as _
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -55,15 +56,13 @@ class FeedbackForm(forms.ModelForm):
         fields = ["kind", "title", "body"]
 
         labels = {
-            "kind": "Feedback type",
-            "title": "Subject",
-            "body": "Your feedback",
+            "kind": _("Feedback type"),
+            "title": _("Subject"),
+            "body": _("Your feedback"),
         }
 
         widgets = {
-            "body": forms.Textarea(
-                attrs={"rows": 6}
-            ),
+            "body": forms.Textarea(attrs={"rows": 6}),
         }
 
 
@@ -97,10 +96,12 @@ def submit_feedback(request):
             ).count()
 
             if recent_count >= 5:
-                form.add_error(
+                                form.add_error(
                     None,
-                    "You can send up to five submissions per hour. "
-                    "Please try again later.",
+                    _(
+                        "You can send up to five submissions per hour. "
+                        "Please try again later."
+                    ),
                 )
             else:
                 feedback = form.save(commit=False)
@@ -109,7 +110,7 @@ def submit_feedback(request):
 
                 messages.success(
                     request,
-                    "Thank you! Your feedback has been sent.",
+                    _("Thank you! Your feedback has been sent."),
                 )
 
                 return redirect("feedback")

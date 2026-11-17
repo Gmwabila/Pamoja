@@ -9,6 +9,8 @@ from django.db.models import F
 from django.shortcuts import get_object_or_404, redirect, render
 from django.templatetags.static import static
 from django.utils import timezone
+from django.utils.translation import get_language
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST, require_GET
 
 @require_GET
@@ -37,7 +39,10 @@ def signup(request):
     form = SignupForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         user = form.save()
-        Profile.objects.create(user=user)
+        Profile.objects.create(
+            user=user,
+            language=get_language() or "en",
+        )
         login(request, user)
         return redirect('onboarding')
     return render(request, 'registration/signup.html', {'form': form})
@@ -51,7 +56,7 @@ def onboarding(request):
         profile = form.save(commit=False)
         profile.onboarded = True
         profile.save()
-        messages.success(request, 'Your space is ready. Let’s take the next step together.')
+        messages.success(request, _('Your space is ready. Let’s take the next step together.'))
         return redirect('dashboard')
     return render(request, 'core/onboarding.html', {'form': form, 'editing': profile.onboarded})
 
@@ -71,14 +76,32 @@ def dashboard(request):
     labels = dict(SPACES)
     spaces = [{'key': key, 'label': labels[key]} for key in profile.spaces if key in labels]
     now = timezone.localtime(timezone.now(), ZoneInfo(profile.timezone))
-    greeting = 'Good morning' if now.hour < 12 else ('Good afternoon' if now.hour < 18 else 'Good evening')
-    return render(request, 'core/dashboard.html', {'tasks': tasks, 'today': today, 'done': done,
-        'total': total, 'progress': round(done / total * 100) if total else 0, 'spaces': spaces,
-        'greeting': greeting, 'profile': profile,
-        'upcoming_tasks': upcoming[:5], 'upcoming_count': upcoming_count,
-        'tomorrow': today + timedelta(days=1),
-        'overdue': Task.objects.filter(user=request.user, due_date__lt=today, completed=False).count()})
 
+    if now.hour < 12:
+        greeting = _("Good morning")
+    elif now.hour < 18:
+        greeting = _("Good afternoon")
+    else:
+        greeting = _("Good evening")
+
+    return render(request, 'core/dashboard.html', {
+        'tasks': tasks,
+        'today': today,
+        'done': done,
+        'total': total,
+        'progress': round(done / total * 100) if total else 0,
+        'spaces': spaces,
+        'greeting': greeting,
+        'profile': profile,
+        'upcoming_tasks': upcoming[:5],
+        'upcoming_count': upcoming_count,
+        'tomorrow': today + timedelta(days=1),
+        'overdue': Task.objects.filter(
+            user=request.user,
+            due_date__lt=today,
+            completed=False
+        ).count()
+    })
 @login_required
 def planner(request):
     profile = get_profile(request.user)

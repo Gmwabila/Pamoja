@@ -1,26 +1,31 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 
-{% block title %}Feedback | PAMOJA{% endblock %}
+{% block title %}
+    {% translate "Feedback" %} | PAMOJA
+{% endblock %}
 
 {% block content %}
 <section class="narrow">
     <div class="page-heading">
-        <span class="eyebrow">HELP IMPROVE PAMOJA</span>
-        <h1>Share your feedback</h1>
+        <span class="eyebrow">
+            {% translate "HELP IMPROVE PAMOJA" %}
+        </span>
+
+        <h1>{% translate "Share your feedback" %}</h1>
+
         <p class="muted">
-            Suggest an improvement, report a bug,
-            or request a feature.
+            {% translate "Suggest an improvement, report a bug, or request a feature." %}
         </p>
     </div>
 
     <div class="profile-card">
         <p>
-            Your message and account name will be visible
-            to PAMOJA’s owner.
+            {% translate "Your message and account name will be visible to PAMOJA’s owner." %}
         </p>
+
         <p class="fine-print">
-            Please avoid including passwords, financial
-            details, or other sensitive information.
+            {% translate "Please avoid including passwords, financial details, or other sensitive information." %}
         </p>
 
         <form method="post">
@@ -28,18 +33,21 @@
             {{ form.as_p }}
 
             <button type="submit" class="button">
-                Send feedback
+                {% translate "Send feedback" %}
             </button>
         </form>
     </div>
 
     <p>
-        <a href="{% url 'profile' %}">Back to Profile</a>
+        <a href="{% url 'profile' %}">
+            {% translate "Back to Profile" %}
+        </a>
     </p>
 </section>
+
 <p style="text-align: center; margin: 24px 0;">
     <a class="button secondary" href="{% url 'my_feedback' %}">
-        My feedback &amp; replies
+        {% translate "My feedback & replies" %}
     </a>
 </p>
 {% endblock %}

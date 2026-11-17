@@ -1,2 +1,53 @@
-{% extends 'core/base.html' %}{% block title %}Make a plan · PAMOJA{% endblock %}
-{% block content %}<section class="narrow"><a class="subtle-link" href="{% url 'planner' %}">← Back to planner</a><span class="eyebrow">SMALL STEPS, REAL PROGRESS</span><h1>{% if editing %}A little adjustment.{% else %}What’s your next step?{% endif %}</h1><p class="muted">Make a little space for something that matters.</p><form method="post">{% csrf_token %}{% include 'core/form_fields.html' %}<button class="button full">Save task <span aria-hidden="true">↗</span></button></form>{% if editing %}<form class="delete-form" method="post" action="{% url 'task_delete' form.instance.pk %}" data-confirm="Delete this task? This cannot be undone.">{% csrf_token %}<button class="danger-link">Delete task</button></form>{% endif %}</section>{% endblock %}
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% translate "Make a plan" %} · PAMOJA
+{% endblock %}
+
+{% block content %}
+<section class="narrow">
+    <a class="subtle-link" href="{% url 'planner' %}">
+        ← {% translate "Back to planner" %}
+    </a>
+
+    <span class="eyebrow">
+        {% translate "SMALL STEPS, REAL PROGRESS" %}
+    </span>
+
+    <h1>
+        {% if editing %}
+            {% translate "A little adjustment." %}
+        {% else %}
+            {% translate "What’s your next step?" %}
+        {% endif %}
+    </h1>
+
+    <p class="muted">
+        {% translate "Make a little space for something that matters." %}
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        {% include "core/form_fields.html" %}
+
+        <button type="submit" class="button full">
+            {% translate "Save task" %}
+            <span aria-hidden="true">↗</span>
+        </button>
+    </form>
+
+    {% if editing %}
+        <form class="delete-form"
+              method="post"
+              action="{% url 'task_delete' form.instance.pk %}"
+              data-confirm="{% translate 'Delete this task? This cannot be undone.' %}">
+            {% csrf_token %}
+
+            <button type="submit" class="danger-link">
+                {% translate "Delete task" %}
+            </button>
+        </form>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,2 +1,43 @@
-{% extends 'core/base.html' %}{% block title %}Your assistant · PAMOJA{% endblock %}
-{% block content %}<section class="narrow chat-intro"><span class="eyebrow">TOGETHER, EVERY STEP</span><div class="chat-mark" aria-hidden="true">✳</div><h1>A little help.<br>A clearer next step.</h1><p class="muted">Your personal assistant will live here.</p><div class="install-note"><h3>We’re building the foundation first.</h3><p>Live AI chat is not connected in this milestone. Your accounts, preferences, and planner already work. Next, we’ll connect an AI service that can suggest plans using the information you allow.</p><p>You’ll review task changes before saving them.</p></div><a class="button full" href="{% url 'planner' %}">Make a plan <span aria-hidden="true">↗</span></a></section>{% endblock %}
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% translate "Your assistant" %} · PAMOJA
+{% endblock %}
+
+{% block content %}
+<section class="narrow chat-intro">
+    <span class="eyebrow">
+        {% translate "TOGETHER, EVERY STEP" %}
+    </span>
+
+    <div class="chat-mark" aria-hidden="true">✳</div>
+
+    <h1>
+        {% blocktranslate %}A little help.<br>A clearer next step.{% endblocktranslate %}
+    </h1>
+
+    <p class="muted">
+        {% translate "Your personal assistant will live here." %}
+    </p>
+
+    <div class="install-note">
+        <h3>
+            {% translate "We’re building the foundation first." %}
+        </h3>
+
+        <p>
+            {% translate "Live AI chat is not connected in this milestone. Your accounts, preferences, and planner already work. Next, we’ll connect an AI service that can suggest plans using the information you allow." %}
+        </p>
+
+        <p>
+            {% translate "You’ll review task changes before saving them." %}
+        </p>
+    </div>
+
+    <a class="button full" href="{% url 'planner' %}">
+        {% translate "Make a plan" %}
+        <span aria-hidden="true">↗</span>
+    </a>
+</section>
+{% endblock %}

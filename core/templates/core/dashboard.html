@@ -1,7 +1,248 @@
-{% extends 'core/base.html' %}{% block title %}Your day · PAMOJA{% endblock %}
-{% block content %}<section class="dashboard-head"><div><span class="eyebrow">YOUR PERSONAL SPACE · {{ today|date:'l, M j' }}</span><h1>{{ greeting }},<br><em>{{ user.first_name|default:'friend' }}.</em></h1><p class="muted">Let’s make today count, together.</p></div><div class="greeting-art" aria-hidden="true">✳</div></section>
-<div class="dashboard-grid"><div class="primary-column"><section class="progress-card"><div class="row"><div><span class="eyebrow light">ONE STEP AT A TIME</span><h2>Today’s progress</h2></div><span class="progress-number">{{ done }}<small> / {{ total }}</small></span></div><div class="progress-track" role="progressbar" aria-label="Today's task progress" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"><span style="width:{{ progress }}%"></span></div><p>{% if total == 0 %}A fresh page. What would you like to make time for?{% elif done == total %}You did it. Take a moment to enjoy the small wins.{% else %}Every small step counts. You’re making room for what matters.{% endif %}</p></section>
-{% if profile.reminders and overdue %}<div class="reminder-banner"><strong>{{ overdue }} unfinished task{{ overdue|pluralize }} from earlier.</strong> <a href="{% url 'planner' %}">Review your planner ↗</a></div>{% endif %}
-<section class="tasks-section"><div class="section-heading"><div><span class="eyebrow">A LITTLE FOCUS</span><h2>Today’s tasks <span class="count">{{ total }}</span></h2></div><a class="button compact" href="{% url 'task_add' %}">+ Add task</a></div><div class="task-list">{% for task in tasks %}{% include 'core/task_row.html' with origin='dashboard' %}{% empty %}<div class="empty-state"><span aria-hidden="true">↗</span><h3>Your day starts here.</h3><p>Add your first task. A workout, an application, or just a little time for yourself.</p><a href="{% url 'task_add' %}">Make your first plan →</a></div>{% endfor %}</div><a class="subtle-link" href="{% url 'planner' %}">Open my planner <span aria-hidden="true">↗</span></a></section>{% include 'core/upcoming_tasks.html' %}</div>
-<aside class="secondary-column"><section><div class="section-heading"><div><span class="eyebrow">PERSONALIZED FOR YOU</span><h2>Your Spaces</h2></div><a class="text-link small" href="{% url 'onboarding' %}">Edit ↗</a></div><div class="spaces">{% for space in spaces %}<article class="space-card {{ space.key }}"><a href="{% url 'planner' %}?space={{ space.key }}"><span class="space-symbol" aria-hidden="true">{% if space.key == 'fitness' %}↟{% elif space.key == 'career' %}↗{% elif space.key == 'education' %}▤{% elif space.key == 'sports' %}◉{% else %}▦{% endif %}</span><div><h3>{{ space.label }}</h3><p>{% if space.key == 'fitness' %}Make time to move{% elif space.key == 'career' %}Your next chapter{% elif space.key == 'education' %}Keep learning{% elif space.key == 'sports' %}Stay in the game{% else %}Find your daily rhythm{% endif %}</p></div><span aria-hidden="true">↗</span></a><div class="space-reorder"><form method="post" action="{% url 'move_space' space.key %}">{% csrf_token %}<input type="hidden" name="direction" value="up"><button {% if forloop.first %}disabled{% endif %} aria-label="Move {{ space.label }} up">↑</button></form><form method="post" action="{% url 'move_space' space.key %}">{% csrf_token %}<input type="hidden" name="direction" value="down"><button {% if forloop.last %}disabled{% endif %} aria-label="Move {{ space.label }} down">↓</button></form></div></article>{% empty %}<div class="empty-state small-empty"><p>Choose the spaces that fit your life.</p><a href="{% url 'onboarding' %}">Personalize PAMOJA →</a></div>{% endfor %}</div></section>
-<section class="suggestion-card"><div class="row"><span class="suggestion-icon" aria-hidden="true">✳</span><span class="eyebrow">A LITTLE HELP FROM PAMOJA</span></div><h2>Leave a little<br>breathing room.</h2><p>Try choosing one task that matters most today. You can build the rest of your day around it.</p><span class="pill">Planning tip · not AI-generated</span></section></aside></div>{% endblock %}
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% translate "Your day" %} · PAMOJA
+{% endblock %}
+
+{% block content %}
+{% translate "friend" as fallback_name %}
+
+<section class="dashboard-head">
+    <div>
+        <span class="eyebrow">
+            {% translate "YOUR PERSONAL SPACE" %}
+            · {{ today|date:"l, M j" }}
+        </span>
+
+        <h1>
+            {{ greeting }},
+            <br>
+            <em>{{ user.first_name|default:fallback_name }}.</em>
+        </h1>
+
+        <p class="muted">
+            {% translate "Let’s make today count, together." %}
+        </p>
+    </div>
+
+    <div class="greeting-art" aria-hidden="true">✳</div>
+</section>
+
+<div class="dashboard-grid">
+    <div class="primary-column">
+        <section class="progress-card">
+            <div class="row">
+                <div>
+                    <span class="eyebrow light">
+                        {% translate "ONE STEP AT A TIME" %}
+                    </span>
+                    <h2>{% translate "Today’s progress" %}</h2>
+                </div>
+
+                <span class="progress-number">
+                    {{ done }}<small> / {{ total }}</small>
+                </span>
+            </div>
+
+            <div class="progress-track"
+                 role="progressbar"
+                 aria-label="{% translate "Today's task progress" %}"
+                 aria-valuenow="{{ progress }}"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+                <span class="progress-fill" data-progress="{{ progress|default:0 }}"></span>
+            </div>
+
+            <script>
+                document.querySelectorAll('.progress-fill[data-progress]').forEach(function (fill) {
+                    const progress = Number(fill.dataset.progress || 0);
+                    fill.style.width = progress + '%';
+                });
+            </script>
+
+            <p>
+                {% if total == 0 %}
+                    {% translate "A fresh page. What would you like to make time for?" %}
+                {% elif done == total %}
+                    {% translate "You did it. Take a moment to enjoy the small wins." %}
+                {% else %}
+                    {% translate "Every small step counts. You’re making room for what matters." %}
+                {% endif %}
+            </p>
+        </section>
+
+        {% if profile.reminders and overdue %}
+            <div class="reminder-banner">
+                <strong>
+                    {% blocktranslate count task_count=overdue %}{{ task_count }} unfinished task from earlier.{% plural %}{{ task_count }} unfinished tasks from earlier.{% endblocktranslate %}
+                </strong>
+
+                <a href="{% url 'planner' %}">
+                    {% translate "Review your planner" %} ↗
+                </a>
+            </div>
+        {% endif %}
+
+        <section class="tasks-section">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">
+                        {% translate "A LITTLE FOCUS" %}
+                    </span>
+                    <h2>
+                        {% translate "Today’s tasks" %}
+                        <span class="count">{{ total }}</span>
+                    </h2>
+                </div>
+
+                <a class="button compact" href="{% url 'task_add' %}">
+                    + {% translate "Add task" %}
+                </a>
+            </div>
+
+            <div class="task-list">
+                {% for task in tasks %}
+                    {% include "core/task_row.html" with origin="dashboard" %}
+                {% empty %}
+                    <div class="empty-state">
+                        <span aria-hidden="true">↗</span>
+
+                        <h3>{% translate "Your day starts here." %}</h3>
+
+                        <p>
+                            {% translate "Add your first task. A workout, an application, or just a little time for yourself." %}
+                        </p>
+
+                        <a href="{% url 'task_add' %}">
+                            {% translate "Make your first plan" %} →
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <a class="subtle-link" href="{% url 'planner' %}">
+                {% translate "Open my planner" %}
+                <span aria-hidden="true">↗</span>
+            </a>
+        </section>
+
+        {% include "core/upcoming_tasks.html" %}
+    </div>
+
+    <aside class="secondary-column">
+        <section>
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">
+                        {% translate "PERSONALIZED FOR YOU" %}
+                    </span>
+                    <h2>{% translate "Your Spaces" %}</h2>
+                </div>
+
+                <a class="text-link small" href="{% url 'onboarding' %}">
+                    {% translate "Edit" %} ↗
+                </a>
+            </div>
+
+            <div class="spaces">
+                {% for space in spaces %}
+                    {% translate space.label as translated_space_label %}
+
+                    <article class="space-card {{ space.key }}">
+                        <a href="{% url 'planner' %}?space={{ space.key }}">
+                            <span class="space-symbol" aria-hidden="true">
+                                {% if space.key == "fitness" %}
+                                    ↟
+                                {% elif space.key == "career" %}
+                                    ↗
+                                {% elif space.key == "education" %}
+                                    ▤
+                                {% elif space.key == "sports" %}
+                                    ◉
+                                {% else %}
+                                    ▦
+                                {% endif %}
+                            </span>
+
+                            <div>
+                                <h3>{{ translated_space_label }}</h3>
+
+                                <p>
+                                    {% if space.key == "fitness" %}
+                                        {% translate "Make time to move" %}
+                                    {% elif space.key == "career" %}
+                                        {% translate "Your next chapter" %}
+                                    {% elif space.key == "education" %}
+                                        {% translate "Keep learning" %}
+                                    {% elif space.key == "sports" %}
+                                        {% translate "Stay in the game" %}
+                                    {% else %}
+                                        {% translate "Find your daily rhythm" %}
+                                    {% endif %}
+                                </p>
+                            </div>
+
+                            <span aria-hidden="true">↗</span>
+                        </a>
+
+                        <div class="space-reorder">
+                            <form method="post"
+                                  action="{% url 'move_space' space.key %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="direction" value="up">
+
+                                <button type="submit"
+                                        {% if forloop.first %}disabled{% endif %}
+                                        aria-label="{% blocktranslate with name=translated_space_label %}Move {{ name }} up{% endblocktranslate %}">
+                                    ↑
+                                </button>
+                            </form>
+
+                            <form method="post"
+                                  action="{% url 'move_space' space.key %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="direction" value="down">
+
+                                <button type="submit"
+                                        {% if forloop.last %}disabled{% endif %}
+                                        aria-label="{% blocktranslate with name=translated_space_label %}Move {{ name }} down{% endblocktranslate %}">
+                                    ↓
+                                </button>
+                            </form>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty-state small-empty">
+                        <p>
+                            {% translate "Choose the spaces that fit your life." %}
+                        </p>
+                        <a href="{% url 'onboarding' %}">
+                            {% translate "Personalize PAMOJA" %} →
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="suggestion-card">
+            <div class="row">
+                <span class="suggestion-icon" aria-hidden="true">✳</span>
+                <span class="eyebrow">
+                    {% translate "A LITTLE HELP FROM PAMOJA" %}
+                </span>
+            </div>
+
+            <h2>{% translate "Leave a little breathing room." %}</h2>
+
+            <p>
+                {% translate "Try choosing one task that matters most today. You can build the rest of your day around it." %}
+            </p>
+
+            <span class="pill">
+                {% translate "Planning tip · not AI-generated" %}
+            </span>
+        </section>
+    </aside>
+</div>
+{% endblock %}

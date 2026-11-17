@@ -1,17 +1,64 @@
-{% if form.non_field_errors %}<div class="form-error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
-{% for field in form %}
-{% if field.name == 'due_time' %}
-<fieldset class="field time-field{% if field.errors %} invalid{% endif %}">
-  <legend>{{ field.label }}</legend>{{ field }}
-  {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
-  {% if field.errors %}<div class="form-error" role="alert">{{ field.errors }}</div>{% endif %}
-</fieldset>
-{% else %}
-<div class="field{% if field.errors %} invalid{% endif %}">
-  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-  <div class="field-input">{{ field }}{% if field.field.widget.input_type == 'password' %}<button type="button" class="password-toggle" data-password="{{ field.id_for_label }}" aria-label="Show {{ field.label|lower }}" aria-pressed="false">Show</button>{% endif %}</div>
-  {% if field.help_text %}<div class="help">{{ field.help_text|safe }}</div>{% endif %}
-  {% if field.errors %}<div class="form-error" role="alert">{{ field.errors }}</div>{% endif %}
-</div>
+{% load i18n %}
+
+{% if form.non_field_errors %}
+    <div class="form-error" role="alert">
+        {{ form.non_field_errors }}
+    </div>
 {% endif %}
+
+{% for field in form %}
+    {% if field.name == "due_time" %}
+        <fieldset class="field time-field{% if field.errors %} invalid{% endif %}">
+            <legend>{{ field.label }}</legend>
+
+            {{ field }}
+
+            {% if field.help_text %}
+                <div class="help">{{ field.help_text }}</div>
+            {% endif %}
+
+            {% if field.errors %}
+                <div class="form-error" role="alert">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        </fieldset>
+    {% else %}
+        <div class="field{% if field.errors %} invalid{% endif %}">
+            <label for="{{ field.id_for_label }}">
+                {{ field.label }}
+            </label>
+
+            <div class="field-input">
+                {{ field }}
+
+                {% if field.field.widget.input_type == "password" %}
+                    {% blocktranslate with label=field.label|lower asvar show_label %}Show {{ label }}{% endblocktranslate %}
+                    {% blocktranslate with label=field.label|lower asvar hide_label %}Hide {{ label }}{% endblocktranslate %}
+
+                    <button type="button"
+                            class="password-toggle"
+                            data-password="{{ field.id_for_label }}"
+                            data-show-text="{% translate 'Show' %}"
+                            data-hide-text="{% translate 'Hide' %}"
+                            data-show-aria="{{ show_label }}"
+                            data-hide-aria="{{ hide_label }}"
+                            aria-label="{{ show_label }}"
+                            aria-pressed="false">
+                        {% translate "Show" %}
+                    </button>
+                {% endif %}
+            </div>
+
+            {% if field.help_text %}
+                <div class="help">{{ field.help_text|safe }}</div>
+            {% endif %}
+
+            {% if field.errors %}
+                <div class="form-error" role="alert">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endfor %}

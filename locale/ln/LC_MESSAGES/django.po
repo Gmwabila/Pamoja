@@ -1,0 +1,982 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PAMOJA\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-17 05:31+0000\n"
+"PO-Revision-Date: 2026-11-17 00:00+0000\n"
+"Last-Translator: PAMOJA translation draft\n"
+"Language-Team: ln\n"
+"Language: ln\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: core/forms.py:16 core/models.py:8
+msgid "Daily Planning"
+msgstr "Kobongisa mokolo"
+
+#: core/forms.py:17 core/models.py:9
+msgid "Career & Jobs"
+msgstr "Mosala mpe koluka mosala"
+
+#: core/forms.py:18 core/models.py:10
+msgid "Fitness"
+msgstr "Kobatela nzoto"
+
+#: core/forms.py:19 core/models.py:11
+msgid "Education"
+msgstr "Boyekoli"
+
+#: core/forms.py:20 core/models.py:12
+msgid "Sports"
+msgstr "Masano"
+
+#: core/forms.py:24 core/models.py:79
+msgid "Normal"
+msgstr "Ya momeseno"
+
+#: core/forms.py:25 core/models.py:80
+msgid "High"
+msgstr "Ya ntina mingi"
+
+#: core/forms.py:32
+msgid "What should we call you?"
+msgstr "Tobenga yo nani?"
+
+#: core/forms.py:44 core/forms.py:62
+msgid "Email"
+msgstr "Adresi ya email"
+
+#: core/forms.py:53
+msgid "An account with this email already exists. Try logging in."
+msgstr "Konti oyo esalelaka adresi oyo ya email ezali deja. Meka kokota."
+
+#: core/forms.py:70
+msgid "Your spaces"
+msgstr "Biteni na yo"
+
+#: core/forms.py:77
+msgid "Timezone"
+msgstr "Etando ya ngonga"
+
+#: core/forms.py:85 core/templates/core/base.html:98
+#: core/templates/core/profile.html:42
+msgid "Language"
+msgstr "Lokota"
+
+#: core/forms.py:88
+msgid "Choose the language you prefer for PAMOJA."
+msgstr "Pona lokota oyo olingi kosalela na PAMOJA."
+
+#: core/forms.py:101
+msgid "Your goal"
+msgstr "Mokano na yo"
+
+#: core/forms.py:102
+msgid "Reminders"
+msgstr "Makundoli"
+
+#: core/forms.py:108
+msgid "One thing you would like to make time for…"
+msgstr "Eloko moko oyo olingi kozwa ntango mpo na yango…"
+
+#: core/forms.py:131 core/templates/core/planner.html:31
+msgid "Space"
+msgstr "Eteni"
+
+#: core/forms.py:136 core/templates/core/task_row.html:36
+#: core/templates/core/upcoming_tasks.html:55
+msgid "Priority"
+msgstr "Ntina"
+
+#: core/forms.py:140
+msgid "Due time"
+msgstr "Ngonga ya kosilisa"
+
+#: core/forms.py:152
+msgid "Task"
+msgstr "Mosala ya kosala"
+
+#: core/forms.py:153
+msgid "Due date"
+msgstr "Mokolo ya kosilisa"
+
+#: core/forms.py:162
+msgid "What would you like to get done?"
+msgstr "Olingi kosala nini?"
+
+#: core/models.py:98
+msgid "Suggestion"
+msgstr "Likanisi"
+
+#: core/models.py:99
+msgid "Bug report"
+msgstr "Koyebisa mokakatano"
+
+#: core/models.py:100
+msgid "Feature request"
+msgstr "Kosenga likambo ya sika"
+
+#: core/models.py:104
+msgid "New"
+msgstr "Ya sika"
+
+#: core/models.py:105
+msgid "Reviewed"
+msgstr "Etalami"
+
+#: core/models.py:106
+msgid "Resolved"
+msgstr "Esilisami"
+
+#: core/owner_tools.py:59
+msgid "Feedback type"
+msgstr "Lolenge ya makanisi"
+
+#: core/owner_tools.py:60
+msgid "Subject"
+msgstr "Likambo"
+
+#: core/owner_tools.py:61
+#| msgid "Share feedback"
+msgid "Your feedback"
+msgstr "Makanisi na yo"
+
+#: core/owner_tools.py:102
+msgid "You can send up to five submissions per hour. Please try again later."
+msgstr ""
+"Okoki kotinda kaka bansango mitano na ngonga moko. Meka lisusu na nsima."
+
+#: core/owner_tools.py:113
+msgid "Thank you! Your feedback has been sent."
+msgstr "Matondi! Makanisi na yo etindami."
+
+#: core/templates/core/base.html:60
+msgid "Skip to content"
+msgstr "Kende na makambo ya lokasa"
+
+#: core/templates/core/base.html:77
+msgid "Your profile"
+msgstr "Profil na yo"
+
+#: core/templates/core/base.html:82 core/templates/registration/signup.html:58
+msgid "Log in"
+msgstr "Kota"
+
+#: core/templates/core/base.html:111
+msgid "Apply"
+msgstr "Salela"
+
+#: core/templates/core/base.html:129
+msgid "Share feedback"
+msgstr "Pesa makanisi"
+
+#: core/templates/core/base.html:133 core/templates/core/feedback.html:50
+msgid "My feedback & replies"
+msgstr "Makanisi na ngai mpe biyano"
+
+#: core/templates/core/base.html:140
+msgid "Main navigation"
+msgstr "Menu ya monene"
+
+#: core/templates/core/base.html:144
+msgid "Home"
+msgstr "Lokasa ya ebandeli"
+
+#: core/templates/core/base.html:150
+msgid "AI Chat"
+msgstr "Lisolo na AI"
+
+#: core/templates/core/base.html:156
+msgid "Planner"
+msgstr "Manaka"
+
+#: core/templates/core/base.html:162
+msgid "Profile"
+msgstr "Profil"
+
+#: core/templates/core/chat.html:5
+msgid "Your assistant"
+msgstr "Mosungi na yo"
+
+#: core/templates/core/chat.html:11
+msgid "TOGETHER, EVERY STEP"
+msgstr "ELONGO, NA LITAMBE NYONSO"
+
+#: core/templates/core/chat.html:17
+msgid "A little help.<br>A clearer next step."
+msgstr "Mwa lisalisi.<br>Litambe oyo elandi ekomi polele."
+
+#: core/templates/core/chat.html:21
+msgid "Your personal assistant will live here."
+msgstr "Mosungi na yo moko akozala awa."
+
+#: core/templates/core/chat.html:26
+msgid "We’re building the foundation first."
+msgstr "Tozali naino kotonga moboko."
+
+#: core/templates/core/chat.html:30
+msgid ""
+"Live AI chat is not connected in this milestone. Your accounts, preferences,"
+" and planner already work. Next, we’ll connect an AI service that can "
+"suggest plans using the information you allow."
+msgstr ""
+"Lisolo ya mbala moko na AI ekangisami naino te na etape oyo. Bakonti, maponi"
+" mpe manaka na yo ezali deja kosala. Na nsima, tokokangisa lisalisi ya AI "
+"oyo ekoki kopesa makanisi ya manaka na kosalela makambo oyo opesi nzela."
+
+#: core/templates/core/chat.html:34
+msgid "You’ll review task changes before saving them."
+msgstr "Okotala mbongwana ya misala liboso ya kobomba yango."
+
+#: core/templates/core/chat.html:39 core/templates/core/task_form.html:5
+#| msgid "Make your first plan"
+msgid "Make a plan"
+msgstr "Bongisa manaka"
+
+#: core/templates/core/dashboard.html:5 core/tests/test_languages.py:211
+msgid "Your day"
+msgstr "Mokolo na yo"
+
+#: core/templates/core/dashboard.html:9
+msgid "friend"
+msgstr "moninga"
+
+#: core/templates/core/dashboard.html:14
+#: core/templates/registration/login.html:12
+msgid "YOUR PERSONAL SPACE"
+msgstr "ESIKA NA YO MOKO"
+
+#: core/templates/core/dashboard.html:25
+msgid "Let’s make today count, together."
+msgstr "Tosala ete mokolo ya lelo ezala na ntina, elongo."
+
+#: core/templates/core/dashboard.html:38
+msgid "ONE STEP AT A TIME"
+msgstr "LITAMBE MOKO NA MOKO"
+
+#: core/templates/core/dashboard.html:40
+msgid "Today’s progress"
+msgstr "Bokoli ya lelo"
+
+#: core/templates/core/dashboard.html:50
+msgid "Today's task progress"
+msgstr "Bokoli ya misala ya lelo"
+
+#: core/templates/core/dashboard.html:66
+msgid "A fresh page. What would you like to make time for?"
+msgstr "Lokasa ya sika. Olingi kozwa ntango mpo na nini?"
+
+#: core/templates/core/dashboard.html:68
+msgid "You did it. Take a moment to enjoy the small wins."
+msgstr "Olongi! Zwá mwa ntango mpo na kosepela na bolongi ya mike."
+
+#: core/templates/core/dashboard.html:70
+msgid "Every small step counts. You’re making room for what matters."
+msgstr ""
+"Litambe nyonso ya moke ezali na ntina. Ozali kopesa esika na makambo ya "
+"ntina."
+
+#: core/templates/core/dashboard.html:78
+#, python-format
+msgid "%(task_count)s unfinished task from earlier."
+msgid_plural "%(task_count)s unfinished tasks from earlier."
+msgstr[0] "Mosala %(task_count)s ya mikolo eleki esili naino te."
+msgstr[1] "Misala %(task_count)s ya mikolo eleki esili naino te."
+
+#: core/templates/core/dashboard.html:82
+msgid "Review your planner"
+msgstr "Tala manaka na yo"
+
+#: core/templates/core/dashboard.html:91
+msgid "A LITTLE FOCUS"
+msgstr "TYA MWA LIKEBI"
+
+#: core/templates/core/dashboard.html:94
+msgid "Today’s tasks"
+msgstr "Misala ya lelo"
+
+#: core/templates/core/dashboard.html:100 core/templates/core/planner.html:23
+msgid "Add task"
+msgstr "Bakisa mosala"
+
+#: core/templates/core/dashboard.html:111
+msgid "Your day starts here."
+msgstr "Mokolo na yo ebandi awa."
+
+#: core/templates/core/dashboard.html:114
+msgid ""
+"Add your first task. A workout, an application, or just a little time for "
+"yourself."
+msgstr ""
+"Bakisa mosala na yo ya liboso. Kosala ngalasisi, kotinda mokanda ya koluka "
+"mosala, to kozwa kaka mwa ntango mpo na yo moko."
+
+#: core/templates/core/dashboard.html:118
+msgid "Make your first plan"
+msgstr "Bongisa manaka na yo ya liboso"
+
+#: core/templates/core/dashboard.html:125
+msgid "Open my planner"
+msgstr "Fungola manaka na ngai"
+
+#: core/templates/core/dashboard.html:138
+msgid "PERSONALIZED FOR YOU"
+msgstr "EBONGISAMI MPO NA YO"
+
+#: core/templates/core/dashboard.html:140
+msgid "Your Spaces"
+msgstr "Biteni na yo"
+
+#: core/templates/core/dashboard.html:144
+msgid "Edit"
+msgstr "Bongola"
+
+#: core/templates/core/dashboard.html:173
+msgid "Make time to move"
+msgstr "Zwá ntango ya koningisa nzoto"
+
+#: core/templates/core/dashboard.html:175
+msgid "Your next chapter"
+msgstr "Etape na yo ya sika"
+
+#: core/templates/core/dashboard.html:177
+msgid "Keep learning"
+msgstr "Koba koyekola"
+
+#: core/templates/core/dashboard.html:179
+msgid "Stay in the game"
+msgstr "Koba kosakana"
+
+#: core/templates/core/dashboard.html:181
+msgid "Find your daily rhythm"
+msgstr "Luka ndenge ya kobongisa mokolo na yo"
+
+#: core/templates/core/dashboard.html:197
+#, python-format
+msgid "Move %(name)s up"
+msgstr "Matisa %(name)s"
+
+#: core/templates/core/dashboard.html:209
+#, python-format
+msgid "Move %(name)s down"
+msgstr "Kitisa %(name)s"
+
+#: core/templates/core/dashboard.html:218 core/templates/core/welcome.html:82
+msgid "Choose the spaces that fit your life."
+msgstr "Pona biteni oyo eyokani na bomoi na yo."
+
+#: core/templates/core/dashboard.html:221
+msgid "Personalize PAMOJA"
+msgstr "Bongisa PAMOJA ndenge olingi"
+
+#: core/templates/core/dashboard.html:232
+msgid "A LITTLE HELP FROM PAMOJA"
+msgstr "MWA LISALISI YA PAMOJA"
+
+#: core/templates/core/dashboard.html:236
+msgid "Leave a little breathing room."
+msgstr "Tiká mwa ntango mpo na kopema."
+
+#: core/templates/core/dashboard.html:239
+msgid ""
+"Try choosing one task that matters most today. You can build the rest of "
+"your day around it."
+msgstr ""
+"Meka kopona mosala moko oyo eleki ntina lelo. Okoki kobongisa misala mosusu "
+"ya mokolo na yo na kolanda yango."
+
+#: core/templates/core/dashboard.html:243
+msgid "Planning tip · not AI-generated"
+msgstr "Toli ya kobongisa manaka · esalemi na AI te"
+
+#: core/templates/core/feedback.html:5
+#| msgid "Share feedback"
+msgid "Feedback"
+msgstr "Makanisi"
+
+#: core/templates/core/feedback.html:12
+#| msgid "A LITTLE HELP FROM PAMOJA"
+msgid "HELP IMPROVE PAMOJA"
+msgstr "SALISA MPO NA KOBONGISA PAMOJA"
+
+#: core/templates/core/feedback.html:15
+#| msgid "Share feedback"
+msgid "Share your feedback"
+msgstr "Pesa makanisi na yo"
+
+#: core/templates/core/feedback.html:18
+msgid "Suggest an improvement, report a bug, or request a feature."
+msgstr ""
+"Pesa likanisi ya kobongisa, yebisa mokakatano, to senga likambo ya sika."
+
+#: core/templates/core/feedback.html:24
+msgid "Your message and account name will be visible to PAMOJA’s owner."
+msgstr "Nkolo ya PAMOJA akomona nsango na yo mpe nkombo ya konti na yo."
+
+#: core/templates/core/feedback.html:28
+msgid ""
+"Please avoid including passwords, financial details, or other sensitive "
+"information."
+msgstr ""
+"Kotya te maloba ya kobombana, makambo ya mbongo to makambo mosusu ya sekele."
+
+#: core/templates/core/feedback.html:36
+#| msgid "Share feedback"
+msgid "Send feedback"
+msgstr "Tinda makanisi"
+
+#: core/templates/core/feedback.html:43
+#| msgid "Profile"
+msgid "Back to Profile"
+msgstr "Zonga na profil"
+
+#: core/templates/core/form_fields.html:36
+#, python-format
+msgid "Show %(label)s"
+msgstr "Lakisa %(label)s"
+
+#: core/templates/core/form_fields.html:37
+#, python-format
+msgid "Hide %(label)s"
+msgstr "Bomba %(label)s"
+
+#: core/templates/core/form_fields.html:42
+#: core/templates/core/form_fields.html:48
+msgid "Show"
+msgstr "Lakisa"
+
+#: core/templates/core/form_fields.html:43
+msgid "Hide"
+msgstr "Bomba"
+
+#: core/templates/core/my_feedback.html:5
+#: core/templates/core/my_feedback.html:15
+#| msgid "Share feedback"
+msgid "My feedback"
+msgstr "Makanisi na ngai"
+
+#: core/templates/core/my_feedback.html:12
+msgid "HELP & FEEDBACK"
+msgstr "LISALISI MPE MAKANISI"
+
+#: core/templates/core/my_feedback.html:18
+msgid "Your submissions and responses from the PAMOJA Team."
+msgstr "Bansango oyo otindi mpe biyano ya Ekipi ya PAMOJA."
+
+#: core/templates/core/my_feedback.html:22
+#| msgid "Share feedback"
+msgid "Send new feedback"
+msgstr "Tinda makanisi ya sika"
+
+#: core/templates/core/my_feedback.html:36
+#, python-format
+msgid "Submitted %(submitted_at)s"
+msgstr "Etindami %(submitted_at)s"
+
+#: core/templates/core/my_feedback.html:41
+msgid "Responses"
+msgstr "Biyano"
+
+#: core/templates/core/my_feedback.html:45
+msgid "PAMOJA Team"
+msgstr "Ekipi ya PAMOJA"
+
+#: core/templates/core/my_feedback.html:55
+msgid "No response yet. Thank you for sharing your feedback."
+msgstr "Eyano ezali naino te. Matondi mpo na makanisi na yo."
+
+#: core/templates/core/my_feedback.html:62
+msgid "You haven't submitted any feedback yet."
+msgstr "Otindi naino makanisi moko te."
+
+#: core/templates/core/my_feedback.html:68
+#| msgid "My feedback & replies"
+msgid "Feedback pages"
+msgstr "Nkasa ya makanisi"
+
+#: core/templates/core/my_feedback.html:72
+msgid "Previous"
+msgstr "Ya liboso"
+
+#: core/templates/core/my_feedback.html:77
+#, python-format
+msgid "Page %(page_number)s of %(page_count)s"
+msgstr "Lokasa %(page_number)s kati na %(page_count)s"
+
+#: core/templates/core/my_feedback.html:82
+msgid "Next"
+msgstr "Ya nsima"
+
+#: core/templates/core/onboarding.html:5
+msgid "Make it yours"
+msgstr "Bongisa yango ndenge olingi"
+
+#: core/templates/core/onboarding.html:12
+msgid "YOUR PREFERENCES"
+msgstr "MAPONI NA YO"
+
+#: core/templates/core/onboarding.html:14
+msgid "A LITTLE ABOUT YOU"
+msgstr "MWA MAKAMBO MPO NA YO"
+
+#: core/templates/core/onboarding.html:19
+msgid "Life is personal."
+msgstr "Bomoi na yo ezali ya yo moko."
+
+#: core/templates/core/onboarding.html:21
+msgid "Your space should be, too."
+msgstr "Esika na yo esengeli mpe kozala bongo."
+
+#: core/templates/core/onboarding.html:25
+msgid "Choose what matters to you. You can always change things later."
+msgstr ""
+"Pona makambo oyo ezali na ntina mpo na yo. Okoki kobongola yango na nsima."
+
+#: core/templates/core/onboarding.html:33
+msgid "What would you like a hand with?"
+msgstr "Olingi lisalisi na makambo nini?"
+
+#: core/templates/core/onboarding.html:37
+msgid "Choose any combination, or start with an empty dashboard."
+msgstr ""
+"Pona biteni oyo olingi, to banda na lokasa oyo ezali naino na eloko te."
+
+#: core/templates/core/onboarding.html:56
+msgid "A goal on your mind"
+msgstr "Mokano oyo ozali kokanisa"
+
+#: core/templates/core/onboarding.html:58
+msgid "optional"
+msgstr "esengeli te"
+
+#: core/templates/core/onboarding.html:94
+msgid "Show due-task reminders"
+msgstr "Lakisa makundoli ya misala oyo esengeli kosilisa"
+
+#: core/templates/core/onboarding.html:97
+msgid "In-app reminders when you open PAMOJA. Push alerts come later."
+msgstr ""
+"Makundoli ekomonana ntango ofungoli PAMOJA. Mayebisi oyo ekoyaka ata ntango "
+"okangi yango ekoya na nsima."
+
+#: core/templates/core/onboarding.html:106
+msgid "Save my preferences"
+msgstr "Bomba maponi na ngai"
+
+#: core/templates/core/onboarding.html:108
+msgid "Make PAMOJA mine"
+msgstr "Bongisa PAMOJA mpo na ngai"
+
+#: core/templates/core/planner.html:5
+#| msgid "Review your planner"
+msgid "Your planner"
+msgstr "Manaka na yo"
+
+#: core/templates/core/planner.html:11
+msgid "ROOM FOR WHAT MATTERS"
+msgstr "ESIKA MPO NA MAKAMBO YA NTINA"
+
+#: core/templates/core/planner.html:16
+#| msgid "Review your planner"
+msgid "Your planner."
+msgstr "Manaka na yo."
+
+#: core/templates/core/planner.html:18
+#| msgid "A little room ahead."
+msgid "A little structure for the days ahead."
+msgstr "Mwa ebongiseli mpo na mikolo ezali koya."
+
+#: core/templates/core/planner.html:36
+#| msgid "Your spaces"
+msgid "All spaces"
+msgstr "Biteni nyonso"
+
+#: core/templates/core/planner.html:53
+msgid "Include completed"
+msgstr "Lakisa mpe misala oyo esili"
+
+#: core/templates/core/planner.html:57
+msgid "Filter"
+msgstr "Pona oyo ekomonana"
+
+#: core/templates/core/planner.html:68
+#| msgid "A little room ahead."
+msgid "A little room to begin."
+msgstr "Mwa esika mpo na kobanda."
+
+#: core/templates/core/planner.html:71
+msgid "No tasks in this view. Add a task or change your filters."
+msgstr "Mosala ezali te na lokasa oyo. Bakisa mosala to bongola maponi na yo."
+
+#: core/templates/core/planner.html:75
+#: core/templates/core/upcoming_tasks.html:76
+msgid "Plan something"
+msgstr "Bongisa likambo moko"
+
+#: core/templates/core/planner.html:82
+msgid ""
+"Dates and times use your saved time zone. In-app reminders appear on Home "
+"for overdue tasks when enabled."
+msgstr ""
+"Mikolo mpe bangonga esalelaka etando ya ngonga oyo obombi. Soki ofungoli "
+"makundoli, misala oyo eleki mokolo ekomonana na lokasa ya ebandeli."
+
+#: core/templates/core/profile.html:5
+#| msgid "Your spaces"
+msgid "Your space"
+msgstr "Esika na yo"
+
+#: core/templates/core/profile.html:9
+msgid "Your next goal is yours to choose."
+msgstr "Yo moko okopona mokano na yo oyo elandi."
+
+#: core/templates/core/profile.html:13
+msgid "MAKE YOURSELF AT HOME"
+msgstr "ZALA LOKOLA NA NDAKO NA YO"
+
+#: core/templates/core/profile.html:16
+#| msgid "Your spaces"
+msgid "Your space."
+msgstr "Esika na yo."
+
+#: core/templates/core/profile.html:31
+msgid "Preferences & spaces"
+msgstr "Maponi mpe biteni"
+
+#: core/templates/core/profile.html:34
+msgid "Your interests, goal, language, time zone, and reminders"
+msgstr "Makambo oyo olingaka, mokano, lokota, etando ya ngonga mpe makundoli"
+
+#: core/templates/core/profile.html:49
+msgid "Current time zone"
+msgstr "Etando ya ngonga ya sikoyo"
+
+#: core/templates/core/profile.html:56
+#| msgid "Your goal"
+msgid "My goal"
+msgstr "Mokano na ngai"
+
+#: core/templates/core/profile.html:63
+msgid "About PAMOJA"
+msgstr "Makambo ya PAMOJA"
+
+#: core/templates/core/profile.html:65
+msgid "Pamoja means together in Swahili. Built around the way you live."
+msgstr "Pamoja elakisi elongo na Kiswahili. Esalemi na kolanda bomoi na yo."
+
+#: core/templates/core/profile.html:72
+#| msgid "A little room ahead."
+msgid "A little closer to home."
+msgstr "PAMOJA pene na yo."
+
+#: core/templates/core/profile.html:74
+msgid "Open PAMOJA in Safari, tap Share, and choose Add to Home Screen."
+msgstr "Fungola PAMOJA na Safari, finá Share, mpe pona Add to Home Screen."
+
+#: core/templates/core/profile.html:81
+#| msgid "Log in"
+msgid "Log out"
+msgstr "Bima"
+
+#: core/templates/core/task_form.html:11
+#| msgid "Open my planner"
+msgid "Back to planner"
+msgstr "Zonga na manaka"
+
+#: core/templates/core/task_form.html:15
+msgid "SMALL STEPS, REAL PROGRESS"
+msgstr "MATAMBE YA MIKE, BOKOLI YA SOLO"
+
+#: core/templates/core/task_form.html:20
+#| msgid "A little room ahead."
+msgid "A little adjustment."
+msgstr "Mwa mbongwana."
+
+#: core/templates/core/task_form.html:22
+msgid "What’s your next step?"
+msgstr "Litambe na yo oyo elandi ezali nini?"
+
+#: core/templates/core/task_form.html:27
+msgid "Make a little space for something that matters."
+msgstr "Pesa mwa esika na likambo moko ya ntina."
+
+#: core/templates/core/task_form.html:35
+msgid "Save task"
+msgstr "Bomba mosala"
+
+#: core/templates/core/task_form.html:44
+msgid "Delete this task? This cannot be undone."
+msgstr "Olingi kolongola mosala oyo? Okoki kozongisa yango te."
+
+#: core/templates/core/task_form.html:48
+msgid "Delete task"
+msgstr "Longola mosala"
+
+#: core/templates/core/task_row.html:11
+#, python-format
+msgid "Mark incomplete: %(title)s"
+msgstr "Lakisa ete esili naino te: %(title)s"
+
+#: core/templates/core/task_row.html:11
+#, python-format
+msgid "Complete: %(title)s"
+msgstr "Silisa: %(title)s"
+
+#: core/templates/core/upcoming_tasks.html:7
+msgid "A LITTLE LOOK AHEAD · NEXT 7 DAYS"
+msgstr "TALA OYO EZALI KOYA · MIKOLO 7 EKOLANDA"
+
+#: core/templates/core/upcoming_tasks.html:11
+msgid "Upcoming tasks"
+msgstr "Misala oyo ezali koya"
+
+#: core/templates/core/upcoming_tasks.html:17
+msgid "View all"
+msgstr "Tala nyonso"
+
+#: core/templates/core/upcoming_tasks.html:41
+msgid "Tomorrow"
+msgstr "Lobi"
+
+#: core/templates/core/upcoming_tasks.html:63
+#, python-format
+msgid "Edit %(title)s"
+msgstr "Bongola %(title)s"
+
+#: core/templates/core/upcoming_tasks.html:69
+msgid "A little room ahead."
+msgstr "Mwa ntango ya kopema ezali koya."
+
+#: core/templates/core/upcoming_tasks.html:72
+msgid "No unfinished tasks scheduled for the next seven days."
+msgstr ""
+"Mosala moko te oyo esili naino te ebongisami mpo na mikolo nsambo ekolanda."
+
+#: core/templates/core/upcoming_tasks.html:84
+#, python-format
+msgid "See all %(task_count)s upcoming task"
+msgid_plural "See all %(task_count)s upcoming tasks"
+msgstr[0] "Tala mosala %(task_count)s oyo ezali koya"
+msgstr[1] "Tala misala nyonso %(task_count)s oyo ezali koya"
+
+#: core/templates/core/welcome.html:8
+msgid "YOUR LIFE, A LITTLE MORE TOGETHER"
+msgstr "BOMOI NA YO, NA BOYOKANI MINGI"
+
+#: core/templates/core/welcome.html:12
+msgid "Big plans.<br>Small steps.<br><em>Together.</em>"
+msgstr "Mikano minene.<br>Matambe ya mike.<br><em>Elongo.</em>"
+
+#: core/templates/core/welcome.html:16
+msgid ""
+"A little clarity for your everyday. Make room for your goals, organize what "
+"matters, and find your next step with PAMOJA."
+msgstr ""
+"Mwa polele mpo na mokolo na mokolo. Pesa esika na mikano na yo, bongisa "
+"makambo ya ntina, mpe luka litambe na yo oyo elandi na PAMOJA."
+
+#: core/templates/core/welcome.html:20
+#| msgid "Find your daily rhythm"
+msgid "Find your rhythm"
+msgstr "Luka ndenge na yo ya kotambola"
+
+#: core/templates/core/welcome.html:25
+msgid "Your own space. Your own pace."
+msgstr "Esika na yo moko. Na mbangu na yo moko."
+
+#: core/templates/core/welcome.html:34
+msgid "together."
+msgstr "elongo."
+
+#: core/templates/core/welcome.html:39
+#| msgid "Make time to move"
+msgid "Make time for you"
+msgstr "Zwá ntango mpo na yo moko"
+
+#: core/templates/core/welcome.html:44
+msgid "One step forward"
+msgstr "Litambe moko liboso"
+
+#: core/templates/core/welcome.html:48
+msgid "A little structure.<br>A lot of possibility."
+msgstr "Mwa ebongiseli.<br>Makoki mingi."
+
+#: core/templates/core/welcome.html:56
+msgid "ROOTED IN TOGETHERNESS"
+msgstr "MOBOKO NA BISO EZALI BOMOKO"
+
+#: core/templates/core/welcome.html:59
+msgid "A space that feels like yours."
+msgstr "Esika oyo ezali lokola ya yo moko."
+
+#: core/templates/core/welcome.html:62
+msgid ""
+"In Swahili, <strong>pamoja</strong> means <strong>together</strong>. That’s "
+"the idea behind everything we’re building."
+msgstr ""
+"Na Kiswahili, <strong>pamoja</strong> elakisi <strong>elongo</strong>. Yango"
+" ezali likanisi oyo ezali kotambwisa nyonso oyo tozali kotonga."
+
+#: core/templates/core/welcome.html:70
+msgid "See what matters"
+msgstr "Tala makambo ya ntina"
+
+#: core/templates/core/welcome.html:72
+msgid "Your day, your priorities, one clear view."
+msgstr "Mokolo na yo mpe makambo ya liboso, nyonso na esika moko ya polele."
+
+#: core/templates/core/welcome.html:80
+#| msgid "Life is personal."
+msgid "Make it personal"
+msgstr "Bongisa yango ndenge olingi"
+
+#: core/templates/core/welcome.html:90
+msgid "Keep moving forward"
+msgstr "Koba kokende liboso"
+
+#: core/templates/core/welcome.html:92
+msgid "Track small wins that add up over time."
+msgstr "Landa bolongi ya mike oyo ezali kobakisama na ntango."
+
+#: core/templates/core/welcome.html:100
+msgid ""
+"Early development build · Planning and accounts work now. Live AI is a "
+"future milestone."
+msgstr ""
+"Version oyo ezali naino kotongama · Manaka mpe bakonti ezali deja kosala. AI"
+" ya mbala moko ekoya na nsima."
+
+#: core/templates/registration/login.html:5
+msgid "Welcome back"
+msgstr "Boyei malamu lisusu"
+
+#: core/templates/registration/login.html:16
+msgid "A little more<br><em>together.</em>"
+msgstr "Mwa mingi lisusu<br><em>elongo.</em>"
+
+#: core/templates/registration/login.html:20
+msgid "Pick up where you left off. Your plans will be right here."
+msgstr "Koba esika otikaki. Manaka na yo ekozala kaka awa."
+
+#: core/templates/registration/login.html:25
+msgid "One step at a time."
+msgstr "Litambe moko na moko."
+
+#: core/templates/registration/login.html:30
+msgid "GOOD TO SEE YOU"
+msgstr "TOSEPELI KOMONA YO"
+
+#: core/templates/registration/login.html:33
+msgid "Welcome back."
+msgstr "Boyei malamu lisusu."
+
+#: core/templates/registration/login.html:36
+msgid "Log in to your PAMOJA account."
+msgstr "Kota na konti na yo ya PAMOJA."
+
+#: core/templates/registration/login.html:47
+msgid "Let’s continue"
+msgstr "Tokoba"
+
+#: core/templates/registration/login.html:53
+msgid "New here?"
+msgstr "Ozali ya sika awa?"
+
+#: core/templates/registration/login.html:55
+msgid "Create an account"
+msgstr "Fungola konti"
+
+#: core/templates/registration/signup.html:5
+msgid "Create your account"
+msgstr "Fungola konti na yo"
+
+#: core/templates/registration/signup.html:12
+msgid "A FRESH START"
+msgstr "EBANDELI YA SIKA"
+
+#: core/templates/registration/signup.html:16
+msgid "Your next chapter<br>starts <em>here.</em>"
+msgstr "Etape na yo ya sika<br>ebandi <em>awa.</em>"
+
+#: core/templates/registration/signup.html:20
+msgid ""
+"You bring the goals. We’ll build a little space to bring them together."
+msgstr "Yo oyei na mikano. Biso tokotonga mwa esika mpo na kosangisa yango."
+
+#: core/templates/registration/signup.html:26
+msgid "Together, every step of the way."
+msgstr "Elongo, na litambe nyonso."
+
+#: core/templates/registration/signup.html:32
+msgid "WELCOME TO PAMOJA"
+msgstr "BOYEI MALAMU NA PAMOJA"
+
+#: core/templates/registration/signup.html:35
+#| msgid "Let’s make today count, together."
+msgid "Let’s get you settled."
+msgstr "Tobongisa esika na yo."
+
+#: core/templates/registration/signup.html:38
+msgid "Create your personal account."
+msgstr "Fungola konti na yo moko."
+
+#: core/templates/registration/signup.html:46
+msgid "Create my account"
+msgstr "Fungola konti na ngai"
+
+#: core/templates/registration/signup.html:52
+msgid "Email verification and password recovery are not available yet."
+msgstr ""
+"Kondimisa adresi ya email mpe kozongisa liloba ya kobombana ezali naino te."
+
+#: core/templates/registration/signup.html:56
+msgid "Already have an account?"
+msgstr "Ozali deja na konti?"
+
+#: core/time_fields.py:7 core/time_fields.py:59
+msgid "Hour"
+msgstr "Ngonga"
+
+#: core/time_fields.py:12 core/time_fields.py:60
+msgid "Minute"
+msgstr "Minuti"
+
+#: core/time_fields.py:18
+msgid "AM/PM"
+msgstr "AM/PM"
+
+#: core/time_fields.py:61
+msgid "AM or PM"
+msgstr "AM to PM"
+
+#: core/time_fields.py:79
+msgid "Choose an hour, minute, and AM or PM, or leave all three blank."
+msgstr ""
+"Pona ngonga, minuti mpe AM to PM, to tika bisika nyonso misato polele."
+
+#: core/time_fields.py:97
+msgid ""
+"Optional. For 6:30 PM, choose 6, 30, and PM. Leave all three blank for no "
+"time."
+msgstr ""
+"Esengeli te. Mpo na 6:30 PM, pona 6, 30 mpe PM. Tika bisika nyonso misato "
+"polele soki olingi kotya ngonga te."
+
+#: core/views.py:59
+msgid "Your space is ready. Let’s take the next step together."
+msgstr "Esika na yo esili kobongisama. Tózwa litambe oyo elandi elongo."
+
+#: core/views.py:81
+msgid "Good morning"
+msgstr "Mbote ya ntongo"
+
+#: core/views.py:83
+msgid "Good afternoon"
+msgstr "Mbote ya nsima ya midi"
+
+#: core/views.py:85
+msgid "Good evening"
+msgstr "Mbote ya mpokwa"

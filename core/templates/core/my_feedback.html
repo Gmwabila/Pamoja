@@ -1,18 +1,25 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 
-{% block title %}My Feedback | PAMOJA{% endblock %}
+{% block title %}
+    {% translate "My feedback" %} | PAMOJA
+{% endblock %}
 
 {% block content %}
 <section class="narrow">
     <div class="page-heading">
-        <span class="eyebrow">HELP &amp; FEEDBACK</span>
-        <h1>My feedback</h1>
+        <span class="eyebrow">
+            {% translate "HELP & FEEDBACK" %}
+        </span>
+
+        <h1>{% translate "My feedback" %}</h1>
+
         <p class="muted">
-            Your submissions and responses from the PAMOJA Team.
+            {% translate "Your submissions and responses from the PAMOJA Team." %}
         </p>
 
         <a class="button secondary" href="{% url 'feedback' %}">
-            Send new feedback
+            {% translate "Send new feedback" %}
         </a>
     </div>
 
@@ -26,49 +33,53 @@
             <h2>{{ item.title }}</h2>
 
             <p class="fine-print">
-                Submitted {{ item.created_at|date:"M j, Y, g:i A T" }}
+                {% blocktranslate with submitted_at=item.created_at|date:"M j, Y, g:i A T" %}Submitted {{ submitted_at }}{% endblocktranslate %}
             </p>
 
             <p style="white-space: pre-wrap; overflow-wrap: anywhere;">{{ item.body }}</p>
 
-            <h3>Responses</h3>
+            <h3>{% translate "Responses" %}</h3>
 
             {% for reply in item.replies.all %}
                 <section style="margin-top: 16px; padding: 16px; border-left: 3px solid #173f35; background: #f3f5ef;">
-                    <strong>PAMOJA Team</strong>
+                    <strong>{% translate "PAMOJA Team" %}</strong>
+
                     <p class="fine-print">
                         {{ reply.created_at|date:"M j, Y, g:i A T" }}
                     </p>
+
                     <p style="white-space: pre-wrap; overflow-wrap: anywhere;">{{ reply.body }}</p>
                 </section>
             {% empty %}
                 <p class="muted">
-                    No response yet. Thank you for sharing your feedback.
+                    {% translate "No response yet. Thank you for sharing your feedback." %}
                 </p>
             {% endfor %}
         </article>
     {% empty %}
         <div class="profile-card">
-            <p>You haven't submitted any feedback yet.</p>
+            <p>
+                {% translate "You haven't submitted any feedback yet." %}
+            </p>
         </div>
     {% endfor %}
 
     {% if page_obj.has_other_pages %}
-        <nav aria-label="Feedback pages" style="margin-top: 24px;">
+        <nav aria-label="{% translate 'Feedback pages' %}"
+             style="margin-top: 24px;">
             {% if page_obj.has_previous %}
                 <a href="?page={{ page_obj.previous_page_number }}">
-                    Previous
+                    {% translate "Previous" %}
                 </a>
             {% endif %}
 
             <span>
-                Page {{ page_obj.number }}
-                of {{ page_obj.paginator.num_pages }}
+                {% blocktranslate with page_number=page_obj.number page_count=page_obj.paginator.num_pages %}Page {{ page_number }} of {{ page_count }}{% endblocktranslate %}
             </span>
 
             {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}">
-                    Next
+                    {% translate "Next" %}
                 </a>
             {% endif %}
         </nav>

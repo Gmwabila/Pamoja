@@ -1,2 +1,60 @@
-{% extends 'core/base.html' %}{% block title %}Welcome back · PAMOJA{% endblock %}
-{% block content %}<section class="auth-layout"><aside class="auth-aside"><span class="eyebrow light">YOUR PERSONAL SPACE</span><h1>A little more<br><em>together.</em></h1><p>Pick up where you left off. Your plans will be right here.</p><div class="aside-flower" aria-hidden="true">✳</div><span>One step at a time.</span></aside><div class="auth-form"><span class="eyebrow">GOOD TO SEE YOU</span><h2>Welcome back.</h2><p class="muted">Log in to your PAMOJA account.</p><form method="post">{% csrf_token %}<input type="hidden" name="next" value="{{ next }}">{% include 'core/form_fields.html' %}<button class="button full" type="submit">Let’s continue <span aria-hidden="true">↗</span></button></form><p class="auth-switch">New here? <a href="{% url 'signup' %}">Create an account</a></p></div></section>{% endblock %}
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% translate "Welcome back" %} · PAMOJA
+{% endblock %}
+
+{% block content %}
+<section class="auth-layout">
+    <aside class="auth-aside">
+        <span class="eyebrow light">
+            {% translate "YOUR PERSONAL SPACE" %}
+        </span>
+
+        <h1>
+            {% blocktranslate %}A little more<br><em>together.</em>{% endblocktranslate %}
+        </h1>
+
+        <p>
+            {% translate "Pick up where you left off. Your plans will be right here." %}
+        </p>
+
+        <div class="aside-flower" aria-hidden="true">✳</div>
+
+        <span>{% translate "One step at a time." %}</span>
+    </aside>
+
+    <div class="auth-form">
+        <span class="eyebrow">
+            {% translate "GOOD TO SEE YOU" %}
+        </span>
+
+        <h2>{% translate "Welcome back." %}</h2>
+
+        <p class="muted">
+            {% translate "Log in to your PAMOJA account." %}
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <input type="hidden" name="next" value="{{ next }}">
+
+            {% include "core/form_fields.html" %}
+
+            <button class="button full" type="submit">
+                {% translate "Let’s continue" %}
+                <span aria-hidden="true">↗</span>
+            </button>
+        </form>
+
+        <p class="auth-switch">
+            {% translate "New here?" %}
+            <a href="{% url 'signup' %}">
+                {% translate "Create an account" %}
+            </a>
+        </p>
+    </div>
+</section>
+{% endblock %}

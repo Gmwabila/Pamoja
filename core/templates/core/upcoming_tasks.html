@@ -1,20 +1,88 @@
+{% load i18n %}
+
 <section class="upcoming-section">
-  <div class="section-heading">
-    <div><span class="eyebrow">A LITTLE LOOK AHEAD · NEXT 7 DAYS</span><h2>Upcoming tasks <span class="count">{{ upcoming_count }}</span></h2></div>
-    <a class="text-link small" href="{% url 'planner' %}">View all ↗</a>
-  </div>
-  <div class="task-list">
-    {% for task in upcoming_tasks %}
-    <article class="task-row upcoming-row">
-      <span class="upcoming-date" aria-hidden="true"><strong>{{ task.due_date|date:'j' }}</strong><small>{{ task.due_date|date:'M' }}</small></span>
-      <a class="task-detail" href="{% url 'task_edit' task.pk %}">
-        <h3>{{ task.title }}</h3>
-        <p><span class="task-space">{{ task.get_space_display }}</span><span> · {% if task.due_date == tomorrow %}Tomorrow{% else %}{{ task.due_date|date:'D, M j' }}{% endif %}</span>{% if task.due_time %}<span> · {{ task.due_time|time:'g:i A' }}</span>{% endif %}{% if task.priority == 'high' %}<span class="high-priority"> · Priority</span>{% endif %}</p>
-      </a><a class="upcoming-open" href="{% url 'task_edit' task.pk %}" aria-label="Edit {{ task.title }}">↗</a>
-    </article>
-    {% empty %}
-    <div class="empty-state small-empty"><h3>A little room ahead.</h3><p>No unfinished tasks scheduled for the next seven days.</p><a href="{% url 'task_add' %}">Plan something →</a></div>
-    {% endfor %}
-  </div>
-  {% if upcoming_count > 5 %}<a class="subtle-link" href="{% url 'planner' %}">See all {{ upcoming_count }} upcoming tasks <span aria-hidden="true">↗</span></a>{% endif %}
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">
+                {% translate "A LITTLE LOOK AHEAD · NEXT 7 DAYS" %}
+            </span>
+
+            <h2>
+                {% translate "Upcoming tasks" %}
+                <span class="count">{{ upcoming_count }}</span>
+            </h2>
+        </div>
+
+        <a class="text-link small" href="{% url 'planner' %}">
+            {% translate "View all" %} ↗
+        </a>
+    </div>
+
+    <div class="task-list">
+        {% for task in upcoming_tasks %}
+            <article class="task-row upcoming-row">
+                <span class="upcoming-date" aria-hidden="true">
+                    <strong>{{ task.due_date|date:"j" }}</strong>
+                    <small>{{ task.due_date|date:"M" }}</small>
+                </span>
+
+                <a class="task-detail"
+                   href="{% url 'task_edit' task.pk %}">
+                    <h3>{{ task.title }}</h3>
+
+                    <p>
+                        <span class="task-space">
+                            {% translate task.get_space_display %}
+                        </span>
+
+                        <span>
+                            ·
+                            {% if task.due_date == tomorrow %}
+                                {% translate "Tomorrow" %}
+                            {% else %}
+                                {{ task.due_date|date:"D, M j" }}
+                            {% endif %}
+                        </span>
+
+                        {% if task.due_time %}
+                            <span>
+                                · {{ task.due_time|time:"g:i A" }}
+                            </span>
+                        {% endif %}
+
+                        {% if task.priority == "high" %}
+                            <span class="high-priority">
+                                · {% translate "Priority" %}
+                            </span>
+                        {% endif %}
+                    </p>
+                </a>
+
+                <a class="upcoming-open"
+                   href="{% url 'task_edit' task.pk %}"
+                   aria-label="{% blocktranslate with title=task.title %}Edit {{ title }}{% endblocktranslate %}">
+                    ↗
+                </a>
+            </article>
+        {% empty %}
+            <div class="empty-state small-empty">
+                <h3>{% translate "A little room ahead." %}</h3>
+
+                <p>
+                    {% translate "No unfinished tasks scheduled for the next seven days." %}
+                </p>
+
+                <a href="{% url 'task_add' %}">
+                    {% translate "Plan something" %} →
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if upcoming_count > 5 %}
+        <a class="subtle-link" href="{% url 'planner' %}">
+            {% blocktranslate count task_count=upcoming_count %}See all {{ task_count }} upcoming task{% plural %}See all {{ task_count }} upcoming tasks{% endblocktranslate %}
+            <span aria-hidden="true">↗</span>
+        </a>
+    {% endif %}
 </section>

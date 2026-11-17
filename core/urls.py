@@ -1,4 +1,5 @@
 from django.contrib.auth.views import LogoutView
+from .languages import change_language
 from django.urls import path
 
 from . import feedback_replies, owner_tools, views
@@ -7,6 +8,11 @@ from .owner_stats import owner_dashboard
 
 urlpatterns = [
     # Owner dashboard
+    path(
+        "language/",
+        change_language,
+        name="change_language",
+    ),
     path(
         "owner/",
         owner_dashboard,

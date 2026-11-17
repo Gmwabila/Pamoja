@@ -1,1 +1,43 @@
-<article class="task-row{% if task.completed %} is-complete{% endif %}"><form method="post" action="{% url 'task_toggle' task.pk %}">{% csrf_token %}<input type="hidden" name="origin" value="{{ origin }}"><button class="task-check" aria-label="{% if task.completed %}Mark incomplete{% else %}Complete{% endif %}: {{ task.title }}" aria-pressed="{{ task.completed|yesno:'true,false' }}">{% if task.completed %}✓{% endif %}</button></form><a class="task-detail" href="{% url 'task_edit' task.pk %}"><h3>{{ task.title }}</h3><p><span class="task-space">{{ task.get_space_display }}</span>{% if origin == 'planner' %}<span> · {{ task.due_date|date:'M j, Y' }}</span>{% endif %}{% if task.due_time %}<span> · {{ task.due_time|time:'g:i A' }}</span>{% endif %}{% if task.priority == 'high' %}<span class="high-priority"> · Priority</span>{% endif %}</p></a><span class="task-arrow" aria-hidden="true">↗</span></article>
+{% load i18n %}
+
+<article class="task-row{% if task.completed %} is-complete{% endif %}">
+    <form method="post" action="{% url 'task_toggle' task.pk %}">
+        {% csrf_token %}
+
+        <input type="hidden" name="origin" value="{{ origin }}">
+
+        <button
+            class="task-check"
+            aria-label="{% if task.completed %}{% blocktranslate with title=task.title %}Mark incomplete: {{ title }}{% endblocktranslate %}{% else %}{% blocktranslate with title=task.title %}Complete: {{ title }}{% endblocktranslate %}{% endif %}"
+            aria-pressed="{{ task.completed|yesno:'true,false' }}"
+        >
+            {% if task.completed %}✓{% endif %}
+        </button>
+    </form>
+
+    <a class="task-detail" href="{% url 'task_edit' task.pk %}">
+        <h3>{{ task.title }}</h3>
+
+        <p>
+            <span class="task-space">
+                {% translate task.get_space_display %}
+            </span>
+
+            {% if origin == 'planner' %}
+                <span> · {{ task.due_date|date:'M j, Y' }}</span>
+            {% endif %}
+
+            {% if task.due_time %}
+                <span> · {{ task.due_time|time:'g:i A' }}</span>
+            {% endif %}
+
+            {% if task.priority == 'high' %}
+                <span class="high-priority">
+                    · {% translate "Priority" %}
+                </span>
+            {% endif %}
+        </p>
+    </a>
+
+    <span class="task-arrow" aria-hidden="true">↗</span>
+</article>

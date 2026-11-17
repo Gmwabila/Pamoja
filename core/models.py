@@ -1,14 +1,15 @@
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
 
 SPACES = [
-    ("planning", "Daily Planning"),
-    ("career", "Career & Jobs"),
-    ("fitness", "Fitness"),
-    ("education", "Education"),
-    ("sports", "Sports"),
+    ("planning", _("Daily Planning")),
+    ("career", _("Career & Jobs")),
+    ("fitness", _("Fitness")),
+    ("education", _("Education")),
+    ("sports", _("Sports")),
 ]
 
 
@@ -50,6 +51,11 @@ class Profile(models.Model):
     spaces = models.JSONField(default=list)
     goal = models.CharField(max_length=300, blank=True)
     timezone = models.CharField(max_length=64, default="UTC")
+    language = models.CharField(
+        max_length=10,
+        choices=settings.LANGUAGES,
+        default="en",
+    )
     reminders = models.BooleanField(default=False)
     onboarded = models.BooleanField(default=False)
 
@@ -70,8 +76,8 @@ class Task(models.Model):
     priority = models.CharField(
         max_length=8,
         choices=[
-            ("normal", "Normal"),
-            ("high", "High"),
+            ("normal", _("Normal")),
+            ("high", _("High")),
         ],
         default="normal",
     )
@@ -89,15 +95,15 @@ class Task(models.Model):
 
 class Feedback(models.Model):
     KIND_CHOICES = [
-        ("suggestion", "Suggestion"),
-        ("bug", "Bug report"),
-        ("feature", "Feature request"),
+        ("suggestion", _("Suggestion")),
+        ("bug", _("Bug report")),
+        ("feature", _("Feature request")),
     ]
 
     STATUS_CHOICES = [
-        ("new", "New"),
-        ("reviewed", "Reviewed"),
-        ("resolved", "Resolved"),
+        ("new", _("New")),
+        ("reviewed", _("Reviewed")),
+        ("resolved", _("Resolved")),
     ]
 
     user = models.ForeignKey(
