@@ -1,85 +1,212 @@
-
 {% extends "core/owner_base.html" %}
 
 {% block title %}PAMOJA Admin | Overview{% endblock %}
 
+{% block extra_head %}
+<style>
+    .owner-section {
+        margin-top: 24px;
+    }
+
+    .owner-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .owner-metrics .profile-card {
+        min-width: 0;
+    }
+
+    .owner-number {
+        margin: 12px 0;
+        color: #173f35;
+        font-size: 36px;
+        font-weight: 700;
+    }
+
+    .owner-table-wrap {
+        overflow-x: auto;
+    }
+
+    .owner-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .owner-table th,
+    .owner-table td {
+        padding: 12px 8px;
+        border-bottom: 1px solid #d9ded9;
+        overflow-wrap: anywhere;
+        vertical-align: top;
+    }
+
+    .owner-table th {
+        color: #173f35;
+    }
+
+    .owner-bar-track {
+        height: 12px;
+        margin-top: 8px;
+        overflow: hidden;
+        border-radius: 20px;
+        background: #e8ece7;
+    }
+
+    .owner-bar {
+        height: 100%;
+        border-radius: inherit;
+        background: #173f35;
+    }
+
+    @media (max-width: 600px) {
+        .owner-metrics {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-
-<section class="narrow">
-
-    <!-- DASHBOARD HEADER -->
+<section>
     <div class="page-heading">
         <span class="eyebrow">ADMIN DASHBOARD</span>
-
         <h1>PAMOJA Overview</h1>
-
         <p class="muted">
-            Monitor registrations and track
-            the growth of PAMOJA.
+            Monitor registrations and track the growth of PAMOJA.
         </p>
     </div>
 
-    <!-- TOTAL REGISTERED ACCOUNTS -->
-    <div class="profile-card">
-        <span class="eyebrow">
-            TOTAL REGISTERED ACCOUNTS
-        </span>
+    <div class="owner-metrics">
+        <div class="profile-card">
+            <span class="eyebrow">TOTAL ACCOUNTS</span>
+            <p class="owner-number">{{ metrics.total }}</p>
+            <p class="muted">All registered accounts.</p>
+        </div>
 
-        <h1>{{ metrics.total }}</h1>
+        <div class="profile-card">
+            <span class="eyebrow">NEW TODAY</span>
+            <p class="owner-number">{{ metrics.today }}</p>
+            <p class="muted">Accounts created today.</p>
+        </div>
 
-        <p class="muted">
-            Total accounts created on PAMOJA.
-        </p>
+        <div class="profile-card">
+            <span class="eyebrow">LAST 7 CALENDAR DAYS</span>
+            <p class="owner-number">{{ metrics.week }}</p>
+            <p class="muted">Includes today.</p>
+        </div>
     </div>
 
-    <!-- NEW ACCOUNTS TODAY -->
-    <div class="profile-card" style="margin-top: 16px;">
-        <span class="eyebrow">
-            NEW ACCOUNTS TODAY
-        </span>
-
-        <h1>{{ metrics.today }}</h1>
-
+    <section class="profile-card owner-section"
+             aria-labelledby="registration-heading">
+        <h2 id="registration-heading">Registration activity</h2>
         <p class="muted">
-            Accounts registered today.
+            Daily signups · {{ report_timezone }}
         </p>
-    </div>
 
-    <!-- NEW ACCOUNTS THIS WEEK -->
-    <div class="profile-card" style="margin-top: 16px;">
-        <span class="eyebrow">
-            LAST 7 CALENDAR DAYS
-        </span>
+        <div class="owner-table-wrap">
+            <table class="owner-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">New accounts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for day in registration_days %}
+                        <tr>
+                            <th scope="row">
+                                {{ day.date|date:"D, M j" }}
+                            </th>
+                            <td>
+                                {{ day.count }}
+                                <div class="owner-bar-track"
+                                     aria-hidden="true">
+                                    <div class="owner-bar"
+                                         data-width="{{ day.width }}"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-        <h1>{{ metrics.week }}</h1>
-
+    <section class="profile-card owner-section"
+             aria-labelledby="recent-heading">
+        <h2 id="recent-heading">Recent signups</h2>
         <p class="muted">
-            Accounts registered in the last
-            seven calendar days.
+            The 10 most recent registrations, newest first.
         </p>
-    </div>
 
-    <!-- REFRESH BUTTON -->
-    <div style="margin-top: 24px;">
+        <div class="owner-table-wrap">
+            <table class="owner-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Joined</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for person in recent_users %}
+                        <tr>
+                            <td>{{ person.name }}</td>
+                            <td>
+                                {{ person.joined_at|date:"M j, Y" }}
+                                <br>
+                                {{ person.joined_at|date:"g:i A T" }}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">
+                                No registered accounts yet.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <p class="fine-print">
+            Names appear as provided by users.
+        </p>
+    </section>
+
+    <div class="owner-section">
         <a href="{% url 'owner_dashboard' %}"
-           class="button full secondary">
+           class="button secondary">
             Refresh Statistics
         </a>
-    </div>
 
-    <!-- LAST UPDATED -->
-    <div style="margin-top: 20px;">
         <p class="fine-print">
-            Last checked:
-            {{ checked_at|date:"M j, Y, g:i A T" }}
+            Last checked: {{ checked_at|date:"M j, Y, g:i A T" }}
         </p>
 
         <p class="fine-print">
-            These statistics represent registered
-            accounts, not website visits.
+            Statistics count registered accounts,
+            including your own, rather than visits or active sessions.
         </p>
     </div>
+    <div class="profile-card owner-section">
+    <h2>Admin tools</h2>
 
+    <p>
+        <a class="button secondary"
+           href="{% url 'owner_feedback' %}">
+            Feedback inbox
+        </a>
+    </p>
+
+    <p>
+        <a class="button secondary"
+           href="{% url 'owner_health' %}">
+            Platform health
+        </a>
+    </p>
+</div>
 </section>
-
 {% endblock %}

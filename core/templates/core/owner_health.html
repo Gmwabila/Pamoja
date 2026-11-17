@@ -1,0 +1,42 @@
+{% extends "core/owner_base.html" %}
+
+{% block title %}Health Check | PAMOJA Admin{% endblock %}
+
+{% block content %}
+<section class="narrow">
+    <div class="page-heading">
+        <span class="eyebrow">PLATFORM HEALTH</span>
+        <h1>Current health check</h1>
+        <a href="{% url 'owner_dashboard' %}">
+            Back to Overview
+        </a>
+    </div>
+
+    <div class="profile-card">
+        <h2>Application</h2>
+        <p>Responding — this page was generated successfully.</p>
+
+        <h2>Database</h2>
+        {% if database_ok %}
+            <p>Responding — the test query succeeded.</p>
+        {% else %}
+            <p>The database check failed.</p>
+        {% endif %}
+
+        <p class="fine-print">
+            Checked: {{ checked_at|date:"M j, Y, g:i A T" }}
+        </p>
+
+        <a class="button secondary"
+           href="{% url 'owner_health' %}">
+            Run check again
+        </a>
+    </div>
+
+    <p class="fine-print">
+        This checks the application and database when you open
+        this page. It does not measure historical uptime.
+        A complete outage may prevent this page from loading.
+    </p>
+</section>
+{% endblock %}

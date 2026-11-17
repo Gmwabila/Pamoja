@@ -1,0 +1,121 @@
+{% extends "core/owner_base.html" %}
+
+{% block title %}Feedback | PAMOJA Admin{% endblock %}
+
+{% block content %}
+<section class="narrow">
+    <div class="page-heading">
+        <span class="eyebrow">ADMIN FEEDBACK INBOX</span>
+        <h1>User feedback</h1>
+        <p class="muted">{{ new_count }} new submissions</p>
+        <a href="{% url 'owner_dashboard' %}">
+            Back to Overview
+        </a>
+    </div>
+
+    <form method="get" class="profile-card">
+        <label for="feedback-filter">Show submissions</label>
+
+        <select id="feedback-filter" name="status">
+            <option value="">All statuses</option>
+            {% for value, label in status_choices %}
+                <option value="{{ value }}"
+                    {% if active_status == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="button secondary">
+            Filter
+        </button>
+    </form>
+
+    {% for item in page_obj %}
+        <article class="profile-card" style="margin-top: 20px;">
+            <span class="eyebrow">
+                {{ item.get_kind_display }} ·
+                {{ item.get_status_display }}
+            </span>
+
+            <h2>{{ item.title }}</h2>
+
+            <p class="fine-print">
+                {% if item.user %}
+                    {{ item.user.get_full_name|default:"Name not provided" }}
+                {% else %}
+                    Deleted account
+                {% endif %}
+                · {{ item.created_at|date:"M j, Y, g:i A T" }}
+            </p>
+
+            <p style="white-space: pre-wrap; overflow-wrap: anywhere;">{{ item.body }}</p>
+
+            <form method="post"
+                  action="{% url 'owner_feedback_status' item.pk %}">
+                {% csrf_token %}
+
+                <label for="status-{{ item.pk }}">Status</label>
+                <select id="status-{{ item.pk }}" name="status">
+                    {% for value, label in status_choices %}
+                        <option value="{{ value }}"
+                            {% if item.status == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit" class="button secondary">
+                    Save status
+                </button>
+            </form>
+        </article>
+    {% empty %}
+        <p class="profile-card" style="margin-top: 20px;">
+            No feedback matches this filter.
+        </p>
+    {% endfor %}
+
+    {% if page_obj.has_other_pages %}
+        <nav aria-label="Feedback pages" style="margin-top: 20px;">
+            {% if page_obj.has_previous %}
+                <a href="?status={{ active_status }}&amp;page={{ page_obj.previous_page_number }}">
+                    Previous
+                </a>
+            {% endif %}
+
+            <span>
+                Page {{ page_obj.number }}
+                of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?status={{ active_status }}&amp;page={{ page_obj.next_page_number }}">
+                    Next
+                </a>
+            {% endif %}
+        </nav>
+    {% endif %}
+
+    <section class="profile-card" style="margin-top: 24px;">
+        <h2>Recent Admin actions</h2>
+        <p class="fine-print">
+            Latest 20 feedback status changes.
+            Message contents are not copied into this log.
+        </p>
+
+        {% for entry in audit_entries %}
+            <p>
+                Feedback #{{ entry.feedback_id|default:"deleted" }}:
+                {{ entry.previous_status }} → {{ entry.new_status }}
+                <br>
+                <span class="fine-print">
+                    {{ entry.created_at|date:"M j, Y, g:i A T" }}
+                </span>
+            </p>
+        {% empty %}
+            <p>No feedback status changes yet.</p>
+        {% endfor %}
+    </section>
+</section>
+{% endblock %}
