@@ -133,6 +133,17 @@ def rate_limit_exceeded(user_id):
 @login_required
 @require_POST
 def send_message(request):
+
+    # Restrict production AI Chat to staff during Free-tier testing.
+    testing_only = os.environ.get(
+        "PAMOJA_AI_TESTING_ONLY", ""
+    ).lower() in ("true", "1", "yes")
+
+    if testing_only and not request.user.is_staff:
+        return JsonResponse(
+            {"error": _("AI Chat is currently in private testing.")},
+            status=403,
+        )
     api_key = os.environ.get("GEMINI_API_KEY")
 
     if not api_key:
