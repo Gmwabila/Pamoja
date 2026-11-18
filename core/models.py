@@ -171,3 +171,77 @@ class FeedbackReply(models.Model):
 
     class Meta:
         ordering = ["created_at", "pk"]
+class AIConversation(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="ai_conversations",
+    )
+    title = models.CharField(
+        max_length=120,
+        default=_("New conversation"),
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-updated_at", "-pk"]
+
+    def __str__(self):
+        return self.title
+
+
+class AIMessage(models.Model):
+    ROLE_CHOICES = [
+        ("user", _("User")),
+        ("model", _("PAMOJA AI")),
+    ]
+
+    conversation = models.ForeignKey(
+        AIConversation,
+        on_delete=models.CASCADE,
+        related_name="messages",
+    )
+    role = models.CharField(
+        max_length=10,
+        choices=ROLE_CHOICES,
+    )
+    content = models.TextField(max_length=6000)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created_at", "pk"]
+
+    def __str__(self):
+        return f"{self.role} - Message {self.pk}"
+
+class AIUsageLimit(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="ai_usage_limit",
+    )
+
+    minute_window = models.BigIntegerField(default=0)
+    minute_count = models.PositiveIntegerField(default=0)
+
+    day_window = models.BigIntegerField(default=0)
+    day_count = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"AI usage for user {self.user_id}"
+
+
+
+class AIUsageGlobal(models.Model):
+    day_window = models.BigIntegerField(primary_key=True)
+    request_count = models.PositiveIntegerField(default=0)
+
+    minute_window = models.BigIntegerField(default=0)
+    minute_count = models.PositiveIntegerField(default=0)
+
+    # Store timestamps for the rolling 60-second limit.
+    recent_request_times = models.JSONField(default=list)
+
+    def __str__(self):
+        return f"Global AI usage: {self.day_window}"

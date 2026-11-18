@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PAMOJA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 05:31+0000\n"
+"POT-Creation-Date: 2026-11-18 05:12+0000\n"
 "PO-Revision-Date: 2026-11-17 00:00+0000\n"
 "Last-Translator: PAMOJA translation draft\n"
 "Language-Team: sw\n"
@@ -131,6 +131,19 @@ msgstr "Imepitiwa"
 msgid "Resolved"
 msgstr "Imetatuliwa"
 
+#: core/models.py:183
+msgid "New conversation"
+msgstr ""
+
+#: core/models.py:197
+msgid "User"
+msgstr ""
+
+#: core/models.py:198 core/templates/core/chat.html:6
+#: core/templates/core/chat.html:466
+msgid "PAMOJA AI"
+msgstr "PAMOJA AI"
+
 #: core/owner_tools.py:59
 msgid "Feedback type"
 msgstr "Aina ya maoni"
@@ -140,7 +153,6 @@ msgid "Subject"
 msgstr "Mada"
 
 #: core/owner_tools.py:61
-#| msgid "Share feedback"
 msgid "Your feedback"
 msgstr "Maoni yako"
 
@@ -197,45 +209,74 @@ msgstr "Mpangilio"
 msgid "Profile"
 msgstr "Wasifu"
 
-#: core/templates/core/chat.html:5
-msgid "Your assistant"
-msgstr "Msaidizi wako"
+#: core/templates/core/chat.html:469
+msgid "A little help, whenever you need it."
+msgstr "Msaada kidogo, wakati wowote unapouhitaji."
 
-#: core/templates/core/chat.html:11
-msgid "TOGETHER, EVERY STEP"
-msgstr "PAMOJA, KATIKA KILA HATUA"
+#: core/templates/core/chat.html:481
+msgid "Conversations"
+msgstr "Mazungumzo"
 
-#: core/templates/core/chat.html:17
-msgid "A little help.<br>A clearer next step."
-msgstr "Msaada kidogo.<br>Hatua inayofuata iliyo wazi zaidi."
+#: core/templates/core/chat.html:490 core/templates/core/chat.html:504
+msgid "Your conversations"
+msgstr "Mazungumzo yako"
 
-#: core/templates/core/chat.html:21
-msgid "Your personal assistant will live here."
-msgstr "Msaidizi wako binafsi atapatikana hapa."
+#: core/templates/core/chat.html:498
+msgid "Close conversations"
+msgstr "Funga orodha ya mazungumzo"
 
-#: core/templates/core/chat.html:26
-msgid "We’re building the foundation first."
-msgstr "Tunajenga msingi kwanza."
+#: core/templates/core/chat.html:511
+msgid "New chat"
+msgstr "Mazungumzo mapya"
 
-#: core/templates/core/chat.html:30
+#: core/templates/core/chat.html:519
+msgid "Recent conversations"
+msgstr "Mazungumzo ya hivi karibuni"
+
+#: core/templates/core/chat.html:546
 msgid ""
-"Live AI chat is not connected in this milestone. Your accounts, preferences,"
-" and planner already work. Next, we’ll connect an AI service that can "
-"suggest plans using the information you allow."
-msgstr ""
-"Mazungumzo ya moja kwa moja na AI bado hayajaunganishwa katika hatua hii. "
-"Akaunti, mapendeleo na mpangilio wako tayari vinafanya kazi. Kisha "
-"tutaunganisha huduma ya AI inayoweza kupendekeza mipango kwa kutumia taarifa"
-" utakazoruhusu."
+"Hello! I'm PAMOJA AI. I can help you plan your day, study, work toward your "
+"goals, or simply talk. What's on your mind?"
+msgstr "Habari! Mimi ni PAMOJA AI. Ninaweza kukusaidia kupanga siku yako, kusoma, kufikia malengo yako, au kuzungumza tu. Una nini akilini?"
 
-#: core/templates/core/chat.html:34
-msgid "You’ll review task changes before saving them."
-msgstr "Utapitia mabadiliko ya majukumu kabla ya kuyahifadhi."
+#: core/templates/core/chat.html:558
+msgid "PAMOJA is thinking..."
+msgstr "PAMOJA inafikiria..."
 
-#: core/templates/core/chat.html:39 core/templates/core/task_form.html:5
-#| msgid "Make your first plan"
-msgid "Make a plan"
-msgstr "Tengeneza mpango"
+#: core/templates/core/chat.html:559
+msgid "Something went wrong. Please try again."
+msgstr "Hitilafu imetokea. Tafadhali jaribu tena."
+
+#: core/templates/core/chat.html:560
+msgid "No saved conversations yet."
+msgstr "Bado hakuna mazungumzo yaliyohifadhiwa."
+
+#: core/templates/core/chat.html:561
+msgid "Delete this conversation and its messages?"
+msgstr "Ungependa kufuta mazungumzo haya na ujumbe wake wote?"
+
+#: core/templates/core/chat.html:562
+msgid "Delete conversation"
+msgstr "Futa mazungumzo"
+
+#: core/templates/core/chat.html:571
+msgid "Ask PAMOJA anything..."
+msgstr "Uliza PAMOJA chochote..."
+
+#: core/templates/core/chat.html:572
+msgid "Your message"
+msgstr "Ujumbe wako"
+
+#: core/templates/core/chat.html:580
+msgid "Send message"
+msgstr "Tuma ujumbe"
+
+#: core/templates/core/chat.html:609
+msgid ""
+"Conversations are saved to your account and processed by Google Gemini. "
+"Avoid sharing passwords or highly sensitive information. PAMOJA AI can make "
+"mistakes."
+msgstr "Mazungumzo yanahifadhiwa kwenye akaunti yako na kuchakatwa na Google Gemini. Epuka kushiriki nywila au taarifa nyeti sana. PAMOJA AI inaweza kufanya makosa."
 
 #: core/templates/core/dashboard.html:5 core/tests/test_languages.py:211
 msgid "Your day"
@@ -392,17 +433,14 @@ msgid "Planning tip · not AI-generated"
 msgstr "Dokezo la kupanga · halijatengenezwa na AI"
 
 #: core/templates/core/feedback.html:5
-#| msgid "Share feedback"
 msgid "Feedback"
 msgstr "Maoni"
 
 #: core/templates/core/feedback.html:12
-#| msgid "A LITTLE HELP FROM PAMOJA"
 msgid "HELP IMPROVE PAMOJA"
 msgstr "SAIDIA KUBORESHA PAMOJA"
 
 #: core/templates/core/feedback.html:15
-#| msgid "Share feedback"
 msgid "Share your feedback"
 msgstr "Shiriki maoni yako"
 
@@ -422,12 +460,10 @@ msgstr ""
 "Tafadhali usijumuishe nywila, taarifa za kifedha au taarifa nyingine nyeti."
 
 #: core/templates/core/feedback.html:36
-#| msgid "Share feedback"
 msgid "Send feedback"
 msgstr "Tuma maoni"
 
 #: core/templates/core/feedback.html:43
-#| msgid "Profile"
 msgid "Back to Profile"
 msgstr "Rudi kwenye Wasifu"
 
@@ -452,7 +488,6 @@ msgstr "Ficha"
 
 #: core/templates/core/my_feedback.html:5
 #: core/templates/core/my_feedback.html:15
-#| msgid "Share feedback"
 msgid "My feedback"
 msgstr "Maoni yangu"
 
@@ -465,7 +500,6 @@ msgid "Your submissions and responses from the PAMOJA Team."
 msgstr "Ujumbe wako na majibu kutoka kwa Timu ya PAMOJA."
 
 #: core/templates/core/my_feedback.html:22
-#| msgid "Share feedback"
 msgid "Send new feedback"
 msgstr "Tuma maoni mapya"
 
@@ -491,7 +525,6 @@ msgid "You haven't submitted any feedback yet."
 msgstr "Bado hujatuma maoni yoyote."
 
 #: core/templates/core/my_feedback.html:68
-#| msgid "My feedback & replies"
 msgid "Feedback pages"
 msgstr "Kurasa za maoni"
 
@@ -512,62 +545,61 @@ msgstr "Inayofuata"
 msgid "Make it yours"
 msgstr "Ifanye ikufae"
 
-#: core/templates/core/onboarding.html:12
+#: core/templates/core/onboarding.html:13
 msgid "YOUR PREFERENCES"
 msgstr "MAPENDELEO YAKO"
 
-#: core/templates/core/onboarding.html:14
+#: core/templates/core/onboarding.html:15
 msgid "A LITTLE ABOUT YOU"
 msgstr "MACHACHE KUHUSU WEWE"
 
-#: core/templates/core/onboarding.html:19
+#: core/templates/core/onboarding.html:20
 msgid "Life is personal."
 msgstr "Maisha yako ni ya kipekee."
 
-#: core/templates/core/onboarding.html:21
+#: core/templates/core/onboarding.html:22
 msgid "Your space should be, too."
 msgstr "Nafasi yako inapaswa kuwa hivyo pia."
 
-#: core/templates/core/onboarding.html:25
+#: core/templates/core/onboarding.html:26
 msgid "Choose what matters to you. You can always change things later."
 msgstr "Chagua mambo muhimu kwako. Unaweza kubadilisha chaguo zako baadaye."
 
-#: core/templates/core/onboarding.html:33
+#: core/templates/core/onboarding.html:34
 msgid "What would you like a hand with?"
 msgstr "Ungependa kusaidiwa katika mambo gani?"
 
-#: core/templates/core/onboarding.html:37
+#: core/templates/core/onboarding.html:38
 msgid "Choose any combination, or start with an empty dashboard."
 msgstr "Chagua sehemu zozote unazotaka, au anza na dashibodi tupu."
 
-#: core/templates/core/onboarding.html:56
+#: core/templates/core/onboarding.html:57
 msgid "A goal on your mind"
 msgstr "Lengo unalolifikiria"
 
-#: core/templates/core/onboarding.html:58
+#: core/templates/core/onboarding.html:59
 msgid "optional"
 msgstr "si lazima"
 
-#: core/templates/core/onboarding.html:94
+#: core/templates/core/onboarding.html:95
 msgid "Show due-task reminders"
 msgstr "Onyesha vikumbusho vya majukumu ya kukamilisha"
 
-#: core/templates/core/onboarding.html:97
+#: core/templates/core/onboarding.html:98
 msgid "In-app reminders when you open PAMOJA. Push alerts come later."
 msgstr ""
 "Vikumbusho vinaonekana unapofungua PAMOJA. Arifa za moja kwa moja "
 "zitapatikana baadaye."
 
-#: core/templates/core/onboarding.html:106
+#: core/templates/core/onboarding.html:107
 msgid "Save my preferences"
 msgstr "Hifadhi mapendeleo yangu"
 
-#: core/templates/core/onboarding.html:108
+#: core/templates/core/onboarding.html:109
 msgid "Make PAMOJA mine"
 msgstr "Andaa PAMOJA yangu"
 
 #: core/templates/core/planner.html:5
-#| msgid "Review your planner"
 msgid "Your planner"
 msgstr "Mpangilio wako"
 
@@ -576,17 +608,14 @@ msgid "ROOM FOR WHAT MATTERS"
 msgstr "NAFASI KWA MAMBO MUHIMU"
 
 #: core/templates/core/planner.html:16
-#| msgid "Review your planner"
 msgid "Your planner."
 msgstr "Mpangilio wako."
 
 #: core/templates/core/planner.html:18
-#| msgid "A little room ahead."
 msgid "A little structure for the days ahead."
 msgstr "Mpangilio kidogo kwa siku zijazo."
 
 #: core/templates/core/planner.html:36
-#| msgid "Your spaces"
 msgid "All spaces"
 msgstr "Sehemu zote"
 
@@ -599,7 +628,6 @@ msgid "Filter"
 msgstr "Chuja"
 
 #: core/templates/core/planner.html:68
-#| msgid "A little room ahead."
 msgid "A little room to begin."
 msgstr "Nafasi kidogo ya kuanzia."
 
@@ -618,11 +646,10 @@ msgid ""
 "Dates and times use your saved time zone. In-app reminders appear on Home "
 "for overdue tasks when enabled."
 msgstr ""
-"Tarehe na saa hutumia ukanda wako wa saa uliohifadhiwa. Ukiwasha vikumbusho,"
-" majukumu yaliyochelewa yataonyeshwa kwenye Mwanzo."
+"Tarehe na saa hutumia ukanda wako wa saa uliohifadhiwa. Ukiwasha vikumbusho, "
+"majukumu yaliyochelewa yataonyeshwa kwenye Mwanzo."
 
 #: core/templates/core/profile.html:5
-#| msgid "Your spaces"
 msgid "Your space"
 msgstr "Nafasi yako"
 
@@ -635,7 +662,6 @@ msgid "MAKE YOURSELF AT HOME"
 msgstr "JISIKIE UKO NYUMBANI"
 
 #: core/templates/core/profile.html:16
-#| msgid "Your spaces"
 msgid "Your space."
 msgstr "Nafasi yako."
 
@@ -652,7 +678,6 @@ msgid "Current time zone"
 msgstr "Ukanda wa saa wa sasa"
 
 #: core/templates/core/profile.html:56
-#| msgid "Your goal"
 msgid "My goal"
 msgstr "Lengo langu"
 
@@ -667,23 +692,24 @@ msgstr ""
 "maisha yako."
 
 #: core/templates/core/profile.html:72
-#| msgid "A little room ahead."
 msgid "A little closer to home."
 msgstr "Karibu nawe zaidi."
 
 #: core/templates/core/profile.html:74
 msgid "Open PAMOJA in Safari, tap Share, and choose Add to Home Screen."
 msgstr ""
-"Fungua PAMOJA katika Safari, gusa Shiriki, kisha chagua Ongeza kwenye Skrini"
-" ya Mwanzo."
+"Fungua PAMOJA katika Safari, gusa Shiriki, kisha chagua Ongeza kwenye Skrini "
+"ya Mwanzo."
 
 #: core/templates/core/profile.html:81
-#| msgid "Log in"
 msgid "Log out"
 msgstr "Ondoka"
 
+#: core/templates/core/task_form.html:5
+msgid "Make a plan"
+msgstr "Tengeneza mpango"
+
 #: core/templates/core/task_form.html:11
-#| msgid "Open my planner"
 msgid "Back to planner"
 msgstr "Rudi kwenye mpangilio"
 
@@ -692,7 +718,6 @@ msgid "SMALL STEPS, REAL PROGRESS"
 msgstr "HATUA NDOGO, MAENDELEO HALISI"
 
 #: core/templates/core/task_form.html:20
-#| msgid "A little room ahead."
 msgid "A little adjustment."
 msgstr "Marekebisho kidogo."
 
@@ -776,11 +801,10 @@ msgid ""
 "A little clarity for your everyday. Make room for your goals, organize what "
 "matters, and find your next step with PAMOJA."
 msgstr ""
-"Uwazi kidogo katika maisha yako ya kila siku. Tenga nafasi kwa malengo yako,"
-" panga mambo muhimu na pata hatua yako inayofuata kwa PAMOJA."
+"Uwazi kidogo katika maisha yako ya kila siku. Tenga nafasi kwa malengo yako, "
+"panga mambo muhimu na pata hatua yako inayofuata kwa PAMOJA."
 
 #: core/templates/core/welcome.html:20
-#| msgid "Find your daily rhythm"
 msgid "Find your rhythm"
 msgstr "Pata mdundo wako"
 
@@ -793,7 +817,6 @@ msgid "together."
 msgstr "pamoja."
 
 #: core/templates/core/welcome.html:39
-#| msgid "Make time to move"
 msgid "Make time for you"
 msgstr "Tenga muda kwa ajili yako"
 
@@ -830,7 +853,6 @@ msgid "Your day, your priorities, one clear view."
 msgstr "Siku yako na vipaumbele vyako, katika mwonekano mmoja ulio wazi."
 
 #: core/templates/core/welcome.html:80
-#| msgid "Life is personal."
 msgid "Make it personal"
 msgstr "Ifanye ikufae"
 
@@ -847,8 +869,8 @@ msgid ""
 "Early development build · Planning and accounts work now. Live AI is a "
 "future milestone."
 msgstr ""
-"Toleo linaloendelezwa · Mipango na akaunti tayari vinafanya kazi. AI ya moja"
-" kwa moja itaongezwa baadaye."
+"Toleo linaloendelezwa · Mipango na akaunti tayari vinafanya kazi. AI ya moja "
+"kwa moja itaongezwa baadaye."
 
 #: core/templates/registration/login.html:5
 msgid "Welcome back"
@@ -903,8 +925,7 @@ msgid "Your next chapter<br>starts <em>here.</em>"
 msgstr "Ukurasa wako mpya<br>unaanza <em>hapa.</em>"
 
 #: core/templates/registration/signup.html:20
-msgid ""
-"You bring the goals. We’ll build a little space to bring them together."
+msgid "You bring the goals. We’ll build a little space to bring them together."
 msgstr "Unaleta malengo yako. Tunajenga nafasi ya kuyaweka pamoja."
 
 #: core/templates/registration/signup.html:26
@@ -916,7 +937,6 @@ msgid "WELCOME TO PAMOJA"
 msgstr "KARIBU PAMOJA"
 
 #: core/templates/registration/signup.html:35
-#| msgid "Let’s make today count, together."
 msgid "Let’s get you settled."
 msgstr "Tuandae nafasi yako."
 
@@ -980,3 +1000,80 @@ msgstr "Habari za mchana"
 #: core/views.py:85
 msgid "Good evening"
 msgstr "Habari za jioni"
+
+#~ msgid "Your assistant"
+#~ msgstr "Msaidizi wako"
+
+#~ msgid "TOGETHER, EVERY STEP"
+#~ msgstr "PAMOJA, KATIKA KILA HATUA"
+
+#~ msgid "Your personal assistant will live here."
+#~ msgstr "Msaidizi wako binafsi atapatikana hapa."
+
+#~ msgid "We’re building the foundation first."
+#~ msgstr "Tunajenga msingi kwanza."
+
+#~ msgid ""
+#~ "Live AI chat is not connected in this milestone. Your accounts, "
+#~ "preferences, and planner already work. Next, we’ll connect an AI service "
+#~ "that can suggest plans using the information you allow."
+#~ msgstr ""
+#~ "Mazungumzo ya moja kwa moja na AI bado hayajaunganishwa katika hatua hii. "
+#~ "Akaunti, mapendeleo na mpangilio wako tayari vinafanya kazi. Kisha "
+#~ "tutaunganisha huduma ya AI inayoweza kupendekeza mipango kwa kutumia "
+#~ "taarifa utakazoruhusu."
+
+#~ msgid "You’ll review task changes before saving them."
+#~ msgstr "Utapitia mabadiliko ya majukumu kabla ya kuyahifadhi."
+
+#: core/ai_chat.py
+msgid "AI chat is not configured yet."
+msgstr "Gumzo la AI bado halijasanidiwa."
+
+#: core/ai_chat.py
+msgid "Message request is too large."
+msgstr "Ombi la ujumbe ni kubwa mno."
+
+#: core/ai_chat.py
+msgid "Invalid message format."
+msgstr "Muundo wa ujumbe si sahihi."
+
+#: core/ai_chat.py
+msgid "Please enter a message."
+msgstr "Tafadhali andika ujumbe."
+
+#: core/ai_chat.py
+msgid "Please keep messages under 2000 characters."
+msgstr "Tafadhali hakikisha ujumbe una herufi chini ya 2000."
+
+#: core/ai_chat.py
+msgid "Invalid conversation ID."
+msgstr "Kitambulisho cha mazungumzo si sahihi."
+
+#: core/ai_chat.py
+msgid "Conversation not found."
+msgstr "Mazungumzo hayajapatikana."
+
+#: core/ai_chat.py
+msgid "Message limit reached. Please try again later."
+msgstr "Umefikia kikomo cha ujumbe. Tafadhali jaribu tena baadaye."
+
+#: core/ai_chat.py
+msgid "AI model configuration is invalid."
+msgstr "Mipangilio ya modeli ya AI si sahihi."
+
+#: core/ai_chat.py
+msgid "The assistant could not generate a reply."
+msgstr "Msaidizi hakuweza kutoa jibu."
+
+#: core/ai_chat.py
+msgid "AI is busy. Please try again shortly."
+msgstr "AI ina shughuli nyingi. Tafadhali jaribu tena baada ya muda mfupi."
+
+#: core/ai_chat.py
+msgid "AI service is temporarily unavailable."
+msgstr "Huduma ya AI haipatikani kwa sasa."
+
+#: core/ai_chat.py
+msgid "Could not connect to the AI service."
+msgstr "Imeshindikana kuunganisha kwenye huduma ya AI."

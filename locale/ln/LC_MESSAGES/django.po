@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PAMOJA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 05:31+0000\n"
+"POT-Creation-Date: 2026-11-18 05:12+0000\n"
 "PO-Revision-Date: 2026-11-17 00:00+0000\n"
 "Last-Translator: PAMOJA translation draft\n"
 "Language-Team: ln\n"
@@ -131,6 +131,19 @@ msgstr "Etalami"
 msgid "Resolved"
 msgstr "Esilisami"
 
+#: core/models.py:183
+msgid "New conversation"
+msgstr ""
+
+#: core/models.py:197
+msgid "User"
+msgstr ""
+
+#: core/models.py:198 core/templates/core/chat.html:6
+#: core/templates/core/chat.html:466
+msgid "PAMOJA AI"
+msgstr "PAMOJA AI"
+
 #: core/owner_tools.py:59
 msgid "Feedback type"
 msgstr "Lolenge ya makanisi"
@@ -140,7 +153,6 @@ msgid "Subject"
 msgstr "Likambo"
 
 #: core/owner_tools.py:61
-#| msgid "Share feedback"
 msgid "Your feedback"
 msgstr "Makanisi na yo"
 
@@ -197,44 +209,74 @@ msgstr "Manaka"
 msgid "Profile"
 msgstr "Profil"
 
-#: core/templates/core/chat.html:5
-msgid "Your assistant"
-msgstr "Mosungi na yo"
+#: core/templates/core/chat.html:469
+msgid "A little help, whenever you need it."
+msgstr "Mwa lisalisi, ntango nyonso oyo ozali na bosenga na yango."
 
-#: core/templates/core/chat.html:11
-msgid "TOGETHER, EVERY STEP"
-msgstr "ELONGO, NA LITAMBE NYONSO"
+#: core/templates/core/chat.html:481
+msgid "Conversations"
+msgstr "Masolo"
 
-#: core/templates/core/chat.html:17
-msgid "A little help.<br>A clearer next step."
-msgstr "Mwa lisalisi.<br>Litambe oyo elandi ekomi polele."
+#: core/templates/core/chat.html:490 core/templates/core/chat.html:504
+msgid "Your conversations"
+msgstr "Masolo na yo"
 
-#: core/templates/core/chat.html:21
-msgid "Your personal assistant will live here."
-msgstr "Mosungi na yo moko akozala awa."
+#: core/templates/core/chat.html:498
+msgid "Close conversations"
+msgstr "Kanga liste ya masolo"
 
-#: core/templates/core/chat.html:26
-msgid "We’re building the foundation first."
-msgstr "Tozali naino kotonga moboko."
+#: core/templates/core/chat.html:511
+msgid "New chat"
+msgstr "Lisolo ya sika"
 
-#: core/templates/core/chat.html:30
+#: core/templates/core/chat.html:519
+msgid "Recent conversations"
+msgstr "Masolo ya sika kala mingi te"
+
+#: core/templates/core/chat.html:546
 msgid ""
-"Live AI chat is not connected in this milestone. Your accounts, preferences,"
-" and planner already work. Next, we’ll connect an AI service that can "
-"suggest plans using the information you allow."
-msgstr ""
-"Lisolo ya mbala moko na AI ekangisami naino te na etape oyo. Bakonti, maponi"
-" mpe manaka na yo ezali deja kosala. Na nsima, tokokangisa lisalisi ya AI "
-"oyo ekoki kopesa makanisi ya manaka na kosalela makambo oyo opesi nzela."
+"Hello! I'm PAMOJA AI. I can help you plan your day, study, work toward your "
+"goals, or simply talk. What's on your mind?"
+msgstr "Mbote! Nazali PAMOJA AI. Nakoki kosalisa yo obongisa mokolo na yo, oyekola, okokisa mikano na yo, to tósolola kaka. Ozali kokanisa nini?"
 
-#: core/templates/core/chat.html:34
-msgid "You’ll review task changes before saving them."
-msgstr "Okotala mbongwana ya misala liboso ya kobomba yango."
+#: core/templates/core/chat.html:558
+msgid "PAMOJA is thinking..."
+msgstr "PAMOJA ezali kokanisa..."
 
-#: core/templates/core/chat.html:39 core/templates/core/task_form.html:5
-#| msgid "Make your first plan"
-msgid "Make a plan"
-msgstr "Bongisa manaka"
+#: core/templates/core/chat.html:559
+msgid "Something went wrong. Please try again."
+msgstr "Likambo moko esimbi te. Meká lisusu."
+
+#: core/templates/core/chat.html:560
+msgid "No saved conversations yet."
+msgstr "Masolo oyo ebombami ezali naino te."
+
+#: core/templates/core/chat.html:561
+msgid "Delete this conversation and its messages?"
+msgstr "Olingi kolongola lisolo oyo ná bansango na yango?"
+
+#: core/templates/core/chat.html:562
+msgid "Delete conversation"
+msgstr "Longola lisolo"
+
+#: core/templates/core/chat.html:571
+msgid "Ask PAMOJA anything..."
+msgstr "Tuná PAMOJA nyonso oyo olingi..."
+
+#: core/templates/core/chat.html:572
+msgid "Your message"
+msgstr "Nsango na yo"
+
+#: core/templates/core/chat.html:580
+msgid "Send message"
+msgstr "Tinda nsango"
+
+#: core/templates/core/chat.html:609
+msgid ""
+"Conversations are saved to your account and processed by Google Gemini. "
+"Avoid sharing passwords or highly sensitive information. PAMOJA AI can make "
+"mistakes."
+msgstr "Masolo ebombamaka na kɔnti na yo mpe Google Gemini esalelaka yango. Kokabola te bapasiwɛrdi to makambo ya sekele mingi. PAMOJA AI ekoki kosala mabunga."
 
 #: core/templates/core/dashboard.html:5 core/tests/test_languages.py:211
 msgid "Your day"
@@ -393,17 +435,14 @@ msgid "Planning tip · not AI-generated"
 msgstr "Toli ya kobongisa manaka · esalemi na AI te"
 
 #: core/templates/core/feedback.html:5
-#| msgid "Share feedback"
 msgid "Feedback"
 msgstr "Makanisi"
 
 #: core/templates/core/feedback.html:12
-#| msgid "A LITTLE HELP FROM PAMOJA"
 msgid "HELP IMPROVE PAMOJA"
 msgstr "SALISA MPO NA KOBONGISA PAMOJA"
 
 #: core/templates/core/feedback.html:15
-#| msgid "Share feedback"
 msgid "Share your feedback"
 msgstr "Pesa makanisi na yo"
 
@@ -424,12 +463,10 @@ msgstr ""
 "Kotya te maloba ya kobombana, makambo ya mbongo to makambo mosusu ya sekele."
 
 #: core/templates/core/feedback.html:36
-#| msgid "Share feedback"
 msgid "Send feedback"
 msgstr "Tinda makanisi"
 
 #: core/templates/core/feedback.html:43
-#| msgid "Profile"
 msgid "Back to Profile"
 msgstr "Zonga na profil"
 
@@ -454,7 +491,6 @@ msgstr "Bomba"
 
 #: core/templates/core/my_feedback.html:5
 #: core/templates/core/my_feedback.html:15
-#| msgid "Share feedback"
 msgid "My feedback"
 msgstr "Makanisi na ngai"
 
@@ -467,7 +503,6 @@ msgid "Your submissions and responses from the PAMOJA Team."
 msgstr "Bansango oyo otindi mpe biyano ya Ekipi ya PAMOJA."
 
 #: core/templates/core/my_feedback.html:22
-#| msgid "Share feedback"
 msgid "Send new feedback"
 msgstr "Tinda makanisi ya sika"
 
@@ -493,7 +528,6 @@ msgid "You haven't submitted any feedback yet."
 msgstr "Otindi naino makanisi moko te."
 
 #: core/templates/core/my_feedback.html:68
-#| msgid "My feedback & replies"
 msgid "Feedback pages"
 msgstr "Nkasa ya makanisi"
 
@@ -514,64 +548,63 @@ msgstr "Ya nsima"
 msgid "Make it yours"
 msgstr "Bongisa yango ndenge olingi"
 
-#: core/templates/core/onboarding.html:12
+#: core/templates/core/onboarding.html:13
 msgid "YOUR PREFERENCES"
 msgstr "MAPONI NA YO"
 
-#: core/templates/core/onboarding.html:14
+#: core/templates/core/onboarding.html:15
 msgid "A LITTLE ABOUT YOU"
 msgstr "MWA MAKAMBO MPO NA YO"
 
-#: core/templates/core/onboarding.html:19
+#: core/templates/core/onboarding.html:20
 msgid "Life is personal."
 msgstr "Bomoi na yo ezali ya yo moko."
 
-#: core/templates/core/onboarding.html:21
+#: core/templates/core/onboarding.html:22
 msgid "Your space should be, too."
 msgstr "Esika na yo esengeli mpe kozala bongo."
 
-#: core/templates/core/onboarding.html:25
+#: core/templates/core/onboarding.html:26
 msgid "Choose what matters to you. You can always change things later."
 msgstr ""
 "Pona makambo oyo ezali na ntina mpo na yo. Okoki kobongola yango na nsima."
 
-#: core/templates/core/onboarding.html:33
+#: core/templates/core/onboarding.html:34
 msgid "What would you like a hand with?"
 msgstr "Olingi lisalisi na makambo nini?"
 
-#: core/templates/core/onboarding.html:37
+#: core/templates/core/onboarding.html:38
 msgid "Choose any combination, or start with an empty dashboard."
 msgstr ""
 "Pona biteni oyo olingi, to banda na lokasa oyo ezali naino na eloko te."
 
-#: core/templates/core/onboarding.html:56
+#: core/templates/core/onboarding.html:57
 msgid "A goal on your mind"
 msgstr "Mokano oyo ozali kokanisa"
 
-#: core/templates/core/onboarding.html:58
+#: core/templates/core/onboarding.html:59
 msgid "optional"
 msgstr "esengeli te"
 
-#: core/templates/core/onboarding.html:94
+#: core/templates/core/onboarding.html:95
 msgid "Show due-task reminders"
 msgstr "Lakisa makundoli ya misala oyo esengeli kosilisa"
 
-#: core/templates/core/onboarding.html:97
+#: core/templates/core/onboarding.html:98
 msgid "In-app reminders when you open PAMOJA. Push alerts come later."
 msgstr ""
 "Makundoli ekomonana ntango ofungoli PAMOJA. Mayebisi oyo ekoyaka ata ntango "
 "okangi yango ekoya na nsima."
 
-#: core/templates/core/onboarding.html:106
+#: core/templates/core/onboarding.html:107
 msgid "Save my preferences"
 msgstr "Bomba maponi na ngai"
 
-#: core/templates/core/onboarding.html:108
+#: core/templates/core/onboarding.html:109
 msgid "Make PAMOJA mine"
 msgstr "Bongisa PAMOJA mpo na ngai"
 
 #: core/templates/core/planner.html:5
-#| msgid "Review your planner"
 msgid "Your planner"
 msgstr "Manaka na yo"
 
@@ -580,17 +613,14 @@ msgid "ROOM FOR WHAT MATTERS"
 msgstr "ESIKA MPO NA MAKAMBO YA NTINA"
 
 #: core/templates/core/planner.html:16
-#| msgid "Review your planner"
 msgid "Your planner."
 msgstr "Manaka na yo."
 
 #: core/templates/core/planner.html:18
-#| msgid "A little room ahead."
 msgid "A little structure for the days ahead."
 msgstr "Mwa ebongiseli mpo na mikolo ezali koya."
 
 #: core/templates/core/planner.html:36
-#| msgid "Your spaces"
 msgid "All spaces"
 msgstr "Biteni nyonso"
 
@@ -603,7 +633,6 @@ msgid "Filter"
 msgstr "Pona oyo ekomonana"
 
 #: core/templates/core/planner.html:68
-#| msgid "A little room ahead."
 msgid "A little room to begin."
 msgstr "Mwa esika mpo na kobanda."
 
@@ -625,7 +654,6 @@ msgstr ""
 "makundoli, misala oyo eleki mokolo ekomonana na lokasa ya ebandeli."
 
 #: core/templates/core/profile.html:5
-#| msgid "Your spaces"
 msgid "Your space"
 msgstr "Esika na yo"
 
@@ -638,7 +666,6 @@ msgid "MAKE YOURSELF AT HOME"
 msgstr "ZALA LOKOLA NA NDAKO NA YO"
 
 #: core/templates/core/profile.html:16
-#| msgid "Your spaces"
 msgid "Your space."
 msgstr "Esika na yo."
 
@@ -655,7 +682,6 @@ msgid "Current time zone"
 msgstr "Etando ya ngonga ya sikoyo"
 
 #: core/templates/core/profile.html:56
-#| msgid "Your goal"
 msgid "My goal"
 msgstr "Mokano na ngai"
 
@@ -668,7 +694,6 @@ msgid "Pamoja means together in Swahili. Built around the way you live."
 msgstr "Pamoja elakisi elongo na Kiswahili. Esalemi na kolanda bomoi na yo."
 
 #: core/templates/core/profile.html:72
-#| msgid "A little room ahead."
 msgid "A little closer to home."
 msgstr "PAMOJA pene na yo."
 
@@ -677,12 +702,14 @@ msgid "Open PAMOJA in Safari, tap Share, and choose Add to Home Screen."
 msgstr "Fungola PAMOJA na Safari, finá Share, mpe pona Add to Home Screen."
 
 #: core/templates/core/profile.html:81
-#| msgid "Log in"
 msgid "Log out"
 msgstr "Bima"
 
+#: core/templates/core/task_form.html:5
+msgid "Make a plan"
+msgstr "Bongisa manaka"
+
 #: core/templates/core/task_form.html:11
-#| msgid "Open my planner"
 msgid "Back to planner"
 msgstr "Zonga na manaka"
 
@@ -691,7 +718,6 @@ msgid "SMALL STEPS, REAL PROGRESS"
 msgstr "MATAMBE YA MIKE, BOKOLI YA SOLO"
 
 #: core/templates/core/task_form.html:20
-#| msgid "A little room ahead."
 msgid "A little adjustment."
 msgstr "Mwa mbongwana."
 
@@ -779,7 +805,6 @@ msgstr ""
 "makambo ya ntina, mpe luka litambe na yo oyo elandi na PAMOJA."
 
 #: core/templates/core/welcome.html:20
-#| msgid "Find your daily rhythm"
 msgid "Find your rhythm"
 msgstr "Luka ndenge na yo ya kotambola"
 
@@ -792,7 +817,6 @@ msgid "together."
 msgstr "elongo."
 
 #: core/templates/core/welcome.html:39
-#| msgid "Make time to move"
 msgid "Make time for you"
 msgstr "Zwá ntango mpo na yo moko"
 
@@ -817,8 +841,8 @@ msgid ""
 "In Swahili, <strong>pamoja</strong> means <strong>together</strong>. That’s "
 "the idea behind everything we’re building."
 msgstr ""
-"Na Kiswahili, <strong>pamoja</strong> elakisi <strong>elongo</strong>. Yango"
-" ezali likanisi oyo ezali kotambwisa nyonso oyo tozali kotonga."
+"Na Kiswahili, <strong>pamoja</strong> elakisi <strong>elongo</strong>. Yango "
+"ezali likanisi oyo ezali kotambwisa nyonso oyo tozali kotonga."
 
 #: core/templates/core/welcome.html:70
 msgid "See what matters"
@@ -829,7 +853,6 @@ msgid "Your day, your priorities, one clear view."
 msgstr "Mokolo na yo mpe makambo ya liboso, nyonso na esika moko ya polele."
 
 #: core/templates/core/welcome.html:80
-#| msgid "Life is personal."
 msgid "Make it personal"
 msgstr "Bongisa yango ndenge olingi"
 
@@ -846,8 +869,8 @@ msgid ""
 "Early development build · Planning and accounts work now. Live AI is a "
 "future milestone."
 msgstr ""
-"Version oyo ezali naino kotongama · Manaka mpe bakonti ezali deja kosala. AI"
-" ya mbala moko ekoya na nsima."
+"Version oyo ezali naino kotongama · Manaka mpe bakonti ezali deja kosala. AI "
+"ya mbala moko ekoya na nsima."
 
 #: core/templates/registration/login.html:5
 msgid "Welcome back"
@@ -902,8 +925,7 @@ msgid "Your next chapter<br>starts <em>here.</em>"
 msgstr "Etape na yo ya sika<br>ebandi <em>awa.</em>"
 
 #: core/templates/registration/signup.html:20
-msgid ""
-"You bring the goals. We’ll build a little space to bring them together."
+msgid "You bring the goals. We’ll build a little space to bring them together."
 msgstr "Yo oyei na mikano. Biso tokotonga mwa esika mpo na kosangisa yango."
 
 #: core/templates/registration/signup.html:26
@@ -915,7 +937,6 @@ msgid "WELCOME TO PAMOJA"
 msgstr "BOYEI MALAMU NA PAMOJA"
 
 #: core/templates/registration/signup.html:35
-#| msgid "Let’s make today count, together."
 msgid "Let’s get you settled."
 msgstr "Tobongisa esika na yo."
 
@@ -954,8 +975,7 @@ msgstr "AM to PM"
 
 #: core/time_fields.py:79
 msgid "Choose an hour, minute, and AM or PM, or leave all three blank."
-msgstr ""
-"Pona ngonga, minuti mpe AM to PM, to tika bisika nyonso misato polele."
+msgstr "Pona ngonga, minuti mpe AM to PM, to tika bisika nyonso misato polele."
 
 #: core/time_fields.py:97
 msgid ""
@@ -980,3 +1000,80 @@ msgstr "Mbote ya nsima ya midi"
 #: core/views.py:85
 msgid "Good evening"
 msgstr "Mbote ya mpokwa"
+
+#~ msgid "Your assistant"
+#~ msgstr "Mosungi na yo"
+
+#~ msgid "TOGETHER, EVERY STEP"
+#~ msgstr "ELONGO, NA LITAMBE NYONSO"
+
+#~ msgid "Your personal assistant will live here."
+#~ msgstr "Mosungi na yo moko akozala awa."
+
+#~ msgid "We’re building the foundation first."
+#~ msgstr "Tozali naino kotonga moboko."
+
+#~ msgid ""
+#~ "Live AI chat is not connected in this milestone. Your accounts, "
+#~ "preferences, and planner already work. Next, we’ll connect an AI service "
+#~ "that can suggest plans using the information you allow."
+#~ msgstr ""
+#~ "Lisolo ya mbala moko na AI ekangisami naino te na etape oyo. Bakonti, "
+#~ "maponi mpe manaka na yo ezali deja kosala. Na nsima, tokokangisa lisalisi "
+#~ "ya AI oyo ekoki kopesa makanisi ya manaka na kosalela makambo oyo opesi "
+#~ "nzela."
+
+#~ msgid "You’ll review task changes before saving them."
+#~ msgstr "Okotala mbongwana ya misala liboso ya kobomba yango."
+
+#: core/ai_chat.py
+msgid "AI chat is not configured yet."
+msgstr "Lisolo na AI ebongisami naino te."
+
+#: core/ai_chat.py
+msgid "Message request is too large."
+msgstr "Bosengi ya nsango ezali monene mingi."
+
+#: core/ai_chat.py
+msgid "Invalid message format."
+msgstr "Lolenge ya nsango ezali malamu te."
+
+#: core/ai_chat.py
+msgid "Please enter a message."
+msgstr "Svp, koma nsango."
+
+#: core/ai_chat.py
+msgid "Please keep messages under 2000 characters."
+msgstr "Svp, nsango ezala na bilembo koleka 2000 te."
+
+#: core/ai_chat.py
+msgid "Invalid conversation ID."
+msgstr "Nimero ya lisolo ezali malamu te."
+
+#: core/ai_chat.py
+msgid "Conversation not found."
+msgstr "Lisolo ezwami te."
+
+#: core/ai_chat.py
+msgid "Message limit reached. Please try again later."
+msgstr "Okómi na ndelo ya bansango. Meka lisusu na nsima."
+
+#: core/ai_chat.py
+msgid "AI model configuration is invalid."
+msgstr "Bobongisi ya modèle ya AI ezali malamu te."
+
+#: core/ai_chat.py
+msgid "The assistant could not generate a reply."
+msgstr "Mosungi akoki kopesa eyano te."
+
+#: core/ai_chat.py
+msgid "AI is busy. Please try again shortly."
+msgstr "AI ezali na mosala mingi. Meka lisusu mwa moke na nsima."
+
+#: core/ai_chat.py
+msgid "AI service is temporarily unavailable."
+msgstr "Service ya AI ezali kosala te mpo na mwa ntango."
+
+#: core/ai_chat.py
+msgid "Could not connect to the AI service."
+msgstr "Tokoki kokangama na service ya AI te."

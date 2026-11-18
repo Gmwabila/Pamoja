@@ -1,43 +1,1023 @@
+
 {% extends "core/base.html" %}
 {% load i18n %}
 
 {% block title %}
-    {% translate "Your assistant" %} · PAMOJA
+    {% translate "PAMOJA AI" %}
 {% endblock %}
 
 {% block content %}
-<section class="narrow chat-intro">
-    <span class="eyebrow">
-        {% translate "TOGETHER, EVERY STEP" %}
-    </span>
+<style>
+    .ai-chat {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 18px 14px 36px;
+    }
 
-    <div class="chat-mark" aria-hidden="true">✳</div>
+    .ai-header {
+        text-align: center;
+        margin-bottom: 18px;
+    }
 
-    <h1>
-        {% blocktranslate %}A little help.<br>A clearer next step.{% endblocktranslate %}
-    </h1>
+    .ai-icon {
+        width: 52px;
+        height: 52px;
+        margin: 0 auto 12px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        background: #103f32;
+        color: #fff;
+        font-size: 26px;
+    }
 
-    <p class="muted">
-        {% translate "Your personal assistant will live here." %}
-    </p>
+    .ai-header h1 {
+        margin: 0 0 6px;
+        font-size: 28px;
+    }
 
-    <div class="install-note">
-        <h3>
-            {% translate "We’re building the foundation first." %}
-        </h3>
+    .ai-header p {
+        margin: 0;
+        color: #69746e;
+        font-size: 14px;
+    }
+
+    .ai-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .ai-toolbar h2 {
+        margin: 0;
+        font-size: 15px;
+        color: #244435;
+    }
+
+    .ai-new {
+        background: #103f32;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .ai-new:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .ai-history {
+        display: flex;
+        gap: 9px;
+        overflow-x: auto;
+        padding: 2px 0 12px;
+        margin-bottom: 8px;
+    }
+
+    .ai-history-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        flex: 0 0 auto;
+        max-width: 260px;
+        background: #fff;
+        border: 1px solid #e1e8df;
+        border-radius: 13px;
+        padding: 4px;
+    }
+
+    .ai-history-item.active {
+        background: #edf5ed;
+        border-color: #91b59c;
+    }
+
+    .ai-history-open {
+        border: 0;
+        background: transparent;
+        padding: 8px;
+        font: inherit;
+        font-size: 12px;
+        color: #274735;
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 205px;
+    }
+
+    .ai-history-delete {
+        border: 0;
+        background: transparent;
+        color: #9a5454;
+        padding: 8px;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    .ai-history-open:disabled,
+    .ai-history-delete:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .ai-history-empty {
+        color: #78817a;
+        font-size: 12px;
+        padding: 10px 0;
+    }
+
+    .ai-list-status {
+        font-size: 12px;
+        color: #9a5454;
+        margin-bottom: 8px;
+    }
+
+    .ai-panel {
+        background: #fff;
+        border: 1px solid #e5e9e4;
+        border-radius: 22px;
+        overflow: hidden;
+    }
+
+    .ai-messages {
+        min-height: 300px;
+        height: min(55vh, 510px);
+        overflow-y: auto;
+        padding: 22px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .ai-message {
+        max-width: 88%;
+        padding: 13px 16px;
+        border-radius: 17px;
+        font-size: 14px;
+        line-height: 1.65;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    .ai-assistant {
+        background: #f4f6f1;
+        color: #263d32;
+        align-self: flex-start;
+        border-bottom-left-radius: 5px;
+    }
+
+    .ai-user {
+        background: #103f32;
+        color: #fff;
+        align-self: flex-end;
+        border-bottom-right-radius: 5px;
+    }
+
+    .ai-compose {
+        border-top: 1px solid #e9ede8;
+        padding: 13px;
+    }
+
+    .ai-form {
+        display: flex;
+        align-items: flex-end;
+        gap: 9px;
+    }
+
+    .ai-input {
+        flex: 1;
+        min-width: 0;
+        min-height: 46px;
+        max-height: 145px;
+        resize: vertical;
+        border: 1px solid #dce4dc;
+        border-radius: 15px;
+        padding: 12px;
+        font: inherit;
+        font-size: 14px;
+        background: #fafbf8;
+        color: #183b2e;
+    }
+
+    .ai-input:focus {
+        outline: 2px solid #a6c9b1;
+        outline-offset: 1px;
+    }
+
+    .ai-send {
+        width: 46px;
+        height: 46px;
+        border: 0;
+        border-radius: 14px;
+        background: #103f32;
+        color: white;
+        cursor: pointer;
+        font-size: 21px;
+    }
+
+    .ai-send:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+
+    .ai-note {
+        margin-top: 12px;
+        text-align: center;
+        font-size: 12px;
+        color: #78817a;
+        line-height: 1.6;
+    }
+
+    .ai-status {
+        min-height: 18px;
+        margin: 8px 3px 0;
+        font-size: 12px;
+        color: #6b756c;
+    }
+
+    @media (max-width: 600px) {
+        .ai-chat {
+            padding: 10px 5px 36px;
+        }
+
+        .ai-header h1 {
+            font-size: 24px;
+        }
+
+        .ai-messages {
+            height: 50vh;
+            padding: 16px 12px;
+        }
+
+        .ai-message {
+            max-width: 92%;
+        }
+
+        .ai-history-item {
+            max-width: 220px;
+        }
+
+        .ai-history-open {
+            max-width: 165px;
+        }
+    }
+
+/* Keep the AI Chat composer clear of the floating navigation. */
+.ai-chat {
+    padding-bottom: calc(145px + env(safe-area-inset-bottom));
+}
+
+/* Give the conversation enough space without pushing
+   the message input too far down the screen. */
+.ai-messages {
+    height: min(42dvh, 420px);
+}
+
+/* Mobile and iPhone adjustments. */
+@media (max-width: 600px) {
+    .ai-chat {
+        padding-bottom: calc(155px + env(safe-area-inset-bottom));
+    }
+
+    .ai-messages {
+        height: 38dvh;
+        min-height: 220px;
+    }
+
+    .ai-input {
+        font-size: 16px;
+    }
+}
+
+
+/* PAMOJA AI — Desktop sidebar layout */
+
+.ai-chat {
+    max-width: 1120px;
+}
+
+.ai-workspace {
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+    gap: 18px;
+    align-items: stretch;
+}
+
+.ai-sidebar {
+    min-width: 0;
+    background: #f4f6f1;
+    border: 1px solid #e1e8df;
+    border-radius: 20px;
+    padding: 18px 12px;
+}
+
+.ai-sidebar .ai-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.ai-sidebar .ai-toolbar h2 {
+    font-size: 14px;
+}
+
+.ai-sidebar .ai-new {
+    width: 100%;
+    text-align: center;
+}
+
+.ai-sidebar .ai-history {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 470px;
+    padding: 0;
+}
+
+.ai-sidebar .ai-history-item {
+    width: 100%;
+    max-width: none;
+    flex: 0 0 auto;
+    min-width: 0;
+    border-radius: 11px;
+}
+
+.ai-sidebar .ai-history-open {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+    text-align: left;
+}
+
+.ai-sidebar .ai-history-delete {
+    flex-shrink: 0;
+}
+
+.ai-workspace .ai-panel {
+    min-width: 0;
+}
+
+.ai-sidebar-toggle,
+.ai-sidebar-close,
+.ai-sidebar-backdrop {
+    display: none;
+}
+
+/* PAMOJA AI — Mobile slide-out sidebar */
+
+@media (max-width: 700px) {
+    .ai-workspace {
+        display: block;
+    }
+
+    .ai-sidebar-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 14px;
+        padding: 10px 14px;
+        background: #f4f6f1;
+        border: 1px solid #dce5da;
+        border-radius: 12px;
+        color: #103f32;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .ai-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 61;
+        width: min(85vw, 320px);
+        height: 100vh;
+        height: 100dvh;
+        padding: calc(22px + env(safe-area-inset-top))
+                 16px
+                 calc(22px + env(safe-area-inset-bottom));
+        border-radius: 0 20px 20px 0;
+        overflow-y: auto;
+        transform: translateX(-105%);
+        visibility: hidden;
+        pointer-events: none;
+        transition: transform 0.25s ease,
+                    visibility 0.25s;
+        box-shadow: 10px 0 40px #103f3220;
+    }
+
+    .ai-sidebar.is-open {
+        transform: translateX(0);
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .ai-sidebar-close {
+        display: block;
+        margin: 0 0 22px auto;
+        padding: 8px 12px;
+        background: white;
+        border: 1px solid #dce5da;
+        border-radius: 10px;
+        color: #103f32;
+        font-size: 20px;
+    }
+
+    .ai-sidebar-backdrop.is-open {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background: #102b2380;
+    }
+
+    .ai-sidebar .ai-history {
+        max-height: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ai-sidebar {
+        transition: none;
+    }
+}
+
+
+</style>
+
+
+<section class="ai-chat">
+
+    <!-- AI Chat heading -->
+    <header class="ai-header">
+        <div class="ai-icon" aria-hidden="true">✳</div>
+
+        <h1>{% translate "PAMOJA AI" %}</h1>
 
         <p>
-            {% translate "Live AI chat is not connected in this milestone. Your accounts, preferences, and planner already work. Next, we’ll connect an AI service that can suggest plans using the information you allow." %}
+            {% translate "A little help, whenever you need it." %}
         </p>
+    </header>
 
-        <p>
-            {% translate "You’ll review task changes before saving them." %}
-        </p>
+    <!-- Mobile sidebar toggle -->
+    <button
+        type="button"
+        id="ai-sidebar-toggle"
+        class="ai-sidebar-toggle"
+        aria-controls="ai-sidebar"
+        aria-expanded="false"
+    >
+        ☰ {% translate "Conversations" %}
+    </button>
+
+    <div class="ai-workspace">
+
+        <!-- Conversation sidebar -->
+        <aside
+            class="ai-sidebar"
+            id="ai-sidebar"
+            aria-label="{% translate 'Your conversations' %}"
+        >
+
+            <!-- Mobile sidebar close button -->
+            <button
+                type="button"
+                id="ai-sidebar-close"
+                class="ai-sidebar-close"
+                aria-label="{% translate 'Close conversations' %}"
+            >
+                &times;
+            </button>
+
+            <div class="ai-toolbar">
+                <h2>{% translate "Your conversations" %}</h2>
+
+                <button
+                    type="button"
+                    id="ai-new"
+                    class="ai-new"
+                >
+                    + {% translate "New chat" %}
+                </button>
+            </div>
+
+            <!-- Saved conversations -->
+            <div
+                id="ai-history"
+                class="ai-history"
+                aria-label="{% translate 'Recent conversations' %}"
+            ></div>
+
+            <!-- Sidebar status -->
+            <div
+                id="ai-list-status"
+                class="ai-list-status"
+                role="status"
+            ></div>
+
+        </aside>
+
+        <!-- Main conversation panel -->
+        <div class="ai-panel">
+
+            <!-- Messages -->
+            <div
+                id="ai-messages"
+                class="ai-messages"
+                role="log"
+                aria-live="polite"
+                aria-relevant="additions"
+            >
+                <div
+                    id="ai-welcome"
+                    class="ai-message ai-assistant"
+                >
+                    {% translate "Hello! I'm PAMOJA AI. I can help you plan your day, study, work toward your goals, or simply talk. What's on your mind?" %}
+                </div>
+            </div>
+
+            <!-- Message composer -->
+            <div class="ai-compose">
+
+                <form
+                    id="ai-form"
+                    class="ai-form"
+                    action="{% url 'chat_message' %}"
+                    method="post"
+                    data-thinking="{% translate 'PAMOJA is thinking...' %}"
+                    data-error="{% translate 'Something went wrong. Please try again.' %}"
+                    data-empty="{% translate 'No saved conversations yet.' %}"
+                    data-delete="{% translate 'Delete this conversation and its messages?' %}"
+                    data-delete-label="{% translate 'Delete conversation' %}"
+                >
+                    {% csrf_token %}
+
+                    <textarea
+                        id="ai-input"
+                        class="ai-input"
+                        rows="2"
+                        maxlength="2000"
+                        placeholder="{% translate 'Ask PAMOJA anything...' %}"
+                        aria-label="{% translate 'Your message' %}"
+                        required
+                    ></textarea>
+
+                    <button
+                        id="ai-send"
+                        class="ai-send"
+                        type="submit"
+                        aria-label="{% translate 'Send message' %}"
+                    >
+                        ↑
+                    </button>
+                </form>
+
+                <!-- Message status -->
+                <div
+                    id="ai-status"
+                    class="ai-status"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <a class="button full" href="{% url 'planner' %}">
-        {% translate "Make a plan" %}
-        <span aria-hidden="true">↗</span>
-    </a>
+    <!-- Mobile sidebar backdrop -->
+    <div
+        id="ai-sidebar-backdrop"
+        class="ai-sidebar-backdrop"
+        aria-hidden="true"
+    ></div>
+
+    <!-- Privacy notice -->
+    <p class="ai-note">
+        {% translate "Conversations are saved to your account and processed by Google Gemini. Avoid sharing passwords or highly sensitive information. PAMOJA AI can make mistakes." %}
+    </p>
+
 </section>
+
+
+<script>
+(function () {
+
+    const sidebar = document.getElementById("ai-sidebar");
+    const sidebarToggle = document.getElementById("ai-sidebar-toggle");
+    const sidebarClose = document.getElementById("ai-sidebar-close");
+    const sidebarBackdrop = document.getElementById("ai-sidebar-backdrop");
+
+    function openSidebar() {
+        sidebar.classList.add("is-open");
+        sidebarBackdrop.classList.add("is-open");
+        sidebarToggle.setAttribute("aria-expanded", "true");
+        sidebarClose.focus();
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove("is-open");
+        sidebarBackdrop.classList.remove("is-open");
+        sidebarToggle.setAttribute("aria-expanded", "false");
+    }
+
+    sidebarToggle.addEventListener("click", openSidebar);
+    sidebarClose.addEventListener("click", closeSidebar);
+    sidebarBackdrop.addEventListener("click", closeSidebar);
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" &&
+            sidebar.classList.contains("is-open")) {
+            closeSidebar();
+            sidebarToggle.focus();
+        }
+    });
+
+    const form = document.getElementById("ai-form");
+    const input = document.getElementById("ai-input");
+    const messages = document.getElementById("ai-messages");
+    const sendButton = document.getElementById("ai-send");
+    const newButton = document.getElementById("ai-new");
+    const historyElement = document.getElementById("ai-history");
+    const listStatus = document.getElementById("ai-list-status");
+    const status = document.getElementById("ai-status");
+
+    const welcomeText = document.getElementById(
+        "ai-welcome"
+    ).textContent.trim();
+
+    const csrfToken = form.querySelector(
+        'input[name="csrfmiddlewaretoken"]'
+    ).value;
+
+    const listUrl = "{% url 'chat_conversations' %}";
+    const detailTemplate = "{% url 'chat_conversation_detail' 0 %}";
+    const deleteTemplate = "{% url 'chat_conversation_delete' 0 %}";
+
+    // Keep the active conversation ID per browser tab and account.
+    const storageKey = "pamoja-ai-active-{{ request.user.pk }}";
+
+    let conversationId = null;
+    let conversationList = [];
+    let busy = false;
+
+    function conversationUrl(template, id) {
+        return template.replace("/0/", "/" + id + "/");
+    }
+
+    function setBusy(value) {
+        busy = value;
+        sendButton.disabled = value;
+        input.disabled = value;
+        newButton.disabled = value;
+
+        historyElement.querySelectorAll("button").forEach(
+            button => button.disabled = value
+        );
+    }
+
+    function addMessage(text, sender) {
+        const bubble = document.createElement("div");
+
+        bubble.className = "ai-message " +
+            (sender === "user" ? "ai-user" : "ai-assistant");
+
+        // Never interpret user or AI text as HTML.
+        bubble.textContent = text;
+
+        messages.appendChild(bubble);
+        messages.scrollTop = messages.scrollHeight;
+
+        return bubble;
+    }
+
+    function showWelcome() {
+        messages.replaceChildren();
+        addMessage(welcomeText, "assistant");
+    }
+
+    function renderHistory() {
+        historyElement.replaceChildren();
+
+        if (!conversationList.length) {
+            const empty = document.createElement("span");
+            empty.className = "ai-history-empty";
+            empty.textContent = form.dataset.empty;
+            historyElement.appendChild(empty);
+            return;
+        }
+
+        conversationList.forEach(conversation => {
+            const item = document.createElement("div");
+            item.className = "ai-history-item";
+
+            if (conversation.id === conversationId) {
+                item.classList.add("active");
+            }
+
+            const openButton = document.createElement("button");
+            openButton.type = "button";
+            openButton.className = "ai-history-open";
+            openButton.textContent = conversation.title;
+            openButton.title = conversation.title;
+            openButton.disabled = busy;
+
+            openButton.addEventListener("click", function () {
+                openConversation(conversation.id);
+                closeSidebar();
+        });
+
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.className = "ai-history-delete";
+            deleteButton.textContent = "✕";
+            deleteButton.disabled = busy;
+            deleteButton.setAttribute(
+                "aria-label",
+                form.dataset.deleteLabel + ": " + conversation.title
+            );
+
+            deleteButton.addEventListener("click", function () {
+                deleteConversation(conversation.id);
+            });
+
+            item.appendChild(openButton);
+            item.appendChild(deleteButton);
+            historyElement.appendChild(item);
+        });
+    }
+
+    async function refreshHistory() {
+        try {
+            const response = await fetch(listUrl, {
+                credentials: "same-origin"
+            });
+
+            if (!response.ok) {
+                throw new Error(form.dataset.error);
+            }
+
+            const data = await response.json();
+
+            if (!Array.isArray(data.conversations)) {
+                throw new Error(form.dataset.error);
+            }
+
+            conversationList = data.conversations;
+            listStatus.textContent = "";
+            renderHistory();
+
+            return true;
+
+        } catch (error) {
+            listStatus.textContent =
+                error.message || form.dataset.error;
+            return false;
+        }
+    }
+
+    async function loadConversation(id) {
+        const response = await fetch(
+            conversationUrl(detailTemplate, id),
+            { credentials: "same-origin" }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || form.dataset.error);
+        }
+
+        if (!Array.isArray(data.messages)) {
+            throw new Error(form.dataset.error);
+        }
+
+        conversationId = data.id;
+        sessionStorage.setItem(storageKey, String(conversationId));
+
+        messages.replaceChildren();
+
+        if (!data.messages.length) {
+            showWelcome();
+        } else {
+            data.messages.forEach(message => {
+                addMessage(
+                    message.text,
+                    message.role === "user" ? "user" : "assistant"
+                );
+            });
+        }
+
+        status.textContent = "";
+        renderHistory();
+    }
+
+    async function openConversation(id) {
+        if (busy) return;
+
+        setBusy(true);
+
+        try {
+            await loadConversation(id);
+        } catch (error) {
+            status.textContent =
+                error.message || form.dataset.error;
+        } finally {
+            setBusy(false);
+            renderHistory();
+        }
+    }
+
+    function startNewChat() {
+        if (busy) return;
+
+        conversationId = null;
+        sessionStorage.setItem(storageKey, "new");
+
+        input.value = "";
+        status.textContent = "";
+        showWelcome();
+        renderHistory();
+        input.focus();
+    }
+
+    async function deleteConversation(id) {
+        if (busy) return;
+
+        if (!window.confirm(form.dataset.delete)) {
+            return;
+        }
+
+        setBusy(true);
+
+        try {
+            const response = await fetch(
+                conversationUrl(deleteTemplate, id),
+                {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "X-CSRFToken": csrfToken
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || form.dataset.error);
+            }
+
+            if (conversationId === id) {
+                conversationId = null;
+                sessionStorage.setItem(storageKey, "new");
+                showWelcome();
+            }
+
+            await refreshHistory();
+            status.textContent = "";
+
+        } catch (error) {
+            status.textContent =
+                error.message || form.dataset.error;
+        } finally {
+            setBusy(false);
+            renderHistory();
+        }
+    }
+
+    newButton.addEventListener("click", function () {
+        startNewChat();
+        closeSidebar();
+    });
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const message = input.value.trim();
+
+        if (!message || busy) return;
+
+        const userBubble = addMessage(message, "user");
+
+        input.value = "";
+        setBusy(true);
+        status.textContent = form.dataset.thinking;
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken
+                },
+                body: JSON.stringify({
+                    message: message,
+                    conversation_id: conversationId
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || form.dataset.error);
+            }
+
+            if (
+                typeof data.reply !== "string" ||
+                !Number.isInteger(data.conversation_id)
+            ) {
+                throw new Error(form.dataset.error);
+            }
+
+            conversationId = data.conversation_id;
+
+            sessionStorage.setItem(
+                storageKey,
+                String(conversationId)
+            );
+
+            addMessage(data.reply, "assistant");
+            status.textContent = "";
+
+            await refreshHistory();
+
+        } catch (error) {
+            userBubble.remove();
+            input.value = message;
+
+            status.textContent =
+                error.message || form.dataset.error;
+
+        } finally {
+            setBusy(false);
+            renderHistory();
+            input.focus();
+        }
+    });
+
+    input.addEventListener("keydown", function (event) {
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey &&
+            !event.isComposing
+        ) {
+            event.preventDefault();
+            form.requestSubmit();
+        }
+    });
+
+    async function initialize() {
+        setBusy(true);
+
+        try {
+            const loaded = await refreshHistory();
+
+            if (!loaded) return;
+
+            const savedId = sessionStorage.getItem(storageKey);
+
+            if (savedId === "new") {
+                showWelcome();
+                return;
+            }
+
+            const selected = conversationList.find(
+                item => String(item.id) === savedId
+            );
+
+            const initialConversation =
+                selected || conversationList[0];
+
+            if (initialConversation) {
+                await loadConversation(initialConversation.id);
+            } else {
+                showWelcome();
+            }
+
+        } catch (error) {
+            status.textContent =
+                error.message || form.dataset.error;
+        } finally {
+            setBusy(false);
+            renderHistory();
+        }
+    }
+
+    initialize();
+})();
+</script>
 {% endblock %}

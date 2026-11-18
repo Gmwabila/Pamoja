@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PAMOJA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 05:31+0000\n"
+"POT-Creation-Date: 2026-11-18 05:12+0000\n"
 "PO-Revision-Date: 2026-11-17 00:00+0000\n"
 "Last-Translator: PAMOJA translation draft\n"
 "Language-Team: ja\n"
@@ -131,6 +131,19 @@ msgstr "確認済み"
 msgid "Resolved"
 msgstr "対応済み"
 
+#: core/models.py:183
+msgid "New conversation"
+msgstr ""
+
+#: core/models.py:197
+msgid "User"
+msgstr ""
+
+#: core/models.py:198 core/templates/core/chat.html:6
+#: core/templates/core/chat.html:466
+msgid "PAMOJA AI"
+msgstr "PAMOJA AI"
+
 #: core/owner_tools.py:59
 msgid "Feedback type"
 msgstr "フィードバックの種類"
@@ -140,7 +153,6 @@ msgid "Subject"
 msgstr "件名"
 
 #: core/owner_tools.py:61
-#| msgid "Share feedback"
 msgid "Your feedback"
 msgstr "フィードバックの内容"
 
@@ -196,42 +208,74 @@ msgstr "プランナー"
 msgid "Profile"
 msgstr "プロフィール"
 
-#: core/templates/core/chat.html:5
-msgid "Your assistant"
-msgstr "あなたのアシスタント"
+#: core/templates/core/chat.html:469
+msgid "A little help, whenever you need it."
+msgstr "必要なときに、いつでも少しお手伝いします。"
 
-#: core/templates/core/chat.html:11
-msgid "TOGETHER, EVERY STEP"
-msgstr "どの一歩も、一緒に"
+#: core/templates/core/chat.html:481
+msgid "Conversations"
+msgstr "会話"
 
-#: core/templates/core/chat.html:17
-msgid "A little help.<br>A clearer next step."
-msgstr "小さな手助けで、<br>次の一歩が見えてくる。"
+#: core/templates/core/chat.html:490 core/templates/core/chat.html:504
+msgid "Your conversations"
+msgstr "あなたの会話"
 
-#: core/templates/core/chat.html:21
-msgid "Your personal assistant will live here."
-msgstr "あなた専用のアシスタントをここに用意する予定です。"
+#: core/templates/core/chat.html:498
+msgid "Close conversations"
+msgstr "会話一覧を閉じる"
 
-#: core/templates/core/chat.html:26
-msgid "We’re building the foundation first."
-msgstr "まずは土台を作っています。"
+#: core/templates/core/chat.html:511
+msgid "New chat"
+msgstr "新しいチャット"
 
-#: core/templates/core/chat.html:30
+#: core/templates/core/chat.html:519
+msgid "Recent conversations"
+msgstr "最近の会話"
+
+#: core/templates/core/chat.html:546
 msgid ""
-"Live AI chat is not connected in this milestone. Your accounts, preferences,"
-" and planner already work. Next, we’ll connect an AI service that can "
-"suggest plans using the information you allow."
-msgstr ""
-"現段階では、AIチャットはまだ接続されていません。アカウント、設定、プランナーはすでに利用できます。今後、あなたが利用を許可した情報を使って計画を提案できるAIサービスを接続する予定です。"
+"Hello! I'm PAMOJA AI. I can help you plan your day, study, work toward your "
+"goals, or simply talk. What's on your mind?"
+msgstr "こんにちは！PAMOJA AIです。1日の予定を立てたり、勉強したり、目標に向かって取り組んだり、気軽にお話ししたりできます。今日は何を話しましょうか？"
 
-#: core/templates/core/chat.html:34
-msgid "You’ll review task changes before saving them."
-msgstr "タスクの変更内容は、保存する前に確認できます。"
+#: core/templates/core/chat.html:558
+msgid "PAMOJA is thinking..."
+msgstr "PAMOJAが考えています..."
 
-#: core/templates/core/chat.html:39 core/templates/core/task_form.html:5
-#| msgid "Make your first plan"
-msgid "Make a plan"
-msgstr "予定を立てる"
+#: core/templates/core/chat.html:559
+msgid "Something went wrong. Please try again."
+msgstr "エラーが発生しました。もう一度お試しください。"
+
+#: core/templates/core/chat.html:560
+msgid "No saved conversations yet."
+msgstr "保存された会話はまだありません。"
+
+#: core/templates/core/chat.html:561
+msgid "Delete this conversation and its messages?"
+msgstr "この会話とすべてのメッセージを削除しますか？"
+
+#: core/templates/core/chat.html:562
+msgid "Delete conversation"
+msgstr "会話を削除"
+
+#: core/templates/core/chat.html:571
+msgid "Ask PAMOJA anything..."
+msgstr "PAMOJAに何でも聞いてください..."
+
+#: core/templates/core/chat.html:572
+msgid "Your message"
+msgstr "メッセージ"
+
+#: core/templates/core/chat.html:580
+msgid "Send message"
+msgstr "メッセージを送信"
+
+#: core/templates/core/chat.html:609
+msgid ""
+"Conversations are saved to your account and processed by Google Gemini. "
+"Avoid sharing passwords or highly sensitive information. PAMOJA AI can make "
+"mistakes."
+msgstr "会話はアカウントに保存され、Google Geminiによって処理されます。パスワードや機密性の高い情報は共有しないでください。PAMOJA AIの回答には誤りが含まれる場合があります。"
 
 #: core/templates/core/dashboard.html:5 core/tests/test_languages.py:211
 msgid "Your day"
@@ -304,7 +348,9 @@ msgstr "今日の一日はここから。"
 msgid ""
 "Add your first task. A workout, an application, or just a little time for "
 "yourself."
-msgstr "最初のタスクを追加しましょう。運動、仕事への応募、自分のためのひとときでも構いません。"
+msgstr ""
+"最初のタスクを追加しましょう。運動、仕事への応募、自分のためのひとときでも構"
+"いません。"
 
 #: core/templates/core/dashboard.html:118
 msgid "Make your first plan"
@@ -376,24 +422,23 @@ msgstr "ひと息つく余裕も忘れずに。"
 msgid ""
 "Try choosing one task that matters most today. You can build the rest of "
 "your day around it."
-msgstr "今日いちばん大切なタスクを一つ選んでみましょう。それを中心に、残りの予定を組み立てられます。"
+msgstr ""
+"今日いちばん大切なタスクを一つ選んでみましょう。それを中心に、残りの予定を組"
+"み立てられます。"
 
 #: core/templates/core/dashboard.html:243
 msgid "Planning tip · not AI-generated"
 msgstr "計画のヒント · AIによる生成ではありません"
 
 #: core/templates/core/feedback.html:5
-#| msgid "Share feedback"
 msgid "Feedback"
 msgstr "フィードバック"
 
 #: core/templates/core/feedback.html:12
-#| msgid "A LITTLE HELP FROM PAMOJA"
 msgid "HELP IMPROVE PAMOJA"
 msgstr "PAMOJAの改善にご協力ください"
 
 #: core/templates/core/feedback.html:15
-#| msgid "Share feedback"
 msgid "Share your feedback"
 msgstr "ご意見をお聞かせください"
 
@@ -412,12 +457,10 @@ msgid ""
 msgstr "パスワード、金融情報、その他の機密情報は記入しないでください。"
 
 #: core/templates/core/feedback.html:36
-#| msgid "Share feedback"
 msgid "Send feedback"
 msgstr "フィードバックを送信"
 
 #: core/templates/core/feedback.html:43
-#| msgid "Profile"
 msgid "Back to Profile"
 msgstr "プロフィールに戻る"
 
@@ -442,7 +485,6 @@ msgstr "非表示"
 
 #: core/templates/core/my_feedback.html:5
 #: core/templates/core/my_feedback.html:15
-#| msgid "Share feedback"
 msgid "My feedback"
 msgstr "自分のフィードバック"
 
@@ -455,7 +497,6 @@ msgid "Your submissions and responses from the PAMOJA Team."
 msgstr "送信した内容とPAMOJAチームからの返信を確認できます。"
 
 #: core/templates/core/my_feedback.html:22
-#| msgid "Share feedback"
 msgid "Send new feedback"
 msgstr "新しいフィードバックを送信"
 
@@ -481,7 +522,6 @@ msgid "You haven't submitted any feedback yet."
 msgstr "まだフィードバックを送信していません。"
 
 #: core/templates/core/my_feedback.html:68
-#| msgid "My feedback & replies"
 msgid "Feedback pages"
 msgstr "フィードバックのページ"
 
@@ -502,60 +542,61 @@ msgstr "次へ"
 msgid "Make it yours"
 msgstr "あなたらしく"
 
-#: core/templates/core/onboarding.html:12
+#: core/templates/core/onboarding.html:13
 msgid "YOUR PREFERENCES"
 msgstr "あなたの設定"
 
-#: core/templates/core/onboarding.html:14
+#: core/templates/core/onboarding.html:15
 msgid "A LITTLE ABOUT YOU"
 msgstr "あなたについて"
 
-#: core/templates/core/onboarding.html:19
+#: core/templates/core/onboarding.html:20
 msgid "Life is personal."
 msgstr "人生は一人ひとり違うもの。"
 
-#: core/templates/core/onboarding.html:21
+#: core/templates/core/onboarding.html:22
 msgid "Your space should be, too."
 msgstr "あなたのスペースも、あなたらしく。"
 
-#: core/templates/core/onboarding.html:25
+#: core/templates/core/onboarding.html:26
 msgid "Choose what matters to you. You can always change things later."
 msgstr "あなたにとって大切なことを選んでください。後からいつでも変更できます。"
 
-#: core/templates/core/onboarding.html:33
+#: core/templates/core/onboarding.html:34
 msgid "What would you like a hand with?"
 msgstr "どんなことをサポートしてほしいですか？"
 
-#: core/templates/core/onboarding.html:37
+#: core/templates/core/onboarding.html:38
 msgid "Choose any combination, or start with an empty dashboard."
 msgstr "好きな組み合わせを選ぶか、何も選ばずに始めることもできます。"
 
-#: core/templates/core/onboarding.html:56
+#: core/templates/core/onboarding.html:57
 msgid "A goal on your mind"
 msgstr "今、目指していること"
 
-#: core/templates/core/onboarding.html:58
+#: core/templates/core/onboarding.html:59
 msgid "optional"
 msgstr "任意"
 
-#: core/templates/core/onboarding.html:94
+#: core/templates/core/onboarding.html:95
 msgid "Show due-task reminders"
 msgstr "期限のあるタスクのリマインダーを表示"
 
-#: core/templates/core/onboarding.html:97
+#: core/templates/core/onboarding.html:98
 msgid "In-app reminders when you open PAMOJA. Push alerts come later."
-msgstr "PAMOJAを開いたときにアプリ内でお知らせします。プッシュ通知は今後対応予定です。"
+msgstr ""
+"PAMOJAを開いたときにアプリ内でお知らせします。プッシュ通知は今後対応予定で"
+"す。"
 
-#: core/templates/core/onboarding.html:106
+#: core/templates/core/onboarding.html:107
 msgid "Save my preferences"
 msgstr "設定を保存"
 
-#: core/templates/core/onboarding.html:108
+#: core/templates/core/onboarding.html:109
 msgid "Make PAMOJA mine"
 msgstr "自分のPAMOJAを始める"
 
 #: core/templates/core/planner.html:5
-#| msgid "Review your planner"
 msgid "Your planner"
 msgstr "あなたのプランナー"
 
@@ -564,17 +605,14 @@ msgid "ROOM FOR WHAT MATTERS"
 msgstr "大切なことのための余裕を"
 
 #: core/templates/core/planner.html:16
-#| msgid "Review your planner"
 msgid "Your planner."
 msgstr "あなたのプランナー。"
 
 #: core/templates/core/planner.html:18
-#| msgid "A little room ahead."
 msgid "A little structure for the days ahead."
 msgstr "これからの日々に、少しの計画を。"
 
 #: core/templates/core/planner.html:36
-#| msgid "Your spaces"
 msgid "All spaces"
 msgstr "すべてのスペース"
 
@@ -587,13 +625,14 @@ msgid "Filter"
 msgstr "絞り込む"
 
 #: core/templates/core/planner.html:68
-#| msgid "A little room ahead."
 msgid "A little room to begin."
 msgstr "始めるための余裕があります。"
 
 #: core/templates/core/planner.html:71
 msgid "No tasks in this view. Add a task or change your filters."
-msgstr "この表示にはタスクがありません。タスクを追加するか、絞り込み条件を変更してください。"
+msgstr ""
+"この表示にはタスクがありません。タスクを追加するか、絞り込み条件を変更してく"
+"ださい。"
 
 #: core/templates/core/planner.html:75
 #: core/templates/core/upcoming_tasks.html:76
@@ -604,10 +643,11 @@ msgstr "予定を立てる"
 msgid ""
 "Dates and times use your saved time zone. In-app reminders appear on Home "
 "for overdue tasks when enabled."
-msgstr "日付と時刻には、保存したタイムゾーンが使われます。リマインダーを有効にすると、期限を過ぎたタスクがホームに表示されます。"
+msgstr ""
+"日付と時刻には、保存したタイムゾーンが使われます。リマインダーを有効にする"
+"と、期限を過ぎたタスクがホームに表示されます。"
 
 #: core/templates/core/profile.html:5
-#| msgid "Your spaces"
 msgid "Your space"
 msgstr "あなたのスペース"
 
@@ -620,7 +660,6 @@ msgid "MAKE YOURSELF AT HOME"
 msgstr "自分らしく過ごせる場所に"
 
 #: core/templates/core/profile.html:16
-#| msgid "Your spaces"
 msgid "Your space."
 msgstr "あなたのスペース。"
 
@@ -637,7 +676,6 @@ msgid "Current time zone"
 msgstr "現在のタイムゾーン"
 
 #: core/templates/core/profile.html:56
-#| msgid "Your goal"
 msgid "My goal"
 msgstr "自分の目標"
 
@@ -647,24 +685,29 @@ msgstr "PAMOJAについて"
 
 #: core/templates/core/profile.html:65
 msgid "Pamoja means together in Swahili. Built around the way you live."
-msgstr "Pamojaはスワヒリ語で「一緒に」という意味です。あなたの暮らしに合わせて作られています。"
+msgstr ""
+"Pamojaはスワヒリ語で「一緒に」という意味です。あなたの暮らしに合わせて作られ"
+"ています。"
 
 #: core/templates/core/profile.html:72
-#| msgid "A little room ahead."
 msgid "A little closer to home."
 msgstr "もっと身近に。"
 
 #: core/templates/core/profile.html:74
 msgid "Open PAMOJA in Safari, tap Share, and choose Add to Home Screen."
-msgstr "SafariでPAMOJAを開き、「共有」をタップして「ホーム画面に追加」を選んでください。"
+msgstr ""
+"SafariでPAMOJAを開き、「共有」をタップして「ホーム画面に追加」を選んでくださ"
+"い。"
 
 #: core/templates/core/profile.html:81
-#| msgid "Log in"
 msgid "Log out"
 msgstr "ログアウト"
 
+#: core/templates/core/task_form.html:5
+msgid "Make a plan"
+msgstr "予定を立てる"
+
 #: core/templates/core/task_form.html:11
-#| msgid "Open my planner"
 msgid "Back to planner"
 msgstr "プランナーに戻る"
 
@@ -673,7 +716,6 @@ msgid "SMALL STEPS, REAL PROGRESS"
 msgstr "小さな一歩が、確かな前進に"
 
 #: core/templates/core/task_form.html:20
-#| msgid "A little room ahead."
 msgid "A little adjustment."
 msgstr "少し調整しましょう。"
 
@@ -754,10 +796,11 @@ msgstr "大きな計画。<br>小さな一歩。<br><em>一緒に。</em>"
 msgid ""
 "A little clarity for your everyday. Make room for your goals, organize what "
 "matters, and find your next step with PAMOJA."
-msgstr "毎日の暮らしに、少しの見通しを。目標のための時間を作り、大切なことを整理して、PAMOJAと次の一歩を見つけましょう。"
+msgstr ""
+"毎日の暮らしに、少しの見通しを。目標のための時間を作り、大切なことを整理し"
+"て、PAMOJAと次の一歩を見つけましょう。"
 
 #: core/templates/core/welcome.html:20
-#| msgid "Find your daily rhythm"
 msgid "Find your rhythm"
 msgstr "自分のリズムを見つける"
 
@@ -770,7 +813,6 @@ msgid "together."
 msgstr "一緒に。"
 
 #: core/templates/core/welcome.html:39
-#| msgid "Make time to move"
 msgid "Make time for you"
 msgstr "自分のための時間を"
 
@@ -795,7 +837,8 @@ msgid ""
 "In Swahili, <strong>pamoja</strong> means <strong>together</strong>. That’s "
 "the idea behind everything we’re building."
 msgstr ""
-"スワヒリ語で<strong>pamoja</strong>は<strong>一緒に</strong>という意味です。私たちが作るすべてのものの原点です。"
+"スワヒリ語で<strong>pamoja</strong>は<strong>一緒に</strong>という意味です。"
+"私たちが作るすべてのものの原点です。"
 
 #: core/templates/core/welcome.html:70
 msgid "See what matters"
@@ -806,7 +849,6 @@ msgid "Your day, your priorities, one clear view."
 msgstr "今日の予定と優先事項を、ひと目で確認。"
 
 #: core/templates/core/welcome.html:80
-#| msgid "Life is personal."
 msgid "Make it personal"
 msgstr "自分に合わせる"
 
@@ -822,7 +864,9 @@ msgstr "時間とともに積み重なる、小さな達成を記録しましょ
 msgid ""
 "Early development build · Planning and accounts work now. Live AI is a "
 "future milestone."
-msgstr "開発中のバージョンです · 計画機能とアカウントは利用できます。AIとの対話は今後対応予定です。"
+msgstr ""
+"開発中のバージョンです · 計画機能とアカウントは利用できます。AIとの対話は今後"
+"対応予定です。"
 
 #: core/templates/registration/login.html:5
 msgid "Welcome back"
@@ -877,9 +921,10 @@ msgid "Your next chapter<br>starts <em>here.</em>"
 msgstr "あなたの次の物語は、<br><em>ここから。</em>"
 
 #: core/templates/registration/signup.html:20
-msgid ""
-"You bring the goals. We’ll build a little space to bring them together."
-msgstr "あなたの目標を持ち寄ってください。私たちは、それらをまとめる小さなスペースを作ります。"
+msgid "You bring the goals. We’ll build a little space to bring them together."
+msgstr ""
+"あなたの目標を持ち寄ってください。私たちは、それらをまとめる小さなスペースを"
+"作ります。"
 
 #: core/templates/registration/signup.html:26
 msgid "Together, every step of the way."
@@ -890,7 +935,6 @@ msgid "WELCOME TO PAMOJA"
 msgstr "PAMOJAへようこそ"
 
 #: core/templates/registration/signup.html:35
-#| msgid "Let’s make today count, together."
 msgid "Let’s get you settled."
 msgstr "あなたのスペースを準備しましょう。"
 
@@ -934,7 +978,9 @@ msgstr "時、分、AMまたはPMを選ぶか、3つすべてを空欄にして�
 msgid ""
 "Optional. For 6:30 PM, choose 6, 30, and PM. Leave all three blank for no "
 "time."
-msgstr "任意です。午後6時30分の場合は、6、30、PMを選んでください。時刻を指定しない場合は、3つすべてを空欄にしてください。"
+msgstr ""
+"任意です。午後6時30分の場合は、6、30、PMを選んでください。時刻を指定しない場"
+"合は、3つすべてを空欄にしてください。"
 
 #: core/views.py:59
 msgid "Your space is ready. Let’s take the next step together."
@@ -951,3 +997,79 @@ msgstr "こんにちは"
 #: core/views.py:85
 msgid "Good evening"
 msgstr "こんばんは"
+
+#~ msgid "Your assistant"
+#~ msgstr "あなたのアシスタント"
+
+#~ msgid "TOGETHER, EVERY STEP"
+#~ msgstr "どの一歩も、一緒に"
+
+#~ msgid "Your personal assistant will live here."
+#~ msgstr "あなた専用のアシスタントをここに用意する予定です。"
+
+#~ msgid "We’re building the foundation first."
+#~ msgstr "まずは土台を作っています。"
+
+#~ msgid ""
+#~ "Live AI chat is not connected in this milestone. Your accounts, "
+#~ "preferences, and planner already work. Next, we’ll connect an AI service "
+#~ "that can suggest plans using the information you allow."
+#~ msgstr ""
+#~ "現段階では、AIチャットはまだ接続されていません。アカウント、設定、プラン"
+#~ "ナーはすでに利用できます。今後、あなたが利用を許可した情報を使って計画を提"
+#~ "案できるAIサービスを接続する予定です。"
+
+#~ msgid "You’ll review task changes before saving them."
+#~ msgstr "タスクの変更内容は、保存する前に確認できます。"
+
+#: core/ai_chat.py
+msgid "AI chat is not configured yet."
+msgstr "AIチャットはまだ設定されていません。"
+
+#: core/ai_chat.py
+msgid "Message request is too large."
+msgstr "メッセージのリクエストが大きすぎます。"
+
+#: core/ai_chat.py
+msgid "Invalid message format."
+msgstr "メッセージの形式が正しくありません。"
+
+#: core/ai_chat.py
+msgid "Please enter a message."
+msgstr "メッセージを入力してください。"
+
+#: core/ai_chat.py
+msgid "Please keep messages under 2000 characters."
+msgstr "メッセージは2000文字未満にしてください。"
+
+#: core/ai_chat.py
+msgid "Invalid conversation ID."
+msgstr "会話IDが無効です。"
+
+#: core/ai_chat.py
+msgid "Conversation not found."
+msgstr "会話が見つかりません。"
+
+#: core/ai_chat.py
+msgid "Message limit reached. Please try again later."
+msgstr "メッセージの上限に達しました。後でもう一度お試しください。"
+
+#: core/ai_chat.py
+msgid "AI model configuration is invalid."
+msgstr "AIモデルの設定が無効です。"
+
+#: core/ai_chat.py
+msgid "The assistant could not generate a reply."
+msgstr "アシスタントは回答を生成できませんでした。"
+
+#: core/ai_chat.py
+msgid "AI is busy. Please try again shortly."
+msgstr "AIが混み合っています。しばらくしてからもう一度お試しください。"
+
+#: core/ai_chat.py
+msgid "AI service is temporarily unavailable."
+msgstr "AIサービスは一時的に利用できません。"
+
+#: core/ai_chat.py
+msgid "Could not connect to the AI service."
+msgstr "AIサービスに接続できませんでした。"

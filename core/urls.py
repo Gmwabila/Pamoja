@@ -2,7 +2,7 @@ from django.contrib.auth.views import LogoutView
 from .languages import change_language
 from django.urls import path
 
-from . import feedback_replies, owner_tools, views
+from . import ai_chat, feedback_replies, owner_tools, views
 from .owner_stats import owner_dashboard
 
 
@@ -65,6 +65,24 @@ urlpatterns = [
     path("planner/", views.planner, name="planner"),
     path("profile/", views.profile, name="profile"),
     path("chat/", views.chat, name="chat"),
+    path("chat/message/", ai_chat.send_message, name="chat_message"),
+
+
+    path(
+        "chat/conversations/",
+        ai_chat.list_conversations,
+        name="chat_conversations",
+    ),
+    path(
+        "chat/conversations/<int:conversation_id>/",
+    ai_chat.get_conversation,
+    name="chat_conversation_detail",
+    ),
+    path(
+        "chat/conversations/<int:conversation_id>/delete/",
+        ai_chat.delete_conversation,
+        name="chat_conversation_delete",
+    ),
 
     # User feedback
     path(

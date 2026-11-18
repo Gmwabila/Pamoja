@@ -123,8 +123,25 @@ class UpdatedDashboardTests(TestCase):
         self.assertEqual(response.context['upcoming_count'], 0)
 
     def test_brand_is_pamoja_on_all_pages_and_in_install_manifest(self):
-        for route in ['welcome', 'dashboard', 'onboarding', 'profile', 'chat', 'planner', 'task_add']:
+        routes = [
+            "welcome",
+            "dashboard",
+            "onboarding",
+            "profile",
+            "chat",
+            "planner",
+            "task_add",
+        ]
+
+        for route in routes:
             response = self.client.get(reverse(route))
-            self.assertNotContains(response, 'PAMOJA AI')
-            self.assertNotContains(response, '<small>AI</small>')
-            self.assertContains(response, '<span>PAMOJA</span>')
+
+            # PAMOJA remains the main application brand.
+            self.assertContains(response, "<span>PAMOJA</span>")
+            self.assertNotContains(response, "<small>AI</small>")
+
+            # Only the dedicated AI Chat page uses PAMOJA AI.
+            if route == "chat":
+                self.assertContains(response, "PAMOJA AI")
+            else:
+                self.assertNotContains(response, "PAMOJA AI")

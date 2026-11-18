@@ -2,80 +2,105 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PAMOJA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 05:40+0000\n"
+"POT-Creation-Date: 2026-11-18 05:12+0000\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: core/forms.py:16 core/models.py:8
 msgid "Daily Planning"
 msgstr "Organisation quotidienne"
 
+#: core/forms.py:17 core/models.py:9
 msgid "Career & Jobs"
 msgstr "Carrière et emploi"
 
+#: core/forms.py:18 core/models.py:10
 msgid "Fitness"
 msgstr "Forme physique"
 
+#: core/forms.py:19 core/models.py:11
 msgid "Education"
 msgstr "Éducation"
 
+#: core/forms.py:20 core/models.py:12
 msgid "Sports"
 msgstr "Sports"
 
+#: core/forms.py:24 core/models.py:79
 msgid "Normal"
 msgstr "Normale"
 
+#: core/forms.py:25 core/models.py:80
 msgid "High"
 msgstr "Élevée"
 
+#: core/forms.py:32
 msgid "What should we call you?"
 msgstr "Comment souhaitez-vous qu’on vous appelle ?"
 
+#: core/forms.py:44 core/forms.py:62
 msgid "Email"
 msgstr "Adresse e-mail"
 
+#: core/forms.py:53
 msgid "An account with this email already exists. Try logging in."
 msgstr ""
 "Un compte utilise déjà cette adresse e-mail. Essayez de vous connecter."
 
+#: core/forms.py:70
 msgid "Your spaces"
 msgstr "Vos espaces"
 
+#: core/forms.py:77
 msgid "Timezone"
 msgstr "Fuseau horaire"
 
+#: core/forms.py:85 core/templates/core/base.html:98
+#: core/templates/core/profile.html:42
 msgid "Language"
 msgstr "Langue"
 
+#: core/forms.py:88
 msgid "Choose the language you prefer for PAMOJA."
 msgstr "Choisissez votre langue préférée pour PAMOJA."
 
+#: core/forms.py:101
 msgid "Your goal"
 msgstr "Votre objectif"
 
+#: core/forms.py:102
 msgid "Reminders"
 msgstr "Rappels"
 
+#: core/forms.py:108
 msgid "One thing you would like to make time for…"
 msgstr "Une chose à laquelle vous aimeriez consacrer du temps…"
 
+#: core/forms.py:131 core/templates/core/planner.html:31
 msgid "Space"
 msgstr "Espace"
 
+#: core/forms.py:136 core/templates/core/task_row.html:36
+#: core/templates/core/upcoming_tasks.html:55
 msgid "Priority"
 msgstr "Priorité"
 
+#: core/forms.py:140
 msgid "Due time"
 msgstr "Heure prévue"
 
+#: core/forms.py:152
 msgid "Task"
 msgstr "Tâche"
 
+#: core/forms.py:153
 msgid "Due date"
 msgstr "Date prévue"
 
+#: core/forms.py:162
 msgid "What would you like to get done?"
 msgstr "Que souhaitez-vous accomplir ?"
 
@@ -103,6 +128,19 @@ msgstr "Examiné"
 msgid "Resolved"
 msgstr "Résolu"
 
+#: core/models.py:183
+msgid "New conversation"
+msgstr ""
+
+#: core/models.py:197
+msgid "User"
+msgstr ""
+
+#: core/models.py:198 core/templates/core/chat.html:6
+#: core/templates/core/chat.html:466
+msgid "PAMOJA AI"
+msgstr "PAMOJA AI"
+
 #: core/owner_tools.py:59
 msgid "Feedback type"
 msgstr "Type de commentaire"
@@ -125,132 +163,190 @@ msgstr ""
 msgid "Thank you! Your feedback has been sent."
 msgstr "Merci ! Votre commentaire a été envoyé."
 
+#: core/templates/core/base.html:60
 msgid "Skip to content"
 msgstr "Aller au contenu"
 
+#: core/templates/core/base.html:77
 msgid "Your profile"
 msgstr "Votre profil"
 
+#: core/templates/core/base.html:82 core/templates/registration/signup.html:58
 msgid "Log in"
 msgstr "Se connecter"
 
+#: core/templates/core/base.html:111
 msgid "Apply"
 msgstr "Appliquer"
 
+#: core/templates/core/base.html:129
 msgid "Share feedback"
 msgstr "Donner votre avis"
 
+#: core/templates/core/base.html:133 core/templates/core/feedback.html:50
 msgid "My feedback & replies"
 msgstr "Mes avis et réponses"
 
+#: core/templates/core/base.html:140
 msgid "Main navigation"
 msgstr "Navigation principale"
 
+#: core/templates/core/base.html:144
 msgid "Home"
 msgstr "Accueil"
 
+#: core/templates/core/base.html:150
 msgid "AI Chat"
 msgstr "Discussion avec l’IA"
 
+#: core/templates/core/base.html:156
 msgid "Planner"
 msgstr "Planning"
 
+#: core/templates/core/base.html:162
 msgid "Profile"
 msgstr "Profil"
 
-#: core/templates/core/chat.html:5
-msgid "Your assistant"
-msgstr "Votre assistant"
+#: core/templates/core/chat.html:469
+msgid "A little help, whenever you need it."
+msgstr "Un peu d’aide, chaque fois que vous en avez besoin."
 
-#: core/templates/core/chat.html:11
-msgid "TOGETHER, EVERY STEP"
-msgstr "ENSEMBLE, À CHAQUE ÉTAPE"
+#: core/templates/core/chat.html:481
+msgid "Conversations"
+msgstr "Conversations"
 
-#: core/templates/core/chat.html:17
-msgid "A little help.<br>A clearer next step."
-msgstr "Un coup de main.<br>La suite devient plus claire."
+#: core/templates/core/chat.html:490 core/templates/core/chat.html:504
+msgid "Your conversations"
+msgstr "Vos conversations"
 
-#: core/templates/core/chat.html:21
-msgid "Your personal assistant will live here."
-msgstr "Votre assistant personnel sera disponible ici."
+#: core/templates/core/chat.html:498
+msgid "Close conversations"
+msgstr "Fermer les conversations"
 
-#: core/templates/core/chat.html:26
-msgid "We’re building the foundation first."
-msgstr "Nous construisons d’abord les bases."
+#: core/templates/core/chat.html:511
+msgid "New chat"
+msgstr "Nouvelle conversation"
 
-#: core/templates/core/chat.html:30
+#: core/templates/core/chat.html:519
+msgid "Recent conversations"
+msgstr "Conversations récentes"
+
+#: core/templates/core/chat.html:546
 msgid ""
-"Live AI chat is not connected in this milestone. Your accounts, preferences, "
-"and planner already work. Next, we’ll connect an AI service that can suggest "
-"plans using the information you allow."
-msgstr ""
-"La discussion avec l’IA n’est pas encore disponible à cette étape. Vos "
-"comptes, vos préférences et votre planning fonctionnent déjà. Nous "
-"connecterons ensuite un service d’IA capable de proposer des plans à partir "
-"des informations que vous autorisez."
+"Hello! I'm PAMOJA AI. I can help you plan your day, study, work toward your "
+"goals, or simply talk. What's on your mind?"
+msgstr "Bonjour ! Je suis PAMOJA AI. Je peux vous aider à organiser votre journée, à étudier, à avancer vers vos objectifs ou simplement à discuter. Qu’avez-vous en tête ?"
 
-#: core/templates/core/chat.html:34
-msgid "You’ll review task changes before saving them."
-msgstr ""
-"Vous pourrez vérifier les modifications des tâches avant de les enregistrer."
+#: core/templates/core/chat.html:558
+msgid "PAMOJA is thinking..."
+msgstr "PAMOJA réfléchit..."
 
-#: core/templates/core/chat.html:39 core/templates/core/task_form.html:5
-msgid "Make a plan"
-msgstr "Créer un plan"
+#: core/templates/core/chat.html:559
+msgid "Something went wrong. Please try again."
+msgstr "Une erreur s’est produite. Veuillez réessayer."
 
+#: core/templates/core/chat.html:560
+msgid "No saved conversations yet."
+msgstr "Aucune conversation enregistrée pour le moment."
+
+#: core/templates/core/chat.html:561
+msgid "Delete this conversation and its messages?"
+msgstr "Supprimer cette conversation et tous ses messages ?"
+
+#: core/templates/core/chat.html:562
+msgid "Delete conversation"
+msgstr "Supprimer la conversation"
+
+#: core/templates/core/chat.html:571
+msgid "Ask PAMOJA anything..."
+msgstr "Demandez ce que vous voulez à PAMOJA..."
+
+#: core/templates/core/chat.html:572
+msgid "Your message"
+msgstr "Votre message"
+
+#: core/templates/core/chat.html:580
+msgid "Send message"
+msgstr "Envoyer le message"
+
+#: core/templates/core/chat.html:609
+msgid ""
+"Conversations are saved to your account and processed by Google Gemini. "
+"Avoid sharing passwords or highly sensitive information. PAMOJA AI can make "
+"mistakes."
+msgstr "Les conversations sont enregistrées dans votre compte et traitées par Google Gemini. Évitez de partager des mots de passe ou des informations très sensibles. PAMOJA AI peut commettre des erreurs."
+
+#: core/templates/core/dashboard.html:5 core/tests/test_languages.py:211
 msgid "Your day"
 msgstr "Votre journée"
 
+#: core/templates/core/dashboard.html:9
 msgid "friend"
 msgstr "cher ami"
 
+#: core/templates/core/dashboard.html:14
+#: core/templates/registration/login.html:12
 msgid "YOUR PERSONAL SPACE"
 msgstr "VOTRE ESPACE PERSONNEL"
 
+#: core/templates/core/dashboard.html:25
 msgid "Let’s make today count, together."
 msgstr "Faisons de cette journée une belle journée, ensemble."
 
+#: core/templates/core/dashboard.html:38
 msgid "ONE STEP AT A TIME"
 msgstr "UN PAS À LA FOIS"
 
+#: core/templates/core/dashboard.html:40
 msgid "Today’s progress"
 msgstr "Vos progrès du jour"
 
+#: core/templates/core/dashboard.html:50
 msgid "Today's task progress"
 msgstr "Progression des tâches du jour"
 
+#: core/templates/core/dashboard.html:66
 msgid "A fresh page. What would you like to make time for?"
 msgstr "Une nouvelle page. À quoi souhaitez-vous consacrer du temps ?"
 
+#: core/templates/core/dashboard.html:68
 msgid "You did it. Take a moment to enjoy the small wins."
 msgstr ""
 "Vous avez réussi. Prenez un moment pour savourer ces petites victoires."
 
+#: core/templates/core/dashboard.html:70
 msgid "Every small step counts. You’re making room for what matters."
 msgstr ""
 "Chaque petit pas compte. Vous faites de la place à ce qui compte vraiment."
 
+#: core/templates/core/dashboard.html:78
 #, python-format
 msgid "%(task_count)s unfinished task from earlier."
 msgid_plural "%(task_count)s unfinished tasks from earlier."
 msgstr[0] "%(task_count)s tâche précédente reste à terminer."
 msgstr[1] "%(task_count)s tâches précédentes restent à terminer."
 
+#: core/templates/core/dashboard.html:82
 msgid "Review your planner"
 msgstr "Consulter votre planning"
 
+#: core/templates/core/dashboard.html:91
 msgid "A LITTLE FOCUS"
 msgstr "UN PEU DE CONCENTRATION"
 
+#: core/templates/core/dashboard.html:94
 msgid "Today’s tasks"
 msgstr "Les tâches du jour"
 
+#: core/templates/core/dashboard.html:100 core/templates/core/planner.html:23
 msgid "Add task"
 msgstr "Ajouter une tâche"
 
+#: core/templates/core/dashboard.html:111
 msgid "Your day starts here."
 msgstr "Votre journée commence ici."
 
+#: core/templates/core/dashboard.html:114
 msgid ""
 "Add your first task. A workout, an application, or just a little time for "
 "yourself."
@@ -258,56 +354,73 @@ msgstr ""
 "Ajoutez votre première tâche. Une séance de sport, une candidature ou "
 "simplement un peu de temps pour vous."
 
+#: core/templates/core/dashboard.html:118
 msgid "Make your first plan"
 msgstr "Planifier votre première activité"
 
+#: core/templates/core/dashboard.html:125
 msgid "Open my planner"
 msgstr "Ouvrir mon planning"
 
+#: core/templates/core/dashboard.html:138
 msgid "PERSONALIZED FOR YOU"
 msgstr "PERSONNALISÉ POUR VOUS"
 
+#: core/templates/core/dashboard.html:140
 msgid "Your Spaces"
 msgstr "Vos espaces"
 
+#: core/templates/core/dashboard.html:144
 msgid "Edit"
 msgstr "Modifier"
 
+#: core/templates/core/dashboard.html:173
 msgid "Make time to move"
 msgstr "Prenez le temps de bouger"
 
+#: core/templates/core/dashboard.html:175
 msgid "Your next chapter"
 msgstr "Votre prochain chapitre"
 
+#: core/templates/core/dashboard.html:177
 msgid "Keep learning"
 msgstr "Continuez à apprendre"
 
+#: core/templates/core/dashboard.html:179
 msgid "Stay in the game"
 msgstr "Restez dans le jeu"
 
+#: core/templates/core/dashboard.html:181
 msgid "Find your daily rhythm"
 msgstr "Trouvez votre rythme quotidien"
 
+#: core/templates/core/dashboard.html:197
 #, python-format
 msgid "Move %(name)s up"
 msgstr "Déplacer %(name)s vers le haut"
 
+#: core/templates/core/dashboard.html:209
 #, python-format
 msgid "Move %(name)s down"
 msgstr "Déplacer %(name)s vers le bas"
 
+#: core/templates/core/dashboard.html:218 core/templates/core/welcome.html:82
 msgid "Choose the spaces that fit your life."
 msgstr "Choisissez les espaces qui correspondent à votre vie."
 
+#: core/templates/core/dashboard.html:221
 msgid "Personalize PAMOJA"
 msgstr "Personnaliser PAMOJA"
 
+#: core/templates/core/dashboard.html:232
 msgid "A LITTLE HELP FROM PAMOJA"
 msgstr "UN COUP DE POUCE DE PAMOJA"
 
+#: core/templates/core/dashboard.html:236
 msgid "Leave a little breathing room."
 msgstr "Gardez un peu de temps pour souffler."
 
+#: core/templates/core/dashboard.html:239
 msgid ""
 "Try choosing one task that matters most today. You can build the rest of "
 "your day around it."
@@ -315,6 +428,7 @@ msgstr ""
 "Choisissez la tâche la plus importante pour aujourd’hui. Vous pourrez "
 "organiser le reste de votre journée autour d’elle."
 
+#: core/templates/core/dashboard.html:243
 msgid "Planning tip · not AI-generated"
 msgstr "Conseil d’organisation · non généré par une IA"
 
@@ -431,51 +545,65 @@ msgstr "Page %(page_number)s sur %(page_count)s"
 msgid "Next"
 msgstr "Suivant"
 
+#: core/templates/core/onboarding.html:5
 msgid "Make it yours"
 msgstr "À votre image"
 
+#: core/templates/core/onboarding.html:13
 msgid "YOUR PREFERENCES"
 msgstr "VOS PRÉFÉRENCES"
 
+#: core/templates/core/onboarding.html:15
 msgid "A LITTLE ABOUT YOU"
 msgstr "PARLONS UN PEU DE VOUS"
 
+#: core/templates/core/onboarding.html:20
 msgid "Life is personal."
 msgstr "Votre vie vous appartient."
 
+#: core/templates/core/onboarding.html:22
 msgid "Your space should be, too."
 msgstr "Votre espace devrait vous ressembler."
 
+#: core/templates/core/onboarding.html:26
 msgid "Choose what matters to you. You can always change things later."
 msgstr ""
 "Choisissez ce qui compte pour vous. Vous pourrez toujours modifier vos choix "
 "plus tard."
 
+#: core/templates/core/onboarding.html:34
 msgid "What would you like a hand with?"
 msgstr "Dans quels domaines souhaitez-vous un coup de main ?"
 
+#: core/templates/core/onboarding.html:38
 msgid "Choose any combination, or start with an empty dashboard."
 msgstr ""
 "Choisissez les domaines qui vous intéressent ou commencez avec un tableau de "
 "bord vide."
 
+#: core/templates/core/onboarding.html:57
 msgid "A goal on your mind"
 msgstr "Un objectif qui vous tient à cœur"
 
+#: core/templates/core/onboarding.html:59
 msgid "optional"
 msgstr "facultatif"
 
+#: core/templates/core/onboarding.html:95
 msgid "Show due-task reminders"
 msgstr "Afficher les rappels de tâches à terminer"
 
+#: core/templates/core/onboarding.html:98
 msgid "In-app reminders when you open PAMOJA. Push alerts come later."
 msgstr ""
 "Des rappels s’affichent à l’ouverture de PAMOJA. Les notifications push "
 "arriveront plus tard."
 
+#: core/templates/core/onboarding.html:107
 msgid "Save my preferences"
 msgstr "Enregistrer mes préférences"
 
+#: core/templates/core/onboarding.html:109
 msgid "Make PAMOJA mine"
 msgstr "Créer mon espace PAMOJA"
 
@@ -516,6 +644,8 @@ msgid "No tasks in this view. Add a task or change your filters."
 msgstr ""
 "Aucune tâche dans cette vue. Ajoutez une tâche ou modifiez vos filtres."
 
+#: core/templates/core/planner.html:75
+#: core/templates/core/upcoming_tasks.html:76
 msgid "Plan something"
 msgstr "Planifier une activité"
 
@@ -586,6 +716,10 @@ msgstr ""
 msgid "Log out"
 msgstr "Se déconnecter"
 
+#: core/templates/core/task_form.html:5
+msgid "Make a plan"
+msgstr "Créer un plan"
+
 #: core/templates/core/task_form.html:11
 msgid "Back to planner"
 msgstr "Retour au planning"
@@ -618,36 +752,46 @@ msgstr "Supprimer cette tâche ? Cette action est irréversible."
 msgid "Delete task"
 msgstr "Supprimer la tâche"
 
+#: core/templates/core/task_row.html:11
 #, python-format
 msgid "Mark incomplete: %(title)s"
 msgstr "Marquer comme non terminée : %(title)s"
 
+#: core/templates/core/task_row.html:11
 #, python-format
 msgid "Complete: %(title)s"
 msgstr "Terminer : %(title)s"
 
+#: core/templates/core/upcoming_tasks.html:7
 msgid "A LITTLE LOOK AHEAD · NEXT 7 DAYS"
 msgstr "UN REGARD SUR LA SUITE · LES 7 PROCHAINS JOURS"
 
+#: core/templates/core/upcoming_tasks.html:11
 msgid "Upcoming tasks"
 msgstr "Tâches à venir"
 
+#: core/templates/core/upcoming_tasks.html:17
 msgid "View all"
 msgstr "Tout voir"
 
+#: core/templates/core/upcoming_tasks.html:41
 msgid "Tomorrow"
 msgstr "Demain"
 
+#: core/templates/core/upcoming_tasks.html:63
 #, python-format
 msgid "Edit %(title)s"
 msgstr "Modifier %(title)s"
 
+#: core/templates/core/upcoming_tasks.html:69
 msgid "A little room ahead."
 msgstr "Un peu de temps libre en perspective."
 
+#: core/templates/core/upcoming_tasks.html:72
 msgid "No unfinished tasks scheduled for the next seven days."
 msgstr "Aucune tâche à terminer n’est prévue pour les sept prochains jours."
 
+#: core/templates/core/upcoming_tasks.html:84
 #, python-format
 msgid "See all %(task_count)s upcoming task"
 msgid_plural "See all %(task_count)s upcoming tasks"
@@ -854,19 +998,102 @@ msgstr ""
 "Facultatif. Pour 18 h 30, choisissez 6, 30 et PM. Laissez les trois champs "
 "vides pour ne pas préciser d’heure."
 
+#: core/views.py:59
 msgid "Your space is ready. Let’s take the next step together."
 msgstr "Votre espace est prêt. Passons à la prochaine étape ensemble."
 
+#: core/views.py:81
 msgid "Good morning"
 msgstr "Bonjour"
 
+#: core/views.py:83
 msgid "Good afternoon"
 msgstr "Bon après-midi"
 
+#: core/views.py:85
 msgid "Good evening"
 msgstr "Bonsoir"
 
-msgid "Choose what matters to you. You can always change thingslater."
-msgstr ""
-"Choisissez ce qui compte pour vous. Vous pourrez toujours modifier vos choix "
-"plus tard."
+#~ msgid "Your assistant"
+#~ msgstr "Votre assistant"
+
+#~ msgid "TOGETHER, EVERY STEP"
+#~ msgstr "ENSEMBLE, À CHAQUE ÉTAPE"
+
+#~ msgid "Your personal assistant will live here."
+#~ msgstr "Votre assistant personnel sera disponible ici."
+
+#~ msgid "We’re building the foundation first."
+#~ msgstr "Nous construisons d’abord les bases."
+
+#~ msgid ""
+#~ "Live AI chat is not connected in this milestone. Your accounts, "
+#~ "preferences, and planner already work. Next, we’ll connect an AI service "
+#~ "that can suggest plans using the information you allow."
+#~ msgstr ""
+#~ "La discussion avec l’IA n’est pas encore disponible à cette étape. Vos "
+#~ "comptes, vos préférences et votre planning fonctionnent déjà. Nous "
+#~ "connecterons ensuite un service d’IA capable de proposer des plans à "
+#~ "partir des informations que vous autorisez."
+
+#~ msgid "You’ll review task changes before saving them."
+#~ msgstr ""
+#~ "Vous pourrez vérifier les modifications des tâches avant de les "
+#~ "enregistrer."
+
+#~ msgid "Choose what matters to you. You can always change thingslater."
+#~ msgstr ""
+#~ "Choisissez ce qui compte pour vous. Vous pourrez toujours modifier vos "
+#~ "choix plus tard."
+
+#: core/ai_chat.py
+msgid "AI chat is not configured yet."
+msgstr "Le chat IA n'est pas encore configuré."
+
+#: core/ai_chat.py
+msgid "Message request is too large."
+msgstr "La requête est trop volumineuse."
+
+#: core/ai_chat.py
+msgid "Invalid message format."
+msgstr "Format de message invalide."
+
+#: core/ai_chat.py
+msgid "Please enter a message."
+msgstr "Veuillez saisir un message."
+
+#: core/ai_chat.py
+msgid "Please keep messages under 2000 characters."
+msgstr "Veuillez limiter vos messages à 2 000 caractères."
+
+#: core/ai_chat.py
+msgid "Invalid conversation ID."
+msgstr "Identifiant de conversation invalide."
+
+#: core/ai_chat.py
+msgid "Conversation not found."
+msgstr "Conversation introuvable."
+
+#: core/ai_chat.py
+msgid "Message limit reached. Please try again later."
+msgstr "Limite de messages atteinte. Veuillez réessayer plus tard."
+
+#: core/ai_chat.py
+msgid "AI model configuration is invalid."
+msgstr "La configuration du modèle d'IA est invalide."
+
+#: core/ai_chat.py
+msgid "The assistant could not generate a reply."
+msgstr "L'assistant n'a pas pu générer de réponse."
+
+#: core/ai_chat.py
+msgid "AI is busy. Please try again shortly."
+msgstr "L'IA est occupée. Veuillez réessayer dans un instant."
+
+#: core/ai_chat.py
+msgid "AI service is temporarily unavailable."
+msgstr "Le service d'IA est temporairement indisponible."
+
+#: core/ai_chat.py
+msgid "Could not connect to the AI service."
+msgstr "Impossible de se connecter au service d'IA."
