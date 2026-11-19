@@ -4,14 +4,34 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
 
+
 SPACES = [
     ("planning", _("Daily Planning")),
     ("career", _("Career & Jobs")),
     ("fitness", _("Fitness")),
     ("education", _("Education")),
     ("sports", _("Sports")),
+    ("finance", _("Personal Finance")),
+    ("budgeting", _("Savings & Budgeting")),
+    ("business", _("Business & Entrepreneurship")),
+    ("technology", _("Technology & AI")),
+    ("health", _("Health & Wellness")),
+    ("wellbeing", _("Mental Wellbeing")),
+    ("faith", _("Faith & Spirituality")),
+    ("family", _("Family")),
+    ("relationships", _("Relationships")),
+    ("cooking", _("Food & Cooking")),
+    ("travel", _("Travel")),
+    ("languages", _("Languages")),
+    ("reading", _("Books & Reading")),
+    ("music", _("Music")),
+    ("creativity", _("Art & Creativity")),
+    ("photography", _("Photography")),
+    ("community", _("Community & Volunteering")),
+    ("lifestyle", _("Home & Lifestyle")),
+    ("productivity", _("Productivity & Habits")),
+    ("growth", _("Personal Growth")),
 ]
-
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -56,8 +76,16 @@ class Profile(models.Model):
         choices=settings.LANGUAGES,
         default="en",
     )
+    
     reminders = models.BooleanField(default=False)
+
+    daily_planning_notifications = models.BooleanField(default=False)
+    goal_notifications = models.BooleanField(default=False)
+    feedback_notifications = models.BooleanField(default=True)
+    product_update_notifications = models.BooleanField(default=False)
+
     onboarded = models.BooleanField(default=False)
+
 
 
 class Task(models.Model):

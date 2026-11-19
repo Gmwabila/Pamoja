@@ -157,9 +157,23 @@ def move_space(request, key):
             profile.save(update_fields=['spaces'])
     return redirect('dashboard')
 
+
 @login_required
 def profile(request):
-    return render(request, 'core/profile.html', {'profile': get_profile(request.user)})
+    user_profile = get_profile(request.user)
+    labels = dict(SPACES)
+
+    selected_spaces = [
+        labels[key]
+        for key in user_profile.spaces
+        if key in labels
+    ]
+
+    return render(request, "core/profile.html", {
+        "profile": user_profile,
+        "selected_spaces": selected_spaces,
+    })
+
 
 @login_required
 def chat(request):

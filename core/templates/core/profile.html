@@ -1,3 +1,4 @@
+
 {% extends "core/base.html" %}
 {% load i18n %}
 
@@ -8,70 +9,344 @@
 {% block content %}
 {% translate "Your next goal is yours to choose." as default_goal %}
 
-<section class="narrow">
-    <span class="eyebrow">
-        {% translate "MAKE YOURSELF AT HOME" %}
-    </span>
+<style>
+    .p2 {
+        padding-bottom: 9rem;
+    }
 
-    <h1>{% translate "Your space." %}</h1>
+    .p2-heading {
+        margin-bottom: 1.4rem;
+    }
 
-    <div class="profile-card">
-        <span class="avatar large">
-            {{ user.first_name|first|upper|default:'P' }}
+    .p2-heading h1 {
+        margin-bottom: .35rem;
+    }
+
+    .p2-card {
+        background: #fff;
+        border: 1px solid #e4e9e2;
+        border-radius: 20px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .p2-account {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .p2-avatar {
+        display: grid;
+        place-items: center;
+        width: 60px;
+        height: 60px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: #103f32;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .p2-account h2 {
+        margin: 0 0 .25rem;
+        font-size: 1.25rem;
+    }
+
+    .p2-account p {
+        margin: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .p2-section-title {
+        font-size: 1.15rem;
+        margin: 0 0 .4rem;
+        color: #103f32;
+    }
+
+    .p2-card > p {
+        margin-top: .35rem;
+    }
+
+    .p2-link {
+        display: inline-flex;
+        align-items: center;
+        margin-top: .8rem;
+        font-weight: 650;
+        color: #103f32;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .p2-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: .75rem 0;
+        border-bottom: 1px solid #edf0eb;
+    }
+
+    .p2-info:last-of-type {
+        border-bottom: 0;
+    }
+
+    .p2-info span {
+        color: #59675f;
+    }
+
+    .p2-info strong {
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
+    .p2-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .45rem;
+        margin-top: .9rem;
+    }
+
+    .p2-tag {
+        background: #edf4ed;
+        border: 1px solid #dce9dd;
+        color: #103f32;
+        border-radius: 999px;
+        padding: .4rem .7rem;
+        font-size: .82rem;
+        font-weight: 600;
+    }
+
+    .p2-install {
+        border-top: 1px solid #e4e9e2;
+        padding: .9rem 0;
+    }
+
+    .p2-install summary {
+        cursor: pointer;
+        font-weight: 650;
+        color: #103f32;
+    }
+
+    .p2-install ol {
+        padding-left: 1.4rem;
+        line-height: 1.8;
+        margin-bottom: .3rem;
+    }
+
+    .p2-note {
+        font-size: .85rem;
+        color: #66736a;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 480px) {
+        .p2-card {
+            padding: 1rem;
+        }
+
+        .p2-info {
+            flex-direction: column;
+            gap: .2rem;
+        }
+
+        .p2-info strong {
+            text-align: left;
+        }
+    }
+</style>
+
+<section class="narrow p2">
+    <div class="p2-heading">
+        <span class="eyebrow">
+            {% translate "MAKE YOURSELF AT HOME" %}
         </span>
-
-        <h2>{{ user.first_name }}</h2>
-        <p class="muted">{{ user.email }}</p>
+        <h1>{% translate "Your space." %}</h1>
+        <p class="muted">
+            {% translate "Your account, your interests, your choices." %}
+        </p>
     </div>
 
-    <div class="settings-list">
-        <a href="{% url 'onboarding' %}">
-            <div>
-                <strong>
-                    {% translate "Preferences & spaces" %}
-                </strong>
-                <small>
-                    {% translate "Your interests, goal, language, time zone, and reminders" %}
-                </small>
+    <div class="p2-card">
+        <div class="p2-account">
+            <div class="p2-avatar" aria-hidden="true">
+                {{ user.first_name|first|upper|default:"P" }}
             </div>
-            <span aria-hidden="true">↗</span>
+            <div>
+                <h2>{{ user.first_name|default:"PAMOJA member" }}</h2>
+                <p class="muted">{{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="p2-card">
+        <h2 class="p2-section-title">
+            {% translate "Personalization" %}
+        </h2>
+        <p class="muted">
+            {% translate "Make PAMOJA feel more like you." %}
+        </p>
+
+        <div class="p2-info">
+            <span>{% translate "Language" %}</span>
+            <strong>{{ profile.get_language_display }}</strong>
+        </div>
+
+        <div class="p2-info">
+            <span>{% translate "Time zone" %}</span>
+            <strong>{{ profile.timezone }}</strong>
+        </div>
+
+        <div class="p2-info">
+            <span>{% translate "My goal" %}</span>
+            <strong>{{ profile.goal|default:default_goal }}</strong>
+        </div>
+
+        <h3 class="small-heading">
+            {% translate "My interests" %}
+            ({{ selected_spaces|length }})
+        </h3>
+
+        <div class="p2-tags">
+            {% for space in selected_spaces %}
+                <span class="p2-tag">{{ space }}</span>
+            {% empty %}
+                <p class="muted">
+                    {% translate "No interests selected yet." %}
+                </p>
+            {% endfor %}
+        </div>
+
+        <a class="p2-link" href="{% url 'onboarding' %}">
+            {% translate "Edit my preferences" %} ↗
         </a>
-
-        <div class="settings-item">
-            <div>
-                <strong>{% translate "Language" %}</strong>
-                <small>{{ profile.get_language_display }}</small>
-            </div>
-        </div>
-
-        <div class="settings-item">
-            <div>
-                <strong>{% translate "Current time zone" %}</strong>
-                <small>{{ profile.timezone }}</small>
-            </div>
-        </div>
-
-        <div class="settings-item">
-            <div>
-                <strong>{% translate "My goal" %}</strong>
-                <small>{{ profile.goal|default:default_goal }}</small>
-            </div>
-        </div>
-
-        <div class="settings-item">
-            <div>
-                <strong>{% translate "About PAMOJA" %}</strong>
-                <small>
-                    {% translate "Pamoja means together in Swahili. Built around the way you live." %}
-                </small>
-            </div>
-        </div>
     </div>
 
-    <div class="install-note">
-        <h3>{% translate "A little closer to home." %}</h3>
+    <div class="p2-card">
+        <h2 class="p2-section-title">
+            {% translate "Notifications & reminders" %}
+        </h2>
+        <p class="muted">
+            {% translate "Choose the updates that matter to you." %}
+        </p>
+
+        <div class="p2-info">
+            <span>{% translate "Due-task reminders" %}</span>
+            <strong>
+                {% if profile.reminders %}
+                    {% translate "Enabled" %}
+                {% else %}
+                    {% translate "Disabled" %}
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="p2-info">
+            <span>{% translate "Daily planning" %}</span>
+            <strong>
+                {% if profile.daily_planning_notifications %}
+                    {% translate "Selected" %}
+                {% else %}
+                    {% translate "Not selected" %}
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="p2-info">
+            <span>{% translate "Goals & progress" %}</span>
+            <strong>
+                {% if profile.goal_notifications %}
+                    {% translate "Selected" %}
+                {% else %}
+                    {% translate "Not selected" %}
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="p2-info">
+            <span>{% translate "Feedback replies" %}</span>
+            <strong>
+                {% if profile.feedback_notifications %}
+                    {% translate "Selected" %}
+                {% else %}
+                    {% translate "Not selected" %}
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="p2-info">
+            <span>{% translate "Product updates" %}</span>
+            <strong>
+                {% if profile.product_update_notifications %}
+                    {% translate "Selected" %}
+                {% else %}
+                    {% translate "Not selected" %}
+                {% endif %}
+            </strong>
+        </div>
+
+        <p class="p2-note">
+            {% translate "Additional notification delivery features are being developed." %}
+        </p>
+
+        <a class="p2-link" href="{% url 'onboarding' %}#notifications">
+            {% translate "Manage notifications" %} ↗
+        </a>
+    </div>
+
+    <div class="p2-card">
+        <h2 class="p2-section-title">
+            {% translate "Install PAMOJA" %}
+        </h2>
+        <p class="muted">
+            {% translate "Keep PAMOJA one tap away on your phone." %}
+        </p>
+
+        <details class="p2-install">
+            <summary>
+                {% translate "iPhone — Safari" %}
+            </summary>
+            <ol>
+                <li>{% translate "Open PAMOJA in Safari." %}</li>
+                <li>{% translate "Tap the Share button." %}</li>
+                <li>{% translate "Choose Add to Home Screen." %}</li>
+                <li>{% translate "Tap Add to confirm." %}</li>
+            </ol>
+        </details>
+
+        <details class="p2-install">
+            <summary>
+                {% translate "Android — Chrome" %}
+            </summary>
+            <ol>
+                <li>{% translate "Open PAMOJA in Chrome." %}</li>
+                <li>{% translate "Tap the three-dot menu." %}</li>
+                <li>{% translate "Choose Install app or Add to Home screen." %}</li>
+                <li>{% translate "Confirm the installation." %}</li>
+            </ol>
+        </details>
+    </div>
+
+    <div class="p2-card">
+        <h2 class="p2-section-title">
+            {% translate "About PAMOJA" %}
+        </h2>
+
         <p>
-            {% translate "Open PAMOJA in Safari, tap Share, and choose Add to Home Screen." %}
+            {% translate "PAMOJA means together in Swahili." %}
+        </p>
+
+        <p>
+            {% translate "PAMOJA is a personal digital space designed to bring everyday planning, learning, goals, and AI assistance together." %}
+        </p>
+
+        <p>
+            {% translate "Everyone has different priorities. PAMOJA lets you choose what matters to you and build a space around your own life." %}
+        </p>
+
+        <p class="muted">
+            {% translate "One space. Your journey. Together." %}
         </p>
     </div>
 

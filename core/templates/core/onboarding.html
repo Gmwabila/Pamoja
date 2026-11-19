@@ -6,6 +6,11 @@
 {% endblock %}
 
 {% block content %}
+<style>
+    .onboarding {
+        padding-bottom: 9rem;
+    }
+</style>
 <section class="narrow onboarding"
          data-new-onboarding="{% if editing %}false{% else %}true{% endif %}">
     <span class="eyebrow">
@@ -30,7 +35,7 @@
         {% csrf_token %}
         {{ form.non_field_errors }}
 
-        <h2 class="small-heading">
+        <h2 class="small-heading" id="notifications">
             {% translate "What would you like a hand with?" %}
         </h2>
 
@@ -101,6 +106,51 @@
         </label>
 
         {{ form.reminders.errors }}
+
+<h2 class="small-heading">
+    {% translate "Notification preferences" %}
+</h2>
+
+<p class="help">
+    {% translate "Choose which updates interest you. Notification delivery features are being developed." %}
+</p>
+
+<label class="reminder-option">
+    {{ form.daily_planning_notifications }}
+    <span>
+        <strong>{% translate "Daily planning" %}</strong>
+        <small>{% translate "Preference for daily planning updates." %}</small>
+    </span>
+</label>
+{{ form.daily_planning_notifications.errors }}
+
+<label class="reminder-option">
+    {{ form.goal_notifications }}
+    <span>
+        <strong>{% translate "Goals and progress" %}</strong>
+        <small>{% translate "Preference for updates about your goals." %}</small>
+    </span>
+</label>
+{{ form.goal_notifications.errors }}
+
+<label class="reminder-option">
+    {{ form.feedback_notifications }}
+    <span>
+        <strong>{% translate "Feedback and replies" %}</strong>
+        <small>{% translate "Preference for feedback response notifications." %}</small>
+    </span>
+</label>
+{{ form.feedback_notifications.errors }}
+
+<label class="reminder-option">
+    {{ form.product_update_notifications }}
+    <span>
+        <strong>{% translate "PAMOJA updates" %}</strong>
+        <small>{% translate "Preference for new features and announcements." %}</small>
+    </span>
+</label>
+{{ form.product_update_notifications.errors }}
+
 
         <button type="submit" class="button full">
             {% if editing %}

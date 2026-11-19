@@ -1,4 +1,5 @@
 from zoneinfo import available_timezones
+from .models import Profile, Task, User, SPACES
 
 from django import forms
 from django.conf import settings
@@ -12,13 +13,7 @@ from .models import Profile, Task, User
 from .time_fields import FriendlyTimeField
 
 
-SPACE_CHOICES = [
-    ("planning", _("Daily Planning")),
-    ("career", _("Career & Jobs")),
-    ("fitness", _("Fitness")),
-    ("education", _("Education")),
-    ("sports", _("Sports")),
-]
+SPACE_CHOICES = SPACES
 
 PRIORITY_CHOICES = [
     ("normal", _("Normal")),
@@ -96,6 +91,10 @@ class PreferencesForm(forms.ModelForm):
             "timezone",
             "language",
             "reminders",
+            "daily_planning_notifications",
+            "goal_notifications",
+            "feedback_notifications",
+            "product_update_notifications",
         ]
         labels = {
             "goal": _("Your goal"),
