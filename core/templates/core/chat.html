@@ -453,7 +453,184 @@
     }
 }
 
+/* PAMOJA AI Chat 2.0 — Mobile layout improvements */
 
+@media (max-width: 700px) {
+
+    .ai-chat {
+        padding: 4px 4px calc(110px + env(safe-area-inset-bottom));
+    }
+
+    /* Compact heading */
+    .ai-header {
+        margin-bottom: 10px;
+    }
+
+    .ai-icon {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 6px;
+        border-radius: 12px;
+        font-size: 19px;
+    }
+
+    .ai-header h1 {
+        font-size: 21px;
+        margin-bottom: 2px;
+    }
+
+    .ai-header p {
+        font-size: 12px;
+    }
+
+    /* Compact conversation menu */
+    .ai-sidebar-toggle {
+        margin-bottom: 8px;
+        padding: 8px 11px;
+    }
+
+    /* More screen space for messages */
+    .ai-messages {
+        height: clamp(300px, 52dvh, 650px);
+        min-height: 0;
+        padding: 12px 10px;
+        gap: 10px;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .ai-panel {
+        border-radius: 17px;
+    }
+
+    .ai-message {
+        max-width: 94%;
+        padding: 10px 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 14px;
+    }
+
+    /* Smaller composer */
+    .ai-compose {
+        padding: 9px;
+    }
+
+    .ai-form {
+        gap: 7px;
+    }
+
+    .ai-input {
+        min-height: 42px;
+        max-height: 120px;
+        padding: 10px 12px;
+        font-size: 16px;
+        resize: none;
+    }
+
+    .ai-send {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+    }
+
+    .ai-status {
+        margin-top: 4px;
+    }
+
+    .ai-note {
+        margin-top: 9px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 700px) and (max-height: 700px) {
+    .ai-messages {
+        height: 43dvh;
+        min-height: 200px;
+    }
+}
+
+/* PAMOJA AI Chat 2.0 — iPhone layout fix */
+
+@media (max-width: 700px) {
+
+    /* Reduce unused space above chat */
+    .pamoja-chat-page .language-picker {
+        margin: 6px 0 10px;
+        gap: 6px;
+    }
+
+    .pamoja-chat-page .ai-chat {
+        padding: 0 4px calc(165px + env(safe-area-inset-bottom));
+    }
+
+    .pamoja-chat-page .ai-header {
+        margin-bottom: 8px;
+    }
+
+    .pamoja-chat-page .ai-icon {
+        display: none;
+    }
+
+    .pamoja-chat-page .ai-header h1 {
+        font-size: 20px;
+        margin-bottom: 3px;
+    }
+
+    .pamoja-chat-page .ai-header p {
+        font-size: 12px;
+    }
+
+    .pamoja-chat-page .ai-sidebar-toggle {
+        margin-bottom: 8px;
+        padding: 8px 11px;
+    }
+
+    /* Use a smaller message area so composer stays reachable */
+    .pamoja-chat-page .ai-messages {
+        height: clamp(220px, 35dvh, 390px);
+        min-height: 0;
+        padding: 12px 10px;
+        gap: 10px;
+    }
+
+    .pamoja-chat-page .ai-panel {
+        border-radius: 17px;
+    }
+
+    .pamoja-chat-page .ai-compose {
+        padding: 9px;
+    }
+
+    .pamoja-chat-page .ai-input {
+        min-height: 42px;
+        max-height: 110px;
+        font-size: 16px;
+        resize: none;
+    }
+
+    .pamoja-chat-page .ai-send {
+        width: 42px;
+        height: 42px;
+    }
+
+    /* Reserve room for the floating navigation */
+    .pamoja-chat-page main {
+        padding-bottom: 140px;
+    }
+}
+
+/* PAMOJA AI — Give the keyboard more room on mobile */
+@media (max-width: 700px) {
+    .pamoja-chat-page:has(.ai-input:focus) .bottom-nav {
+        display: none;
+    }
+
+    .pamoja-chat-page:has(.ai-input:focus) .ai-chat {
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    }
+}
 </style>
 
 
@@ -566,7 +743,7 @@
                     <textarea
                         id="ai-input"
                         class="ai-input"
-                        rows="2"
+                        rows="1"
                         maxlength="2000"
                         placeholder="{% translate 'Ask PAMOJA anything...' %}"
                         aria-label="{% translate 'Your message' %}"
