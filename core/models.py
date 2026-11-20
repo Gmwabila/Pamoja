@@ -64,6 +64,9 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
+    daily_planning_time = models.TimeField(
+        default="08:00",
+    )
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -76,7 +79,7 @@ class Profile(models.Model):
         choices=settings.LANGUAGES,
         default="en",
     )
-    
+
     reminders = models.BooleanField(default=False)
 
     daily_planning_notifications = models.BooleanField(default=False)
@@ -273,3 +276,73 @@ class AIUsageGlobal(models.Model):
 
     def __str__(self):
         return f"Global AI usage: {self.day_window}"
+
+class Notification(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="notifications",
+    )
+    kind = models.CharField(
+        max_length=20,
+        choices=[
+            ("task", _("Task reminder")),
+            ("planning", _("Daily planning")),
+            ("milestone", _("Daily task milestone")),
+        ],
+    )
+    title = models.CharField(max_length=160)
+    message = models.CharField(max_length=300)
+    event_key = models.CharField(max_length=160)
+    is_read = models.BooleanField(default=False)
+    push_sent_at = models.DateTimeField(
+    null=True,
+    blank=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at", "-id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "event_key"],
+                name="unique_user_notification_event",
+            ),
+        ]
+
+
+class PushSubscription(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="push_subscriptions",
+    )
+    endpoint = models.TextField(unique=True)
+    p256dh = models.TextField()
+    auth = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Push subscription for user {self.user_id}"
+
+class NotificationPushDelivery(models.Model):
+    notification = models.ForeignKey(
+        Notification,
+        on_delete=models.CASCADE,
+        related_name="push_deliveries",
+    )
+    subscription = models.ForeignKey(
+        PushSubscription,
+        on_delete=models.CASCADE,
+        related_name="notification_deliveries",
+    )
+    sent_at = models.DateTimeField(null=True, blank=True)
+    attempts = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["notification", "subscription"],
+                name="unique_notification_push_delivery",
+            ),
+        ]

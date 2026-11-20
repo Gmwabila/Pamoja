@@ -96,6 +96,23 @@ urlpatterns = [
         name="my_feedback",
     ),
 
+    # Notifications
+    path(
+        "notifications/",
+        views.notification_center,
+        name="notifications",
+    ),
+    path(
+        "notifications/<int:pk>/read/",
+        views.notification_mark_read,
+        name="notification_mark_read",
+    ),
+    path(
+        "notifications/read-all/",
+        views.notifications_mark_all_read,
+        name="notifications_mark_all_read",
+    ),
+
     # Tasks
     path(
         "tasks/new/",
@@ -132,4 +149,20 @@ urlpatterns = [
         views.service_worker,
         name="service_worker",
     ),
-]
+        # Web Push Notifications
+    path(
+        "notifications/push/public-key/",
+        views.push_public_key,
+        name="push_public_key",
+    ),
+    path(
+        "notifications/push/subscribe/",
+        views.push_subscribe,
+        name="push_subscribe",
+    ),
+    path(
+        "notifications/push/unsubscribe/",
+        views.push_unsubscribe,
+        name="push_unsubscribe",
+    ),
+] # comment: End of urlpatterns

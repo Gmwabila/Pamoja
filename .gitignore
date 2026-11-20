@@ -17,3 +17,6 @@ staticfiles/
 *.log
 *.sqlite3*
 pamoja_data.json
+# PAMOJA Web Push VAPID keys
+private_key.pem
+public_key.pem

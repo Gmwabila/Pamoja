@@ -1,5 +1,6 @@
 from zoneinfo import available_timezones
 from .models import Profile, Task, User, SPACES
+from datetime import time
 
 from django import forms
 from django.conf import settings
@@ -83,8 +84,36 @@ class PreferencesForm(forms.ModelForm):
         help_text=_("Choose the language you prefer for PAMOJA."),
     )
 
+    reminder_hour = forms.ChoiceField(
+    label=_("Hour"),
+    required=False,
+    choices=[
+        (str(hour), str(hour).zfill(2))
+        for hour in range(1, 13)
+    ],
+)
+
+    reminder_minute = forms.ChoiceField(
+        label=_("Minute"),
+        required=False,
+        choices=[
+            (f"{minute:02d}", f"{minute:02d}")
+            for minute in range(0, 60, 10)
+        ],
+    )
+
+    reminder_period = forms.ChoiceField(
+        label=_("AM / PM"),
+        required=False,
+        choices=[
+            ("AM", "AM"),
+            ("PM", "PM"),
+        ],
+    )
+
     class Meta:
         model = Profile
+
         fields = [
             "spaces",
             "goal",
@@ -96,10 +125,12 @@ class PreferencesForm(forms.ModelForm):
             "feedback_notifications",
             "product_update_notifications",
         ]
+
         labels = {
             "goal": _("Your goal"),
             "reminders": _("Reminders"),
         }
+
         widgets = {
             "goal": forms.Textarea(attrs={
                 "rows": 2,
@@ -108,12 +139,69 @@ class PreferencesForm(forms.ModelForm):
                 ),
             }),
         }
+
+
     def clean_language(self):
         return (
             self.cleaned_data.get("language")
             or self.instance.language
             or settings.LANGUAGE_CODE
         )
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        current_time = self.instance.daily_planning_time
+
+        if isinstance(current_time, str):
+            try:
+                current_time = time.fromisoformat(current_time)
+            except ValueError:
+                current_time = time(8, 0)
+
+        if current_time is None:
+            current_time = time(8, 0)
+
+        hour = current_time.hour
+
+        # Preserve submitted values when the form is bound.
+        if not self.is_bound:
+            self.fields["reminder_hour"].initial = str(
+                hour % 12 or 12
+            )
+            self.fields["reminder_minute"].initial = (
+                f"{current_time.minute:02d}"
+            )
+            self.fields["reminder_period"].initial = (
+                "PM" if hour >= 12 else "AM"
+            )
+
+
+    def save(self, commit=True):
+        profile = super().save(commit=False)
+
+        hour_value = self.cleaned_data.get("reminder_hour")
+        minute_value = self.cleaned_data.get("reminder_minute")
+        period = self.cleaned_data.get("reminder_period")
+
+        # Preserve the existing time for older clients that
+        # do not submit reminder-time fields.
+        if all((hour_value, minute_value, period)):
+            hour = int(hour_value)
+            minute = int(minute_value)
+
+            hour_24 = hour % 12
+            if period == "PM":
+                hour_24 += 12
+
+            profile.daily_planning_time = time(hour_24, minute)
+
+        if commit:
+            profile.save()
+            self.save_m2m()
+
+        return profile
 
     def clean_spaces(self):
         selected = self.cleaned_data["spaces"]

@@ -1,3 +1,10 @@
+import json
+
+from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+from .models import PushSubscription
 from datetime import timedelta
 from zoneinfo import ZoneInfo
 from django.contrib import messages
@@ -18,7 +25,8 @@ def health(request):
     return HttpResponse('ok', content_type='text/plain', headers={'Cache-Control': 'no-store'})
 
 from .forms import SignupForm, LoginForm, PreferencesForm, TaskForm
-from .models import Profile, Task, SPACES
+from .models import Profile, Task, SPACES, Notification
+from .notifications import generate_notifications
 
 def get_profile(user):
     return Profile.objects.get_or_create(user=user)[0]
@@ -65,6 +73,9 @@ def dashboard(request):
     profile = get_profile(request.user)
     if not profile.onboarded:
         return redirect('onboarding')
+
+    generate_notifications(request.user)
+
     today = today_for(profile)
     tasks = Task.objects.filter(user=request.user, due_date=today)
     done = tasks.filter(completed=True).count()
@@ -180,6 +191,173 @@ def chat(request):
     return render(request, 'core/chat.html')
 
 def service_worker(request):
-    # No account pages, API responses, or private data are placed in offline caches.
-    return HttpResponse("self.addEventListener('install',()=>self.skipWaiting());\n"
-        "self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));\n", content_type='application/javascript')
+    script = """
+self.addEventListener('install', () => self.skipWaiting());
+
+self.addEventListener('activate', event => {
+    event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('push', event => {
+    if (!event.data) return;
+
+    let data;
+
+    try {
+        data = event.data.json();
+    } catch (error) {
+        return;
+    }
+
+    const title = data.title || 'PAMOJA';
+    const options = {
+        body: data.message || 'You have a new notification.',
+        icon: '/static/core/icons/icon-192.png',
+        badge: '/static/core/icons/icon-192.png',
+        tag: data.tag || 'pamoja-notification',
+        data: {
+            url: '/notifications/'
+        }
+    };
+
+    event.waitUntil(
+        self.registration.showNotification(title, options)
+    );
+});
+
+self.addEventListener('notificationclick', event => {
+    event.notification.close();
+
+    event.waitUntil(
+        clients.openWindow('/notifications/')
+    );
+});
+"""
+    return HttpResponse(
+        script,
+        content_type="application/javascript",
+        headers={"Cache-Control": "no-store"},
+    )
+
+@login_required
+def notification_center(request):
+    generate_notifications(request.user)
+
+    notifications = Notification.objects.filter(
+        user=request.user
+    )[:50]
+
+    return render(
+        request,
+        "core/notifications.html",
+        {"notifications": notifications},
+    )
+
+
+@login_required
+@require_POST
+def notification_mark_read(request, pk):
+    notification = get_object_or_404(
+        Notification,
+        pk=pk,
+        user=request.user,
+    )
+    notification.is_read = True
+    notification.save(update_fields=["is_read"])
+
+    return redirect("notifications")
+
+
+@login_required
+@require_POST
+def notifications_mark_all_read(request):
+    Notification.objects.filter(
+        user=request.user,
+        is_read=False,
+    ).update(is_read=True)
+
+    return redirect("notifications")
+@login_required
+@require_GET
+def push_public_key(request):
+    if not settings.VAPID_PUBLIC_KEY:
+        return JsonResponse(
+            {"error": "Push notifications are not configured."},
+            status=503,
+        )
+
+    return JsonResponse({
+        "publicKey": settings.VAPID_PUBLIC_KEY,
+    })
+
+
+@login_required
+@require_POST
+def push_subscribe(request):
+    try:
+        data = json.loads(request.body)
+        subscription = data["subscription"]
+        endpoint = subscription["endpoint"]
+        keys = subscription["keys"]
+        p256dh = keys["p256dh"]
+        auth = keys["auth"]
+
+        if not all(
+            isinstance(value, str) and value.strip()
+            for value in (endpoint, p256dh, auth)
+        ):
+            raise ValueError("Invalid subscription")
+
+        if not endpoint.startswith("https://"):
+            raise ValueError("Invalid endpoint")
+
+    except (ValueError, KeyError, TypeError, AttributeError):
+        return JsonResponse(
+            {"error": "Invalid subscription data."},
+            status=400,
+        )
+
+    existing = PushSubscription.objects.filter(
+        endpoint=endpoint,
+    ).first()
+
+    if existing and existing.user_id != request.user.pk:
+        return JsonResponse(
+            {"error": "Subscription already registered."},
+            status=409,
+        )
+
+    PushSubscription.objects.update_or_create(
+        endpoint=endpoint,
+        defaults={
+            "user": request.user,
+            "p256dh": p256dh,
+            "auth": auth,
+        },
+    )
+
+    return JsonResponse({"success": True})
+
+
+@login_required
+@require_POST
+def push_unsubscribe(request):
+    try:
+        data = json.loads(request.body)
+        endpoint = data["endpoint"]
+
+        if not isinstance(endpoint, str) or not endpoint:
+            raise ValueError("Invalid endpoint")
+
+    except (ValueError, KeyError, TypeError, AttributeError):
+        return JsonResponse(
+            {"error": "Invalid endpoint."},
+            status=400,
+        )
+
+    PushSubscription.objects.filter(
+        user=request.user,
+        endpoint=endpoint,
+    ).delete()
+
+    return JsonResponse({"success": True})

@@ -10,6 +10,33 @@
     .onboarding {
         padding-bottom: 9rem;
     }
+    .reminder-time-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.reminder-time-row > div {
+    min-width: 0;
+}
+
+.reminder-time-row label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.reminder-time-row select {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #d9dfd8;
+    border-radius: 10px;
+    background: #fff;
+    color: #103f32;
+    font-size: 15px;
+}
 </style>
 <section class="narrow onboarding"
          data-new-onboarding="{% if editing %}false{% else %}true{% endif %}">
@@ -122,6 +149,41 @@
         <small>{% translate "Preference for daily planning updates." %}</small>
     </span>
 </label>
+<div class="form-field">
+    <label>
+        {% translate "Daily planning reminder time" %}
+    </label>
+
+    <div class="reminder-time-row">
+        <div>
+            <label for="{{ form.reminder_hour.id_for_label }}">
+                {% translate "Hour" %}
+            </label>
+            {{ form.reminder_hour }}
+            {{ form.reminder_hour.errors }}
+        </div>
+
+        <div>
+            <label for="{{ form.reminder_minute.id_for_label }}">
+                {% translate "Minute" %}
+            </label>
+            {{ form.reminder_minute }}
+            {{ form.reminder_minute.errors }}
+        </div>
+
+        <div>
+            <label for="{{ form.reminder_period.id_for_label }}">
+                {% translate "AM / PM" %}
+            </label>
+            {{ form.reminder_period }}
+            {{ form.reminder_period.errors }}
+        </div>
+    </div>
+
+    <small>
+        {% translate "PAMOJA will use your selected time zone." %}
+    </small>
+</div>
 {{ form.daily_planning_notifications.errors }}
 
 <label class="reminder-option">

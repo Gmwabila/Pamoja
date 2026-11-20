@@ -252,6 +252,12 @@
                 {% endif %}
             </strong>
         </div>
+        <div class="p2-info">
+            <span>{% translate "Daily planning reminder time" %}</span>
+            <strong>
+                {{ profile.daily_planning_time|time:"g:i A" }}
+            </strong>
+        </div>
 
         <div class="p2-info">
             <span>{% translate "Goals & progress" %}</span>

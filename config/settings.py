@@ -8,6 +8,9 @@ from .database import postgres_database
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
+
+load_dotenv(BASE_DIR / ".env")
 
 ON_RENDER = os.environ.get("RENDER") == "true"
 
@@ -241,3 +244,17 @@ if ON_RENDER:
         "HTTP_X_FORWARDED_PROTO",
         "https",
     )
+# Web Push notification configuration
+from pathlib import Path
+
+# Web Push configuration
+VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY", "")
+
+VAPID_PRIVATE_KEY = os.environ.get(
+    "VAPID_PRIVATE_KEY",
+    str(BASE_DIR / "private_key.pem") if DEBUG else "",
+)
+VAPID_SUBJECT = os.environ.get(
+    "VAPID_SUBJECT",
+    "mailto:pamoja015@example.com",
+)

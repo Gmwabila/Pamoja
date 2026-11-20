@@ -1,0 +1,341 @@
+
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}Notifications | PAMOJA{% endblock %}
+
+{% block extra_head %}
+<style>
+.notification-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 12px 0 100px;
+}
+
+.notification-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.notification-heading h1 {
+    color: #103f32;
+    margin: 0;
+}
+
+.notification-card {
+    background: #fff;
+    border: 1px solid #e1e7df;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 12px;
+}
+
+.notification-card.unread {
+    border-left: 4px solid #103f32;
+    background: #f6f9f4;
+}
+
+.notification-card h3 {
+    color: #103f32;
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+.notification-card p {
+    margin: 0 0 12px;
+    line-height: 1.5;
+}
+
+.notification-meta {
+    color: #66746c;
+    font-size: 12px;
+}
+
+.notification-action {
+    border: 0;
+    border-radius: 9px;
+    background: #103f32;
+    color: white;
+    padding: 9px 13px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.notification-empty {
+    text-align: center;
+    padding: 48px 18px;
+    color: #66746c;
+}
+
+@media (max-width: 600px) {
+    .notification-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+.push-settings {
+    background: #f6f9f4;
+    border: 1px solid #dce7dc;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.push-settings h2 {
+    color: #103f32;
+    font-size: 18px;
+    margin: 0 0 8px;
+}
+
+.push-settings p {
+    color: #66746c;
+    line-height: 1.5;
+}
+
+.push-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.push-disable {
+    background: #e7ebe6;
+    color: #103f32;
+}
+
+.push-status {
+    font-size: 13px;
+    margin-top: 12px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="notification-page">
+
+    <div class="notification-heading">
+        <div>
+            <h1>🔔 {% translate "Notifications" %}</h1>
+            <p>{% translate "Your reminders and progress updates." %}</p>
+        </div>
+
+        <form method="post"
+              action="{% url 'notifications_mark_all_read' %}">
+            {% csrf_token %}
+            <button class="notification-action" type="submit">
+                {% translate "Mark all as read" %}
+            </button>
+        </form>
+    </div>
+    <div class="push-settings">
+    <h2>🔔 {% translate "Phone Notifications" %}</h2>
+
+    <p>
+        {% translate "Receive reminders on your device, even when PAMOJA is closed. Your notifications will also remain available here." %}
+    </p>
+
+    <div class="push-actions">
+        <button
+            type="button"
+            id="enable-push"
+            class="notification-action">
+            {% translate "Enable Phone Notifications" %}
+        </button>
+
+        <button
+            type="button"
+            id="disable-push"
+            class="notification-action push-disable"
+            hidden>
+            {% translate "Disable Phone Notifications" %}
+        </button>
+    </div>
+
+    <p id="push-status" class="push-status" role="status" aria-live="polite">
+        {% translate "Checking notification availability..." %}
+    </p>
+</div>
+
+    {% for notification in notifications %}
+        <article class="notification-card {% if not notification.is_read %}unread{% endif %}">
+            <h3>{{ notification.title }}</h3>
+            <p>{{ notification.message }}</p>
+
+            <div class="notification-meta">
+                {{ notification.created_at|date:"M j, Y · g:i A" }}
+            </div>
+
+            {% if not notification.is_read %}
+                <form method="post"
+                      action="{% url 'notification_mark_read' notification.pk %}"
+                      style="margin-top: 12px;">
+                    {% csrf_token %}
+                    <button class="notification-action" type="submit">
+                        {% translate "Mark as read" %}
+                    </button>
+                </form>
+            {% endif %}
+        </article>
+    {% empty %}
+        <div class="notification-empty">
+            <h2>You're all caught up! 🎉</h2>
+            <p>Your notifications will appear here.</p>
+        </div>
+    {% endfor %}
+
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const enableButton = document.getElementById("enable-push");
+    const disableButton = document.getElementById("disable-push");
+    const status = document.getElementById("push-status");
+
+    if (!enableButton || !disableButton || !status) return;
+
+    const supported =
+        "serviceWorker" in navigator &&
+        "PushManager" in window &&
+        "Notification" in window &&
+        window.isSecureContext;
+
+    if (!supported) {
+        enableButton.hidden = true;
+        disableButton.hidden = true;
+        status.textContent =
+            "Push notifications are unavailable in this browser. On iPhone, add PAMOJA to your Home Screen and open it from there.";
+        return;
+    }
+
+    const registration = await navigator.serviceWorker.ready;
+
+    function decodeKey(base64) {
+        const padding = "=".repeat((4 - base64.length % 4) % 4);
+        const normalized = (base64 + padding)
+            .replace(/-/g, "+")
+            .replace(/_/g, "/");
+
+        return Uint8Array.from(
+            atob(normalized),
+            character => character.charCodeAt(0)
+        );
+    }
+
+    async function refreshState() {
+        const subscription =
+            await registration.pushManager.getSubscription();
+
+        enableButton.hidden = Boolean(subscription);
+        disableButton.hidden = !subscription;
+
+        status.textContent = subscription
+            ? "Phone notifications are enabled on this device."
+            : "Phone notifications are not enabled on this device.";
+    }
+
+    enableButton.addEventListener("click", async () => {
+        enableButton.disabled = true;
+
+        try {
+            const permission = await Notification.requestPermission();
+
+            if (permission !== "granted") {
+                status.textContent =
+                    "Notification permission was not granted.";
+                return;
+            }
+
+            const response = await fetch(
+                "{% url 'push_public_key' %}"
+            );
+
+            if (!response.ok) {
+                throw new Error("Unable to load the public key.");
+            }
+
+            const data = await response.json();
+
+            const subscription =
+                await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: decodeKey(data.publicKey)
+                });
+
+            const saved = await fetch(
+                "{% url 'push_subscribe' %}",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({
+                        subscription: subscription.toJSON()
+                    })
+                }
+            );
+
+            if (!saved.ok) {
+                throw new Error("Unable to save device subscription.");
+            }
+
+            await refreshState();
+
+        } catch (error) {
+            status.textContent = error.message;
+        } finally {
+            enableButton.disabled = false;
+        }
+    });
+
+    disableButton.addEventListener("click", async () => {
+        disableButton.disabled = true;
+
+        try {
+            const subscription =
+                await registration.pushManager.getSubscription();
+
+            if (subscription) {
+                const response = await fetch(
+                    "{% url 'push_unsubscribe' %}",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        },
+                        body: JSON.stringify({
+                            endpoint: subscription.endpoint
+                        })
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Unable to unregister device.");
+                }
+
+                const removed = await subscription.unsubscribe();
+
+                if (!removed) {
+                    throw new Error("Unable to disable browser subscription.");
+                }
+            }
+
+            await refreshState();
+
+        } catch (error) {
+            status.textContent = error.message;
+        } finally {
+            disableButton.disabled = false;
+        }
+    });
+
+    await refreshState();
+});
+</script>
+{% endblock %}
