@@ -91,3 +91,18 @@ The workflow suite checks task saving with the time menus, editing existing time
 ## Neon and Render deployment
 
 See `DEPLOYMENT.md`. Apply the deployment update with its updater, install requirements in the existing environment, copy the local account/tasks with `python manage.py move_to_neon`, and deploy the GitHub repository on Render. Database connection strings and the production secret stay out of source control.
+
+## Development Milestones
+
+### Notifications 3.0 — November 19, 2026
+
+Successfully implemented and deployed PAMOJA's push notification system using Django, PostgreSQL, Web Push, and Render Cron Jobs.
+
+- Customizable daily planning reminders
+- Time-zone-aware scheduling
+- Browser and iPhone PWA push notifications
+- Duplicate delivery prevention
+- 84 automated tests, with 82 passing and 2 skipped
+- Successfully verified notification delivery on an iPhone lock screen
+
+**[Read the Notifications 3.0 Launch Report](docs/PAMOJA_AI_Notifications_3_0_Launch_Report.pdf)**
