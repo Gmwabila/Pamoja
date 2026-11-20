@@ -246,6 +246,25 @@ class AIMessage(models.Model):
     def __str__(self):
         return f"{self.role} - Message {self.pk}"
 
+class AITaskProposal(models.Model):
+    """A reviewable Gemini suggestion; never a saved Planner task until approved."""
+    message = models.OneToOneField(
+        AIMessage, on_delete=models.CASCADE, related_name="task_proposal"
+    )
+    title = models.CharField(max_length=160)
+    space = models.CharField(max_length=16, choices=SPACES, default="planning")
+    due_date = models.DateField()
+    due_time = models.TimeField(null=True, blank=True)
+    priority = models.CharField(
+        max_length=8,
+        choices=[("normal", _("Normal")), ("high", _("High"))],
+        default="normal",
+    )
+    task = models.ForeignKey(Task, null=True, blank=True, on_delete=models.SET_NULL)
+    saved_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 class AIUsageLimit(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,

@@ -3,15 +3,21 @@ import json
 import time
 import os
 import re
+from datetime import date, time as datetime_time
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.utils import timezone
+from django.urls import reverse
 from django.http import JsonResponse
 from django.utils.translation import get_language, gettext as _
 from django.views.decorators.http import require_GET, require_POST
-from .models import AIConversation, AIMessage, AIUsageLimit, AIUsageGlobal
+from .models import AIConversation, AIMessage, AIUsageLimit, AIUsageGlobal, AITaskProposal, Task, SPACES, Profile
+from .forms import TaskForm
+from .app_knowledge import PAMOJA_APP_GUIDE
 
 
 SYSTEM_INSTRUCTIONS = """
@@ -31,12 +37,102 @@ Do not claim to be a therapist or provide diagnoses.
 For immediate danger or self-harm concerns, encourage urgent
 human support, including local emergency or crisis services.
 
-Never claim to have created, updated, or deleted a planner task.
-You cannot currently access or change the user's planner.
+When a user wants to create a Planner task, use the propose_task tool
+when you have a clear title and due date. A proposal is NOT a saved task.
+Never claim a task has been saved until the application confirms it.
+If the user has not specified a due date, ask when the task is due.
+If a Space is unclear, use planning. If priority is unclear, use normal.
+Do not invent a due time. Do not call the tool for unrelated questions.
+You can propose a task for review, but cannot edit or delete existing tasks.
 
 Do not request passwords or sensitive account credentials.
 Respond in the user's language when possible.
 """
+
+TASK_TOOL = {
+    "functionDeclarations": [{
+        "name": "propose_task",
+        "description": (
+            "Prepare a task proposal for user review when the user explicitly "
+            "wants to add a Planner task. Never save it. Ask for a due date "
+            "in ordinary chat if the due date is missing."
+        ),
+        "parameters": {
+            "type": "OBJECT",
+            "properties": {
+                "title": {"type": "STRING", "description": "Short task title, maximum 160 characters"},
+                "due_date": {"type": "STRING", "description": "ISO date YYYY-MM-DD in user's local timezone"},
+                "space": {"type": "STRING", "description": "One of the supplied PAMOJA Space keys"},
+                "priority": {"type": "STRING", "description": "normal or high"},
+                "due_time": {"type": "STRING", "description": "Optional local 24-hour time HH:MM; omit unless user gives a time"},
+            },
+            "required": ["title", "due_date"],
+        },
+    }]
+}
+
+
+def _local_today(user):
+    profile, _ = Profile.objects.get_or_create(user=user)
+    try:
+        zone = ZoneInfo(profile.timezone)
+    except (ZoneInfoNotFoundError, ValueError, TypeError):
+        zone = ZoneInfo("UTC")
+    return timezone.localdate(timezone=zone), profile
+
+
+def _proposal_from_tool(args):
+    """Reject malformed model output before it ever reaches the database."""
+    if not isinstance(args, dict):
+        return None
+    title = args.get("title")
+    due_date = args.get("due_date")
+    if not isinstance(title, str) or not 0 < len(title.strip()) <= 160:
+        return None
+    if not isinstance(due_date, str):
+        return None
+    try:
+        day = date.fromisoformat(due_date)
+    except ValueError:
+        return None
+    if day.isoformat() != due_date:
+        return None
+    space = args.get("space", "planning")
+    if space not in dict(SPACES):
+        space = "planning"
+    priority = args.get("priority", "normal")
+    if priority not in ("normal", "high"):
+        priority = "normal"
+    raw_time = args.get("due_time")
+    parsed_time = None
+    if raw_time not in (None, ""):
+        if not isinstance(raw_time, str) or not re.fullmatch(r"\d{2}:\d{2}", raw_time):
+            return None
+        try:
+            parsed_time = datetime_time.fromisoformat(raw_time)
+        except ValueError:
+            return None
+    return {"title": title.strip(), "due_date": day,
+            "due_time": parsed_time, "space": space, "priority": priority}
+
+
+def _proposal_json(proposal):
+    return {
+        "id": proposal.pk,
+        "title": proposal.title,
+        "space": proposal.space,
+        "due_date": proposal.due_date.isoformat(),
+        "due_time": proposal.due_time.strftime("%H:%M") if proposal.due_time else "",
+        "priority": proposal.priority,
+        "saved": proposal.saved_at is not None,
+        "planner_url": reverse("planner") if proposal.saved_at else None,
+    }
+
+
+def _testing_restricted(user):
+    testing_only = os.environ.get("PAMOJA_AI_TESTING_ONLY", "").lower() in ("true", "1", "yes")
+    return testing_only and not user.is_staff
+
 
 GLOBAL_DAILY_LIMIT = 300
 GLOBAL_MINUTE_LIMIT = 10
@@ -135,11 +231,7 @@ def rate_limit_exceeded(user_id):
 def send_message(request):
 
     # Restrict production AI Chat to staff during Free-tier testing.
-    testing_only = os.environ.get(
-        "PAMOJA_AI_TESTING_ONLY", ""
-    ).lower() in ("true", "1", "yes")
-
-    if testing_only and not request.user.is_staff:
+    if _testing_restricted(request.user):
         return JsonResponse(
             {"error": _("AI Chat is currently in private testing.")},
             status=403,
@@ -259,13 +351,20 @@ def send_message(request):
     )
 
     language = get_language() or "en"
+    today, profile = _local_today(request.user)
+    available_spaces = ", ".join(key for key, _ in SPACES)
 
     data = {
         "system_instruction": {
             "parts": [{
                 "text": (
                     SYSTEM_INSTRUCTIONS
+                    + "\n" + PAMOJA_APP_GUIDE
                     + f"\nPreferred interface language: {language}."
+                    + f"\nUser's current local date: {today.isoformat()}."
+                    + f"\nUser's timezone: {profile.timezone}."
+                    + f"\nValid task Space keys: {available_spaces}."
+                    + "\nFor relative dates like tomorrow, calculate from the user's local date."
                 )
             }]
         },
@@ -277,6 +376,7 @@ def send_message(request):
             "maxOutputTokens": 700,
             "temperature": 0.7,
         },
+        "tools": [TASK_TOOL],
     }
 
     http_request = Request(
@@ -299,12 +399,27 @@ def send_message(request):
             if candidates else []
         )
 
+        tool_args = None
+        for part in parts:
+            if not isinstance(part, dict):
+                continue
+            function_call = part.get("functionCall")
+            if isinstance(function_call, dict) and function_call.get("name") == "propose_task":
+                tool_args = function_call.get("args")
+                break
+
+        proposed_fields = _proposal_from_tool(tool_args) if tool_args is not None else None
         reply = "\n".join(
             part["text"]
             for part in parts
             if isinstance(part, dict)
             and isinstance(part.get("text"), str)
         ).strip()
+
+        if proposed_fields:
+            reply = _("I've prepared a task for you. Review the details below, then choose Save to Planner. Nothing has been saved yet.")
+        elif tool_args is not None:
+            reply = _("I couldn't prepare that task yet. Please tell me the task title and due date.")
 
         if not reply:
             return JsonResponse(
@@ -349,10 +464,14 @@ def send_message(request):
             content=message,
         )
 
-        AIMessage.objects.create(
+        assistant_message = AIMessage.objects.create(
             conversation=conversation,
             role="model",
             content=reply[:6000],
+        )
+        proposal = (
+            AITaskProposal.objects.create(message=assistant_message, **proposed_fields)
+            if proposed_fields else None
         )
 
         # Move this conversation to the top of recent chats.
@@ -361,6 +480,7 @@ def send_message(request):
     return JsonResponse({
         "reply": reply,
         "conversation_id": conversation.pk,
+        "task_proposal": _proposal_json(proposal) if proposal else None,
     })
 
 
@@ -398,7 +518,7 @@ def get_conversation(request, conversation_id):
         )
 
     recent_messages = list(
-        conversation.messages.order_by(
+        conversation.messages.select_related("task_proposal").order_by(
             "-created_at", "-pk"
         )[:100]
     )
@@ -410,6 +530,10 @@ def get_conversation(request, conversation_id):
             {
                 "role": message.role,
                 "text": message.content,
+                "task_proposal": (
+                    _proposal_json(message.task_proposal)
+                    if hasattr(message, "task_proposal") else None
+                ),
             }
             for message in reversed(recent_messages)
         ],
@@ -438,3 +562,70 @@ def delete_conversation(request, conversation_id):
 
 
 
+
+@login_required
+@require_POST
+def save_task_proposal(request, proposal_id):
+    """The user's explicit, CSRF-protected approval is the only write path."""
+    if _testing_restricted(request.user):
+        return JsonResponse({"error": _("AI Chat is currently in private testing.")}, status=403)
+    if len(request.body) > 4000:
+        return JsonResponse({"error": _("Task details are too large.")}, status=400)
+    try:
+        data = json.loads(request.body)
+    except (ValueError, UnicodeDecodeError):
+        return JsonResponse({"error": _("Invalid task details.")}, status=400)
+    if not isinstance(data, dict):
+        return JsonResponse({"error": _("Invalid task details.")}, status=400)
+
+    with transaction.atomic():
+        proposal = (
+            AITaskProposal.objects.select_for_update()
+            .filter(pk=proposal_id, message__conversation__user=request.user)
+            .first()
+        )
+        if proposal is None:
+            return JsonResponse({"error": _("Task proposal not found.")}, status=404)
+        if proposal.saved_at is not None:
+            return JsonResponse({"success": True, "task_proposal": _proposal_json(proposal)})
+
+        title = data.get("title")
+        due_date = data.get("due_date")
+        space = data.get("space")
+        priority = data.get("priority")
+        raw_time = data.get("due_time", "")
+        if not all(isinstance(x, str) for x in (title, due_date, space, priority, raw_time)):
+            return JsonResponse({"error": _("Invalid task details.")}, status=400)
+        if len(title) > 160 or len(raw_time) > 5:
+            return JsonResponse({"error": _("Invalid task details.")}, status=400)
+
+        form_data = {
+            "title": title, "space": space,
+            "due_date": due_date, "priority": priority,
+            "due_time_0": "", "due_time_1": "", "due_time_2": "",
+        }
+        if raw_time:
+            if not re.fullmatch(r"\d{2}:\d{2}", raw_time):
+                return JsonResponse({"error": _("Invalid time format.")}, status=400)
+            try:
+                due_time = datetime_time.fromisoformat(raw_time)
+            except ValueError:
+                return JsonResponse({"error": _("Invalid time format.")}, status=400)
+            form_data.update({
+                "due_time_0": str(due_time.hour % 12 or 12),
+                "due_time_1": f"{due_time.minute:02d}",
+                "due_time_2": "PM" if due_time.hour >= 12 else "AM",
+            })
+
+        form = TaskForm(form_data)
+        if not form.is_valid():
+            return JsonResponse({"error": _("Please correct the task details."), "fields": form.errors.get_json_data()}, status=400)
+
+        task = form.save(commit=False)
+        task.user = request.user
+        task.save()
+        proposal.task = task
+        proposal.saved_at = timezone.now()
+        proposal.save(update_fields=["task", "saved_at"])
+
+    return JsonResponse({"success": True, "task_proposal": _proposal_json(proposal)})

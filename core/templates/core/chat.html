@@ -632,6 +632,48 @@
     }
 }
 
+
+/* AI Chat guided task creation: reuses the existing, validated TaskForm. */
+.ai-quick-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.ai-quick-action { border: 1px solid #c7d7c9; background: #f4f6f1;
+    color: #103f32; border-radius: 12px; padding: 9px 13px;
+    font: inherit; font-size: 13px; cursor: pointer; }
+.ai-task-guide { background: #fbfcf8; border: 1px solid #cad9c9;
+    border-radius: 18px; padding: 16px; margin: 0 0 14px; }
+.ai-task-guide[hidden] { display: none; }
+.ai-task-guide h2 { color: #103f32; margin: 0 0 6px; font-size: 17px; }
+.ai-task-guide p { color: #617064; font-size: 13px; margin: 0 0 14px; }
+.ai-task-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.ai-task-field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.ai-task-field.wide { grid-column: 1 / -1; }
+.ai-task-field label { color: #244435; font-size: 13px; font-weight: 600; }
+.ai-task-field input, .ai-task-field select { width: 100%; min-width: 0;
+    box-sizing: border-box; padding: 10px; border: 1px solid #d4dfd2;
+    border-radius: 10px; background: #fff; font: inherit; font-size: 16px; }
+.ai-task-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+.ai-task-review { background: #103f32; color: #fff; border: 0;
+    border-radius: 11px; padding: 10px 15px; font: inherit; cursor: pointer; }
+@media (max-width: 480px) { .ai-task-grid { grid-template-columns: 1fr; } }
+
+/* Editable, persistent AI task proposal inside the conversation. */
+.ai-proposal { margin-top: 12px; padding: 13px; background: #fff;
+    border: 1px solid #b8cfbb; border-radius: 13px; color: #183b2e;
+    min-width: min(260px, 70vw); }
+.ai-proposal-heading { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.ai-proposal-fields { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
+.ai-proposal-field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; }
+.ai-proposal-field.wide { grid-column: 1/-1; }
+.ai-proposal-field input, .ai-proposal-field select { width: 100%; box-sizing: border-box;
+    border: 1px solid #cedbcf; border-radius: 8px; padding: 8px;
+    background: #fff; color: #183b2e; font: inherit; font-size: 14px; }
+.ai-proposal-save { margin-top: 10px; padding: 10px 12px; border: 0;
+    border-radius: 10px; background: #103f32; color: #fff; font: inherit;
+    font-size: 13px; font-weight: 700; cursor: pointer; }
+.ai-proposal-save:disabled { opacity: .6; cursor: default; }
+.ai-proposal-feedback { font-size: 12px; margin-top: 8px; color: #9a3e35; }
+.ai-proposal-feedback.success { color: #17663b; }
+.ai-proposal-link { display: inline-block; margin-top: 8px; color: #103f32; font-weight: 700; }
+@media (max-width: 480px) { .ai-proposal-fields { grid-template-columns: 1fr; } }
 </style>
 
 
@@ -658,6 +700,61 @@
     >
         ☰ {% translate "Conversations" %}
     </button>
+
+
+    <!-- Product help and guided first task (no Gemini call required). -->
+    <div class="ai-quick-actions" aria-label="{% translate 'Quick actions' %}">
+        <button type="button" class="ai-quick-action" id="ai-help-start">
+            {% translate "How do I use PAMOJA?" %}
+        </button>
+        <button type="button" class="ai-quick-action" id="ai-task-start"
+                aria-controls="ai-task-guide" aria-expanded="false">
+            + {% translate "Create a task" %}
+        </button>
+    </div>
+
+    <section id="ai-task-guide" class="ai-task-guide" hidden
+             aria-labelledby="ai-task-guide-heading">
+        <h2 id="ai-task-guide-heading">{% translate "Create your first task" %}</h2>
+        <p>{% translate "Fill in the details, review the task on the next page, then choose Save task. Nothing is saved yet." %}</p>
+        <form id="ai-task-form" method="get" action="{% url 'task_add' %}">
+            <div class="ai-task-grid">
+                <div class="ai-task-field wide">
+                    <label for="ai-task-title">{% translate "What would you like to do?" %}</label>
+                    <input id="ai-task-title" name="title" type="text" maxlength="160"
+                           placeholder="{% translate 'Example: Review biology notes' %}" required>
+                </div>
+                <div class="ai-task-field">
+                    <label for="ai-task-space">{% translate "Space" %}</label>
+                    <select id="ai-task-space" name="space">
+                        {% for key, label in task_spaces %}
+                        <option value="{{ key }}" {% if key == 'planning' %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="ai-task-field">
+                    <label for="ai-task-date">{% translate "Due date" %}</label>
+                    <input id="ai-task-date" name="due_date" type="date"
+                           value="{{ task_today|date:'Y-m-d' }}" required>
+                </div>
+                <div class="ai-task-field">
+                    <label for="ai-task-priority">{% translate "Priority" %}</label>
+                    <select id="ai-task-priority" name="priority">
+                        <option value="normal">{% translate "Normal" %}</option>
+                        <option value="high">{% translate "High" %}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ai-task-actions">
+                <button type="submit" class="ai-task-review">
+                    {% translate "Review task" %} →
+                </button>
+                <button type="button" id="ai-task-cancel" class="ai-quick-action">
+                    {% translate "Cancel" %}
+                </button>
+            </div>
+        </form>
+    </section>
 
     <div class="ai-workspace">
 
@@ -832,6 +929,27 @@
     const listStatus = document.getElementById("ai-list-status");
     const status = document.getElementById("ai-status");
 
+
+    // First-task guide: only opens a prefilled Django task form.
+    // The existing Save task POST remains the required confirmation.
+    const taskGuide = document.getElementById("ai-task-guide");
+    const taskStart = document.getElementById("ai-task-start");
+    const taskCancel = document.getElementById("ai-task-cancel");
+    taskStart.addEventListener("click", function () {
+        taskGuide.hidden = !taskGuide.hidden;
+        taskStart.setAttribute("aria-expanded", String(!taskGuide.hidden));
+        if (!taskGuide.hidden) document.getElementById("ai-task-title").focus();
+    });
+    taskCancel.addEventListener("click", function () {
+        taskGuide.hidden = true;
+        taskStart.setAttribute("aria-expanded", "false");
+        taskStart.focus();
+    });
+    document.getElementById("ai-help-start").addEventListener("click", function () {
+        input.value = "Can you teach me how to use PAMOJA, step by step?";
+        input.focus();
+    });
+
     const welcomeText = document.getElementById(
         "ai-welcome"
     ).textContent.trim();
@@ -843,6 +961,7 @@
     const listUrl = "{% url 'chat_conversations' %}";
     const detailTemplate = "{% url 'chat_conversation_detail' 0 %}";
     const deleteTemplate = "{% url 'chat_conversation_delete' 0 %}";
+    const saveTaskTemplate = "{% url 'chat_task_save' 0 %}";
 
     // Keep the active conversation ID per browser tab and account.
     const storageKey = "pamoja-ai-active-{{ request.user.pk }}";
@@ -866,7 +985,7 @@
         );
     }
 
-    function addMessage(text, sender) {
+    function addMessage(text, sender, proposal = null) {
         const bubble = document.createElement("div");
 
         bubble.className = "ai-message " +
@@ -874,11 +993,115 @@
 
         // Never interpret user or AI text as HTML.
         bubble.textContent = text;
+        if (sender !== "user" && proposal) {
+            bubble.appendChild(createProposalCard(proposal));
+        }
 
         messages.appendChild(bubble);
         messages.scrollTop = messages.scrollHeight;
 
         return bubble;
+    }
+
+    function createProposalCard(proposal) {
+        const card = document.createElement("section");
+        card.className = "ai-proposal";
+        card.setAttribute("aria-label", "Task proposal");
+
+        const heading = document.createElement("div");
+        heading.className = "ai-proposal-heading";
+        heading.textContent = proposal.saved ? "Task saved to Planner" : "Review your task";
+        card.appendChild(heading);
+
+        const fields = document.createElement("div");
+        fields.className = "ai-proposal-fields";
+        card.appendChild(fields);
+        const controls = {};
+
+        function field(key, label, type, value, options = null, wide = false) {
+            const wrapper = document.createElement("label");
+            wrapper.className = "ai-proposal-field" + (wide ? " wide" : "");
+            const labelText = document.createElement("span");
+            labelText.textContent = label;
+            wrapper.appendChild(labelText);
+            const control = document.createElement(options ? "select" : "input");
+            if (!options) control.type = type;
+            if (options) {
+                options.forEach(item => {
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.label;
+                    control.appendChild(option);
+                });
+            }
+            control.value = value || "";
+            control.disabled = Boolean(proposal.saved);
+            if (key === "title") control.maxLength = 160;
+            if (key === "title" || key === "due_date") control.required = true;
+            wrapper.appendChild(control);
+            fields.appendChild(wrapper);
+            controls[key] = control;
+        }
+
+        const spaceOptions = Array.from(document.getElementById("ai-task-space").options)
+            .map(option => ({value: option.value, label: option.textContent}));
+        field("title", "Task", "text", proposal.title, null, true);
+        field("space", "Space", "select", proposal.space, spaceOptions);
+        field("due_date", "Due date", "date", proposal.due_date);
+        field("due_time", "Time (optional)", "time", proposal.due_time || "");
+        field("priority", "Priority", "select", proposal.priority, [
+            {value: "normal", label: "Normal"}, {value: "high", label: "High"}
+        ]);
+
+        const feedback = document.createElement("div");
+        feedback.className = "ai-proposal-feedback";
+        feedback.setAttribute("role", "status");
+        card.appendChild(feedback);
+
+        if (proposal.saved) {
+            feedback.classList.add("success");
+            feedback.textContent = "Saved successfully.";
+            const link = document.createElement("a");
+            link.href = proposal.planner_url || "{% url 'planner' %}";
+            link.textContent = "Open Planner →";
+            link.className = "ai-proposal-link";
+            card.appendChild(link);
+            return card;
+        }
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "ai-proposal-save";
+        button.textContent = "Save to Planner";
+        card.appendChild(button);
+        button.addEventListener("click", async function () {
+            if (!controls.title.value.trim() || !controls.due_date.value) {
+                feedback.textContent = "Please provide a title and due date.";
+                return;
+            }
+            button.disabled = true;
+            feedback.textContent = "Saving your task…";
+            try {
+                const response = await fetch(conversationUrl(saveTaskTemplate, proposal.id), {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {"Content-Type": "application/json", "X-CSRFToken": csrfToken},
+                    body: JSON.stringify(Object.fromEntries(
+                        Object.entries(controls).map(([key, control]) => [key, control.value])
+                    )),
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    throw new Error(result.error || "Unable to save the task.");
+                }
+                const updated = createProposalCard(result.task_proposal);
+                card.replaceWith(updated);
+            } catch (error) {
+                feedback.textContent = error.message || "Unable to save the task.";
+                button.disabled = false;
+            }
+        });
+        return card;
     }
 
     function showWelcome() {
@@ -993,7 +1216,8 @@
             data.messages.forEach(message => {
                 addMessage(
                     message.text,
-                    message.role === "user" ? "user" : "assistant"
+                    message.role === "user" ? "user" : "assistant",
+                    message.task_proposal || null
                 );
             });
         }
@@ -1128,7 +1352,7 @@
                 String(conversationId)
             );
 
-            addMessage(data.reply, "assistant");
+            addMessage(data.reply, "assistant", data.task_proposal || null);
             status.textContent = "";
 
             await refreshHistory();

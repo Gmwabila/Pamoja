@@ -66,6 +66,7 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("chat/", views.chat, name="chat"),
     path("chat/message/", ai_chat.send_message, name="chat_message"),
+    path("chat/tasks/<int:proposal_id>/save/", ai_chat.save_task_proposal, name="chat_task_save"),
 
 
     path(

@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .models import PushSubscription
-from datetime import timedelta
+from datetime import date, time, timedelta
 from zoneinfo import ZoneInfo
 from django.contrib import messages
 from django.contrib.auth import login
@@ -128,8 +128,34 @@ def planner(request):
 @login_required
 def task_edit(request, pk=None):
     task = get_object_or_404(Task, user=request.user, pk=pk) if pk else None
-    initial = None if task else {'due_date': today_for(get_profile(request.user)),
-                               'space': request.GET.get('space', 'planning')}
+    initial = None
+    if task is None:
+        initial = {
+            'due_date': today_for(get_profile(request.user)),
+            'space': 'planning',
+            'priority': 'normal',
+        }
+        # The AI guide only pre-fills this form. A separate POST and
+        # explicit Save task action are still required to create data.
+        if request.method == 'GET':
+            title = request.GET.get('title', '').strip()
+            if 0 < len(title) <= 160:
+                initial['title'] = title
+            space = request.GET.get('space', '')
+            if space in dict(SPACES):
+                initial['space'] = space
+            if request.GET.get('priority') in ('normal', 'high'):
+                initial['priority'] = request.GET['priority']
+            try:
+                initial['due_date'] = date.fromisoformat(request.GET['due_date'])
+            except (KeyError, ValueError):
+                pass
+            try:
+                due_time = time.fromisoformat(request.GET['due_time'])
+                if due_time.tzinfo is None:
+                    initial['due_time'] = due_time
+            except (KeyError, ValueError):
+                pass
     form = TaskForm(request.POST or None, instance=task, initial=initial)
     if request.method == 'POST' and form.is_valid():
         task = form.save(commit=False)
@@ -188,7 +214,10 @@ def profile(request):
 
 @login_required
 def chat(request):
-    return render(request, 'core/chat.html')
+    return render(request, 'core/chat.html', {
+        'task_spaces': SPACES,
+        'task_today': today_for(get_profile(request.user)),
+    })
 
 def service_worker(request):
     script = """
